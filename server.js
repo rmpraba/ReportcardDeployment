@@ -7,9 +7,9 @@ var dbserver_ip_address = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1'
 var connection = mysql.createConnection({
   // host     : '5919a4ea89f5cfaf40000031-samsidh.rhcloud.com',
   host :'localhost',
-   user: 'root',
-   password : '',
- database : 'reportcardnew'
+  user: 'root',
+  password : '',
+  database : 'reportcardcloud'
 
 });
 

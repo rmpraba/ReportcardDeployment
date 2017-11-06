@@ -527,7 +527,11 @@
           }
           }
         }
-        
+          document.querySelector('enrichment-dynamic-markentrycard').fnhideexcelbox();
+        }
+        else
+        {
+          document.querySelector('enrichment-dynamic-markentrycard').fnviewexcelbox();
         }
         // alert(JSON.stringify(overall));
         document.querySelector('enrichment-dynamic-markentrycard').studarr=overall;

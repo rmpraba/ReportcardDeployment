@@ -93,6 +93,7 @@
         document.querySelector('#sectionnamnnnnn').selected=-1;
         document.querySelector('#subjectnamttttt').selected=-1;
          document.querySelector('enrichment-dynamic-markentrycard').fullrefresh();
+         document.querySelector('enrichment-dynamic-markentrycard').fnhideexcelbox();
         this.$.bassesmentservice.callEnrichmentSubjectService(assesmentname,gradename);    
         // this.FnServiceCall(); 
         }
@@ -115,6 +116,7 @@ document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
         if(this.flag==1){
         document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
          document.querySelector('enrichment-dynamic-markentrycard').fullrefresh();
+         document.querySelector('enrichment-dynamic-markentrycard').fnhideexcelbox();
         document.querySelector('#sectionnamnnnnn').selected=-1;
         document.querySelector('#subjectnamttttt').selected=-1;
         this.$.bassesmentservice.callEnrichmentSubjectService(assesmentname,gradename);    
@@ -131,6 +133,7 @@ document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
         document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
         document.querySelector('#subjectnamttttt').selected=-1;
         document.querySelector('enrichment-dynamic-markentrycard').fullrefresh();
+        document.querySelector('enrichment-dynamic-markentrycard').fnhideexcelbox();
         }     
       },
       FnSelectSubject:function(e){
@@ -139,7 +142,7 @@ document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
 
         document.querySelector('enrichment-dynamic-markentrycard').fullrefresh();
         
-
+        document.querySelector('enrichment-dynamic-markentrycard').fnviewexcelbox();
         // document.querySelector('enrichment-dynamic-markentryitemcard').FnRefresh();
         // document.querySelector('enrichment-markentry-input').FnRefresh();
         subject = e.target.selectedItem.textContent.trim();
