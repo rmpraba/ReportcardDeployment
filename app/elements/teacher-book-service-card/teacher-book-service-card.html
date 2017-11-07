@@ -953,6 +953,7 @@
  fnmasterplanedit:function(conarr,valuearr,skarr,subarr,period,innovation,remark,rowid,teachingaid,bldvaluearr,sno)
  {
 
+     
       this.deletecuriculamurl=sessionStorage.getItem("addrinfo")+"/deletecuriculam-service";
       var obj={};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -966,7 +967,7 @@
          obj.rowid=rowid;
          this.deletecuriculamparam=obj;
          this.$.deletecuriculamajax.generateRequest();
-
+   
       gloconarr=conarr;
       glovaluearr=valuearr;
       glosubarr=subarr;
@@ -990,7 +991,7 @@
         alert(JSON.stringify(globldvaluearr));*/
     },
       deletecuriculamResponse:function(e){
-        alert(JSON.stringify(e.detail.response.returnval));
+        // alert(JSON.stringify(e.detail.response.returnval));
       if(e.detail.response.returnval=="Deleted!"){
       var conarr1=[];
       var valuearr1=[];
@@ -1010,8 +1011,7 @@
       subarr1=glosubarr;
       bldvaluearr1=globldvaluearr;
 
-       
-      var  period=this.gloperiod;
+       var  period=this.gloperiod;
       var innovation=this.gloinnovation;
       var remark=this.gloremark;
       var period=this.gloperiod;
@@ -1093,7 +1093,7 @@ if(subarr1.length!=0){
         obj.chaptername=localStorage.getItem("curr_sess_chaptername");
         obj.rowid=subarr1[i].rowid;
         obj.conceptid=subarr1[i].conceptid;
-        obj.conceptname=subarr1[i].conceptname;
+        obj.conceptname=subarr1[i].concept;
         obj.subconceptid=subarr1[i].subconceptid;
         obj.subconceptname=subarr1[i].subconceptname;
         obj.period=period;
@@ -1110,6 +1110,7 @@ if(subarr1.length!=0){
         obj.teachingaid=teachingaid;
         obj.remarks=remark;
         obj.termid=sessionStorage.getItem("termid"); 
+     //   alert(JSON.stringify(obj));
         this.fnmasterplaneditparam=obj;
        this.$.fnmasterplaneditajax.generateRequest();      
         }
@@ -2296,7 +2297,7 @@ fnsetcoskill13:function(skarr,period,rowid,sno)
       obj.delperiod=delperiod;
       obj.capter_id=localStorage.getItem("curr_sess_capters");
       this.buffdel1param=obj;
-          alert(JSON.stringify(obj));
+          // alert(JSON.stringify(obj));
 
       this.$.buffdel1ajax.generateRequest();
    },
@@ -2367,7 +2368,7 @@ fnsetcoskill13:function(skarr,period,rowid,sno)
           fngetclassbookchaptervalueResponse:function(e)
           {
             var res=e.detail.response.chapterarr;
-            alert(JSON.stringify(res));
+            // alert(JSON.stringify(res));
             document.querySelector('curriculum-plan-conceptapproval-card').chapterarr=res;
           },
           fngetclassbookchapterconceptvalue:function(){
@@ -3194,7 +3195,7 @@ fetchchapterResponse:function(e){
         {
             var res=e.detail.response.returnval;
             //alert('Inserted');
-            alert(JSON.stringify(res));
+            // alert(JSON.stringify(res));
            
              if(e.detail.response.returnval=='Updated')
             {

@@ -9,8 +9,8 @@ var connection = mysql.createConnection({
   host :'localhost',
 
   user     : 'root',
-   password : 'admin',
-   database : 'reportcardcheck'
+   password : '',
+   database : 'reportcardcloud'
   // port     : '62631',
   // user     : 'adminM1qnV1d',
   // password : 'HC2bIf7Sk2LD',
@@ -11329,6 +11329,7 @@ app.post('/fnmasterplandisplyinsert-service' , urlencodedParser,function (req, r
     {
     if(!err)   
     {
+      console.log(rows);
       res.status(200).json({'returnval':'Inserted!'});
     }
     else
