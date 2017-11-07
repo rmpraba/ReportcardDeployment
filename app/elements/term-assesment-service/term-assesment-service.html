@@ -454,6 +454,64 @@
         on-response="revertsubmittedmarkResponse"
         debounce-duration="300"
     >
+
+    <iron-ajax
+        method="post"
+        id="fnimporttermmarksajax"
+        url="{{fnimporttermmarksurl}}"
+        params="{{fnimporttermmarksparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fnimporttermmarksResponse"
+        debounce-duration="300"
+    >
+
+      <iron-ajax
+        method="post"
+        id="fndeltoverallassesmarksajax"
+        url="{{fndeltoverallassesmarksurl}}"
+        params="{{fndeltoverallassesmarksparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fndeltoverallassesmarksResponse"
+        debounce-duration="300"
+    >
+
+
+     <iron-ajax
+        method="post"
+        id="fntermauditmarksajax"
+        url="{{fntermauditmarksurl}}"
+        params="{{fntermauditmarksparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fntermauditmarksResponse"
+        debounce-duration="300"
+    >
+
+    <iron-ajax
+        method="post"
+        id="fetchapprovalstatusajax"
+        url="{{fetchapprovalstatusurl}}"
+        params="{{fetchapprovalstatusparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchapprovalstatusResponse"
+        debounce-duration="300"
+    > 
+
+       <iron-ajax
+        method="post"
+        id="deleteauditmarksajax"
+        url="{{deleteauditmarksurl}}"
+        params="{{deleteauditmarksparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="deleteauditmarksResponse"
+        debounce-duration="300"
+    >
+
+    
   </template>
   <script>
   (function() {
@@ -1644,7 +1702,13 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       overalltermmarkinsertResponse:function(e){        
         // alert("Inserted!");
         if(e.detail.response.returnval=="succ")
-          alert('Approved!');
+        {
+             alert('Approved!');
+              this.callApproveService();
+            document.querySelector('home-page').setPage('approveassesment','');  
+            document.querySelector('approve-one-to-four-card').setDefaultHeaders();
+        }
+         
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3"||localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development")
           this.calloveralltermassesmentinsertService();
         // n1++;
@@ -1652,7 +1716,8 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         // this.calloveralltermassesmentinsertService();
         // }
       },
-      calloveralltermassesmentinsertService:function(){        
+      calloveralltermassesmentinsertService:function()
+      {
          this.overalltermassesmentinserturl=sessionStorage.getItem("addrinfo")+"/overalltermassesmentinsert-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","studentid":"","studentname":"","subject":"","type":"","category":"","total":"","rtotal":"","grade":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -2428,7 +2493,153 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         document.querySelector('cs-personalitydevelopment-card').FnHideApprovebtnFlag(true); 
         }
        
-    }
+    },
+
+    fnimporttermmarks:function(termname,assesmentid,grade,section,subject)
+    {
+        this.fnimporttermmarksurl=sessionStorage.getItem("addrinfo")+"/fnimporttermmarks1-service";
+        var obj={};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+         obj.termname=termname;
+         obj.assesmentid=assesmentid;
+         obj.grade=grade;
+         obj.section=section;
+         obj.subject=subject;
+         obj.flag='0';
+         this.fnimporttermmarksparam=obj;  
+         //alert(JSON.stringify(obj));
+         this.$.fnimporttermmarksajax.generateRequest();
+    },
+    fnimporttermmarksResponse:function(e)
+       {
+        var res=e.detail.response.returnval;
+        if(res==='Updated')
+        {
+            alert('Removed Successfully');
+            this.FnFetchApprovalStatus();
+        }
+        //alert(JSON.stringify(res));
+       },
+
+       fndeltoverallassesmarks:function(termname,assesmentid,grade,section,subject)
+    {
+        this.fndeltoverallassesmarksurl=sessionStorage.getItem("addrinfo")+"/fndeltoverallassesmarks1-service";
+        var obj={};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+         obj.termname=termname;
+         obj.grade=grade;
+         obj.assesmentid=assesmentid;
+         obj.section=section;
+         obj.subject=subject;
+         this.fndeltoverallassesmarksparam=obj;  
+         // alert(JSON.stringify(obj));
+         this.$.fndeltoverallassesmarksajax.generateRequest();
+    },
+    fndeltoverallassesmarksResponse:function(e)
+    {
+        var res=e.detail.response.overallassesment1;
+        var res1=e.detail.response.overmarkarr;
+        // alert(JSON.stringify(res));
+    },
+
+    fntermauditmarks:function(termname,grade,section,subject,asseslevel1)
+    {
+        this.fntermauditmarksurl=sessionStorage.getItem("addrinfo")+"/fntermauditmarks1-service";
+        var obj={};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.termname=termname;
+         obj.grade=grade;
+         obj.section=section;
+         obj.subject=subject;
+         obj.asseslevel1=asseslevel1;
+         this.fntermauditmarksparam=obj;  
+         //alert(JSON.stringify(obj));
+         this.$.fntermauditmarksajax.generateRequest();
+    },
+    fntermauditmarksResponse:function(e)
+    {
+        var res=e.detail.response.returnval;
+        // alert(JSON.stringify(res));
+    },
+
+    FnFetchApprovalStatus:function(){
+      var obj={"schoolid":"","academicyear":"","termname":"","loggedid":"","roleid":""};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");      
+        obj.termname=localStorage.getItem("curr_sess_termname");
+        this.fetchapprovalstatusurl=sessionStorage.getItem("addrinfo")+"/fetchapprovalstatus-service";
+        obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+        this.fetchapprovalstatusparam=obj;
+        this.$.fetchapprovalstatusajax.generateRequest();
+    },
+    fetchapprovalstatusResponse:function(e){
+      // alert(JSON.stringify(e.detail.response.returnval));
+      var arr=e.detail.response.returnval;
+      for(var i=0;i<arr.length;i++){
+        if(arr[i].flag=="0")
+          arr[i].flag="Pending for approval";
+        if(arr[i].flag=="1")
+          arr[i].flag="Approved";
+      }
+      document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
+      document.querySelector('approvalstatus-card').FnSpinnerrActive(false);
+    },
+
+    fnfaassesmenttermmarks:function(grade,section,termname,assesmentid,subject)
+     {
+        this.fnfaassesmenttermmarksurl=sessionStorage.getItem("addrinfo")+"/fnfaassesmenttermmarks1-service";
+        var obj={};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.termname=termname;
+         obj.grade=grade;
+         obj.section=section;
+         obj.subject=subject;
+         obj.assesmentid=assesmentid;
+         obj.flag='0';
+         this.fnfaassesmenttermmarksparam=obj;  
+         //alert(JSON.stringify(obj));
+         this.$.fnfaassesmenttermmarksajax.generateRequest();
+     },
+     fnfaassesmenttermmarksResponse:function(e)
+     {
+        var res=e.detail.response.returnval;
+        //alert(JSON.stringify(res));
+        if(res=='Updated')
+        {
+            alert('Removed Successfully');
+            this.FnFetchApprovalStatus();
+        }
+     },
+
+     deleteauditmarks:function(termname,grade,subject,section)
+     {
+        this.deleteauditmarksurl=sessionStorage.getItem("addrinfo")+"/deleteauditmarks1-service";
+        var obj={};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.termname=termname;
+         obj.grade=grade;
+         obj.section=section;
+         obj.subject=subject;
+         this.deleteauditmarksparam=obj;  
+         // alert(JSON.stringify(obj));
+         this.$.deleteauditmarksajax.generateRequest();
+     },
+     deleteauditmarksResponse:function(e)
+     {
+        var res=e.detail.response.returnval;
+        // alert(JSON.stringify(res));
+     },
+
+
+    
     });
   })();
   </script>
