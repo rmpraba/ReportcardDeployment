@@ -534,6 +534,9 @@
           document.querySelector('enrichment-dynamic-markentrycard').fnviewexcelbox();
         }
         // alert(JSON.stringify(overall));
+        for(var i=2;i<overall.length;i++){
+          overall[i].serialno=i-1;
+        }
         document.querySelector('enrichment-dynamic-markentrycard').studarr=overall;
         document.querySelector('enrichment-dynamic-markentrycard').
         FnSetAlreadyEnteredMarks(arr);
