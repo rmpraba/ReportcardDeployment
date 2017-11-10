@@ -13757,7 +13757,7 @@ app.post('/parentadd-service' , urlencodedParser,function (req, res)
     {
     if(rows.length==0)
     {
-      connection.query("INSERT INTO md_admission set ?",[response],
+      connection.query("INSERT INTO parent set ?",[response],
       function(err, rows)
       {
 

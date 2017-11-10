@@ -185,7 +185,14 @@
       </div>
 
       <div class="horizontalframe1">
-       <div class="fields" style="margin-left:15%;">
+       
+        <div class="fields" style="margin-left:14%;">
+          <paper-input id="fcity" label="City"  allowed-pattern="[a-zA-Z]" value="{{city}}"></paper-input>
+        </div>
+        <div class="fields" style="margin-left:8%;">
+          <paper-input id="fpin" label="Pincode" allowed-pattern="[0-9]" maxlength="6" value="{{pincode}}"></paper-input>
+        </div>
+        <div class="fields" style="margin-left:7%;">
           <div class="tlab">
             <label>Transport Availability</label>            
           </div>
@@ -199,13 +206,7 @@
             <span><paper-checkbox id="{{taransyesz}}" checked on-change="transyes1">Yes</paper-checkbox></span>
             <span><paper-checkbox  id="{{transnoz}}" on-change="transno1">No</paper-checkbox></span>
         </div>       
-          </div>
         </div>
-        <div class="fields" style="margin-left:13%;">
-          <paper-input id="fcity" label="City"  allowed-pattern="[a-zA-Z]" value="{{city}}"></paper-input>
-        </div>
-        <div class="fields" style="margin-left:5%;">
-          <paper-input id="fpin" label="Pincode" allowed-pattern="[0-9]" maxlength="6" value="{{pincode}}"></paper-input>
         </div>
       </div>
      </div> 
@@ -346,7 +347,7 @@ if(document.querySelector('#'+this.transnoz).checked==false)
         }
           else if (this.enroll=="" || this.fname=="" || this.gradeid=="" || this.academicyear=="")
           {
-            alert("Please Insert all the fields");
+            alert("Please enter all the fields");
 
           }
 
@@ -461,8 +462,8 @@ if(document.querySelector('#'+this.transnoz).checked==false)
       },
       setdobvalid:function()
       {
-        alert("Select DOB properly, it cannot be future date");
-      },
+        alert("Select proper DOB, it cannot be future date");
+      }
       
       
     });
