@@ -97,7 +97,7 @@ app.post('/login-card',  urlencodedParser,function (req, res)
   connection.query('SELECT name as uname,  school_id as school,(select name from md_school where id=school) as name ,(select address from md_school where id=school) as addr,(select affiliation_no from md_school where id=school) as affno,(select email_id from md_school where id=school) as email,(select website from md_school where id=school) as website,(select telno from md_school where id=school) as telno  from md_employee where ? and ? and ? and ?',[id,username,password,schoolid],
     function(err, rows)
     {
-    if(!err)
+    if(!err)  
     {
     if(rows.length>0)
     {
@@ -13593,7 +13593,67 @@ var qur="Delete from tr_term_fa_assesment_marks where school_id='"+req.query.sch
     
 });
 
-app.post('/addstudent-service', urlencodedParser,function (req,res)
+
+
+
+
+
+app.post('/addstudent-service' , urlencodedParser,function (req, res)
+{  
+   var response={
+    school_id:req.query.schoolid,
+    school_name:req.query.schoolname,
+    admission_no:req.query.studnetid,
+    first_name:req.query.firstname,
+    middle_name:req.query.middlename,
+    last_name:req.query.lastname,
+    student_name:req.query.studentname,
+    class_for_admission:req.query.grade,
+    dob:req.query.dob,
+    age:req.query.age,
+    academic_year:req.query.academicyear,
+    father_name:req.query.fathername,
+    mother_name:req.query.mothername,
+    gender:req.query.gender,
+    transport_availed:req.query.transport,
+    enquiry_no:req.query.enquiry_no,
+    admission_year:req.query.academicyear,
+    flag:req.query.flag,
+  }   
+   console.log("student add");
+  console.log("-------------------------");
+  console.log(response);
+
+  connection.query("SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_no='"+req.query.studnetid+"'",function(err, rows)
+    {
+    if(rows.length==0)
+    {
+      connection.query("INSERT INTO md_admission set ?",[response],
+      function(err, rows)
+      {
+
+      if(!err)
+       {
+        console.log(rows);
+        res.status(200).json({'returnval': 'Inserted!'});
+        }
+      else 
+      {
+        console.log(err);
+        res.status(200).json({'returnval': 'Not Inserted!'});
+      }
+    });  
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'Already Exit'});
+    }
+    });
+  });
+
+
+
+/*app.post('/addstudent-service', urlencodedParser,function (req,res)
 {      
   var response={
     school_id:req.query.schoolid,
@@ -13633,8 +13693,10 @@ app.post('/addstudent-service', urlencodedParser,function (req,res)
 
   });
 });
+*/
 
-app.post('/parentadd-service', urlencodedParser,function (req,res)
+
+/*app.post('/parentadd-service', urlencodedParser,function (req,res)
 {      
   var response={
     school_id:req.query.schoolid,
@@ -13667,7 +13729,57 @@ app.post('/parentadd-service', urlencodedParser,function (req,res)
     }  
 
   });
-});
+});*/
+
+
+app.post('/parentadd-service' , urlencodedParser,function (req, res)
+{  
+   var response={
+    school_id:req.query.schoolid,
+    student_id:req.query.studnetid,
+    parent_name:req.query.fathername,
+    email:req.query.fatheremail,
+    mobile:req.query.fathermob,
+    address1:req.query.address1,
+    address2:req.query.address2,
+    address3:req.query.address3,
+    city:req.query.city,
+    pincode:req.query.pincode,
+    alternate_mail:req.query.matheremail,
+    mother_name:req.query.mothername
+  }   
+
+   console.log("student add in parent table");
+  console.log("-------------------------");
+  console.log(response);
+
+  connection.query("SELECT * FROM parent WHERE school_id='"+req.query.schoolid+"' and student_id='"+req.query.studnetid+"'",function(err, rows)
+    {
+    if(rows.length==0)
+    {
+      connection.query("INSERT INTO md_admission set ?",[response],
+      function(err, rows)
+      {
+
+      if(!err)
+       {
+        console.log(rows);
+        res.status(200).json({'returnval': 'Inserted!'});
+        }
+      else 
+      {
+        console.log(err);
+        res.status(200).json({'returnval': 'Not Inserted!'});
+      }
+    });  
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'Already Exit'});
+    }
+    });
+  });
+
 
 app.post('/getgradestudent-service', urlencodedParser,function (req,res)
 {      
