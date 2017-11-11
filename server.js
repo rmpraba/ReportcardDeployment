@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
   host :'localhost',
   user: 'root',
   password : '',
-  database : 'reportcardcloud'
+  database : 'reportcardnew'
 
 });
 
@@ -2122,7 +2122,7 @@ app.post('/fetchcocurricularmark-service',  urlencodedParser,function (req,res)
 {   
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid}; 
-  var academicyear={academic_year:req.query.academicyear};  
+  var academicyear={academic_year:req.query.academicyear};    
 
   connection.query("SELECT * FROM tr_cocurricular_overallterm_marks WHERE ? AND ? AND ? order by subject_id",[studid,schoolid,academicyear],
     function(err, rows)
@@ -2140,8 +2140,441 @@ app.post('/fetchcocurricularmark-service',  urlencodedParser,function (req,res)
 
   });
 });
+ app.post('/threetoeightvalues-service',  urlencodedParser,function (req,res)
+ {   
 
-//term attendance
+     var studentid;
+     var studentname;
+     var fathername;
+     var classs;
+     var section;
+     var dob;
+     var staff="./app/images/"+req.query.staffid+req.query.schoolid+".jpg";
+     var principalxx="./app/images/principal"+req.query.schoolid+".jpg";
+     var classs=req.query.classs;
+     var schoolid=req.query.schoolid;
+     var section=req.query.section; 
+     var academicyear=req.query.academicyear;  
+     console.log(schoolid);
+ 
+   for(i=0;i<global.studentpersonalinfo.length;i++){
+    studentid=global.studentpersonalinfo[0].admission_no;
+    studentname=global.studentpersonalinfo[0].student_name;
+    fathername=global.studentpersonalinfo[0].father_name;
+    dob=global.studentpersonalinfo[0].dob;
+   
+   }
+    
+     console.log(studentid);
+     console.log(studentname);
+     console.log(fathername);
+     console.log(dob);
+     console.log(section);
+     console.log(classs);
+
+ for(var i=0;i<global.assesmentarrs.length;i++){
+          for(var j=0;j<global.masterarrs.length;j++){
+               if((global.assesmentarrs[i].term_name).toLowerCase()==(global.masterarrs[j].term_name).toLowerCase()&&global.assesmentarrs[i].assesment_id==global.masterarrs[j].assesment_type&&global.assesmentarrs[i].grade==global.masterarrs[j].grade_name&&global.assesmentarrs[i].subject_id==global.masterarrs[j].subject_name){
+              if((global.masterarrs[j].scale_type)=="/")
+               global.assesmentarrs[i].score=parseFloat(parseFloat(global.assesmentarrs[i].total)/parseFloat(global.masterarrs[j].scalar)).toFixed(2);
+              if((global.masterarrs[j].scale_type)=="*")
+               global.assesmentarrs[i].score=parseFloat(parseFloat(global.assesmentarrs[i].total)*parseFloat(global.masterarrs[j].scalar)).toFixed(2);
+              if((global.masterarrs[j].scale_type)=="/*")
+               global.assesmentarrs[i].score=parseFloat((parseFloat(global.assesmentarrs[i].total)/parseFloat(global.masterarrs[j].actual_scale))*parseFloat(global.masterarrs[j].scalar)).toFixed(2);
+            }
+          }
+        }
+        var temparr=[];
+        for(var i=0;i<global.subjectarrs.length;i++){
+          var obj={};
+          obj.subject=global.subjectarrs[i].subject_id;
+          obj.PT1='';
+          obj.NB1='';
+          obj.SEA1='';
+          obj.HY='';
+          obj.mark1='';
+          obj.grade1='';
+          obj.PT2='';
+          obj.NB2='';
+          obj.SEA2='';
+          obj.Y='';
+          obj.mark2='';
+          obj.grade2='';
+          temparr.push(obj);
+        }
+        for(var i=0;i<global.assesmentarrs.length;i++){
+          for(var j=0;j<temparr.length;j++){
+          if(global.assesmentarrs[i].subject_id==temparr[j].subject){
+  
+         if(global.assesmentarrs[i].term_name=="Term1"){
+            if((global.assesmentarrs[i].assesment_id).trim()=="Periodic Test1"){
+    
+                temparr[j].PT1=global.assesmentarrs[i].score;
+            }
+            if((global.assesmentarrs[i].assesment_id).trim()=="Note Book"){
+              temparr[j].NB1=global.assesmentarrs[i].score;
+            }
+            if((global.assesmentarrs[i].assesment_id).trim()=="SEA1"){
+              temparr[j].SEA1=global.assesmentarrs[i].score;
+            }
+            if((global.assesmentarrs[i].assesment_id).trim()=="Half Yearly"){
+              temparr[j].HY=global.assesmentarrs[i].score;
+            }
+          }
+          if(global.assesmentarrs[i].term_name=="Term2"){
+            if(global.assesmentarrs[i].assesment_id=="Periodic Test2")
+              temparr[j].PT2=global.assesmentarrs[i].score;
+            if(global.assesmentarrs[i].assesment_id=="Note Book")
+              temparr[j].NB2=global.assesmentarrs[i].score;
+            if(global.assesmentarrs[i].assesment_id=="SEA2")
+              temparr[j].SEA2=global.assesmentarrs[i].score;
+            if(global.assesmentarrs[i].assesment_id=="Yearly")
+              temparr[j].Y=global.assesmentarrs[i].score;
+        
+            }}}}
+      for(var i=0;i<temparr.length;i++){
+          if(temparr[i].PT1==""||temparr[i].PT1==null)
+            temparr[i].PT1=0;
+          if(temparr[i].NB1==""||temparr[i].NB1==null)
+            temparr[i].NB1=0;
+          if(temparr[i].SEA1==""||temparr[i].SEA1==null)
+            temparr[i].SEA1=0;
+          if(temparr[i].HY==""||temparr[i].HY==null)
+            temparr[i].HY=0;
+          temparr[i].mark1=parseFloat(parseFloat(temparr[i].PT1)+parseFloat(temparr[i].NB1)+parseFloat(temparr[i].SEA1)+parseFloat(temparr[i].HY)).toFixed(2);
+          if(req.query.termname=="term2"){
+          if(temparr[i].PT2==""||temparr[i].PT2==null)
+            temparr[i].PT2=0;
+          if(temparr[i].NB2==""||temparr[i].NB2==null)
+            temparr[i].NB2=0;
+          if(temparr[i].SEA2==""||temparr[i].SEA2==null)
+            temparr[i].SEA2=0;
+          if(temparr[i].Y==""||temparr[i].Y==null)
+            temparr[i].Y=0;
+          temparr[i].mark2=parseFloat(parseFloat(temparr[i].PT2)+parseFloat(temparr[i].NB2)+parseFloat(temparr[i].SEA2)+parseFloat(temparr[i].Y)).toFixed(2);
+           }
+          for(var n=0;n<global.gradearrs.length;n++){
+            if(parseFloat(temparr[i].mark1)>=parseFloat(global.gradearrs[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(global.gradearrs[n].upper_limit))
+              temparr[i].grade1=global.gradearrs[n].grade;
+            if(req.query.termname=="term2"){
+            if(parseFloat(temparr[i].mark2)>=parseFloat(global.gradearrs[n].lower_limit)&&parseFloat(temparr[i].mark2)<=parseFloat(global.gradearrs[n].upper_limit))
+              temparr[i].grade2=global.gradearrs[n].grade;
+            }
+          }
+        }
+
+     for(var i=0;i<global.coarrsvalus.length;i++){
+          for(var j=0;j<global.gradearrss.length;j++){
+      if(parseFloat(global.coarrsvalus[i].total)>=parseFloat(global.gradearrss[j].lower_limit)&&parseFloat(global.coarrsvalus[i].total)<=parseFloat(global.gradearrss[j].higher_limit))
+              global.coarrsvalus[i].grade=global.gradearrss[j].grade;
+          }
+        }
+        var temp=[];
+        var obj={};
+        for(var i=0;i<global.coarrsvalus.length;i++){
+          if(global.coarrsvalus[i].subject_id=="Discipline"){
+            obj=global.coarrsvalus.splice(i,1);
+             temp.push(obj);
+          }
+          }
+         var headers1="<center><h2>REPORT CARD</h2></center>";
+
+         var pesonalinfo1="<table ><tr><th style='text-align:left;'>Roll No: </th><th style='text-align: left;'>"+studentid+"</th></tr><tr><th style='text-align: left;'>Student’s Name: </th><th style='text-align: left;'>"+studentname+"</th></tr><tr><th style='text-align: left;'>Mother’s/Father’s/Guardian’s Name: </th><th style='text-align: left;'>"+fathername+"</th></tr><tr><th style='text-align: left;'>Date of birth: </th><th style='text-align: left;'>"+dob+"</th></tr><tr><th style='text-align: left;'>Class/Section: </th><th style='text-align: left;'>"+section+"/"+classs+"</th></tr></table><br><br>";
+
+        var scolasticinformation1 ="<table style='border-collapse: collapse;' border='2'><tr> <th>Scholastic Areas</th><th colspan='6'>Term 1</th><th colspan='6'>Term 2</th></tr><tr><th>Subjects</th><th>Periodic Test1</th><th>NB1</th><th>SEA1</th><th>Half yearly exam</th><th>Marks (100)</th><th>Grade</th><th>Periodic Test1</th><th>NB1</th><th>SEA1</th><th>Yearly exam</th><th>Marks (100)</th><th>Grade</th></tr>"
+        console.log(scolasticinformation1);
+       for(var i=0;i<temparr.length;i++)
+           {
+   
+            scolasticinformation1 +="<tr><td>"+temparr[i].subject+"</td><td>"+temparr[i].PT1+"</td><td>"+temparr[i].NB1+"</td><td>"+temparr[i].SEA1+"</td><td>"+temparr[i].HY+"</td><td>"+temparr[i].mark1+"</td><td>"+temparr[i].grade1+"</td><td>"+temparr[i].PT2+"</td><td>"+temparr[i].NB2+"</td><td>"+temparr[i].SEA2+"</td><td>"+temparr[i].Y+"</td><td>"+temparr[i].mark2+"</td><td>"+temparr[i].grade2+"</td></tr>"
+          }
+          scolasticinformation1 +="</table><br><br>";
+
+         var coscolasticinformation1="<table class='tab1' style='border-collapse: collapse;' border='1'><tr><th style='text-align: left;'>Co scholastic Areas [on a 3 point A – C grading scale]</th><th style='text-align: left;'>Grade</th></tr>"
+           for(var i=0;i<global.coarrsvalus.length;i++){
+
+            coscolasticinformation1 +="<tr><td>"+global.coarrsvalus[i].subject_id+"</td><td>"+global.coarrsvalus[i].grade+"</td></tr>";
+           }
+           coscolasticinformation1 +="</table><br><br>";
+
+          var gradingrate1 ="<table class='tab1' style='border-collapse: collapse;'border='1'><tr><th style='text-align: left;'>[A - E grading scale]</th><th style='text-align: left;'>Grade</th></tr>"
+              for(var i=0;i<temp.length;i++){
+             gradingrate1 +="<tr><td>"+temp[i].subject_id+"</td><td>"+temp[i].grade+"</td></tr>"    
+              }
+             
+          
+             gradingrate1 +="</table><br><br>";
+
+            var results1="<table class='tab2'><tr><th style='text-align: left;'>Class Teacher's Remarks</th><th>"+req.query.remark+"</th></tr><tr><th style='text-align: left;'>Result</th><th>"+req.query.result+"</th></tr></table><br><br>";
+           var  sinfnaturs1 ="<table style='width: 650px;margin-left:10px;'> <tr><th><center>"+req.query.date+"</center></th><th></th><th><center><img width='100px' height='45px' src="+staff+"></center></th><th></th><th><center><img  width='100px' height='45px' src="+principalxx+"></center></th><th></th></tr>"
+
+            sinfnaturs1 +="<tr><th><center>Date</center></th><th></th><th><center>Signature of Class Teacher's</center></th><th></th><th><center>Signature of Principal</center></th><th></th></tr></table><br><br><br><br>";
+
+        var ovaraltemplates1=headers1+pesonalinfo1+scolasticinformation1+coscolasticinformation1+gradingrate1+results1+sinfnaturs1;
+ 
+       var finaloverall1="<div style='position: relative;width:700px;height: auto;border: 5px solid #849FDC;top:50px;left: 3px;'>"+ovaraltemplates1+"</div>";
+  console.log("7");
+ // console.log(finaloverall);
+         htmlToPdf.convertHTMLString(finaloverall1, './app/reportcard/'+global.global.studentpersonalinfo[0].student_name+'.pdf',
+    function (error, success) {
+       if (error) {
+            console.log('Oh noes! Errorz!');
+            console.log(error);
+            logfile.write('pdf write:'+error+"\n\n");
+            res.status(200).json({'returnval': 'error in conversion'}); 
+        } else {
+        //   logfile.write('pdf write:success\n\n');
+          console.log('Converted');
+          res.status(200).json({'returnval': 'converted'});     
+        }
+    });
+ 
+});
+
+app.post('/ntotenoverallvalus-service',  urlencodedParser,function (req,res)
+ {   
+
+var studentid;
+var studentname;
+var fathername;
+var classs;
+var section;
+var dob;
+        var staff="./app/images/"+req.query.staffid+req.query.schoolid+".jpg";
+       var principalxx="./app/images/principal"+req.query.schoolid+".jpg";
+
+     var classs=req.query.classs;
+     var schoolid=req.query.schoolid;
+     var section=req.query.section; 
+     var academicyear=req.query.academicyear;  
+     console.log(schoolid);
+ 
+   for(i=0;i<global.studentpersonalinfo.length;i++){
+    studentid=global.studentpersonalinfo[0].admission_no;
+    studentname=global.studentpersonalinfo[0].student_name;
+    fathername=global.studentpersonalinfo[0].father_name;
+    dob=global.studentpersonalinfo[0].dob;
+   
+   }
+    
+     console.log(studentid);
+     console.log(studentname);
+     console.log(fathername);
+     console.log(dob);
+     console.log(section);
+     console.log(classs);
+
+
+
+        
+        for(var i=0;i<global.assesmentarrs.length;i++){
+          for(var j=0;j<global.masterarrs.length;j++){
+            // alert(assesment[i].term_name+" "+master[j].term_name+" "+assesment[i].assesment_id+" "+master[j].assesment_type+" "+assesment[i].grade+" "+master[j].grade_name+" "+assesment[i].subject_id+" "+master[j].subject_name);
+            if((global.assesmentarrs[i].term_name).toLowerCase()==(global.masterarrs[j].term_name).toLowerCase()&&global.assesmentarrs[i].assesment_id==global.masterarrs[j].assesment_type&&global.assesmentarrs[i].grade==global.masterarrs[j].grade_name&&global.assesmentarrs[i].subject_id==global.masterarrs[j].subject_name){
+              // alert('in');
+              if((global.masterarrs[j].scale_type)=="/")
+               global.assesmentarrs[i].score=parseFloat(parseFloat(global.assesmentarrs[i].total)/parseFloat(global.masterarrs[j].scalar)).toFixed(2);
+              if((global.masterarrs[j].scale_type)=="*")
+               global.assesmentarrs[i].score=parseFloat(parseFloat(global.assesmentarrs[i].total)*parseFloat(global.masterarrs[j].scalar)).toFixed(2);
+              if((global.masterarrs[j].scale_type)=="/*")
+               global.assesmentarrs[i].score=parseFloat((parseFloat(global.assesmentarrs[i].total)/parseFloat(global.assesmentarrs[i].actual_scale))*parseFloat(global.masterarrs[j].scalar)).toFixed(2);
+            }
+          }
+        } 
+
+        // alert(JSON.stringify(assesment));
+        var temparr=[];
+        for(var i=0;i<global.subjectarrs.length;i++){
+          var obj={};
+          obj.subject=global.subjectarrs[i].subject_id;
+          obj.PT1='';
+          obj.NB1='';
+          obj.SEA1='';
+          obj.mark1='';
+          obj.grade1='';
+          obj.PT2='';
+          obj.NB2='';
+          obj.SEA2='';
+          obj.mark2='';
+          obj.grade2='';
+          obj.PT3='';
+          obj.NB3='';
+          obj.SEA3='';
+          obj.mark3='';
+          obj.grade3='';
+          temparr.push(obj);
+        }
+        for(var i=0;i<global.assesmentarrs.length;i++){
+          for(var j=0;j<temparr.length;j++){
+          if(global.assesmentarrs[i].subject_id==temparr[j].subject){
+          if((global.assesmentarrs[i].term_name).toLowerCase()=="quartely"){
+            if((global.assesmentarrs[i].assesment_id).trim()=="Periodic Test1"){
+              temparr[j].MPT1=global.assesmentarrs[i].total;
+              temparr[j].PT1=global.assesmentarrs[i].score;
+            }
+            if((global.assesmentarrs[i].assesment_id).trim()=="Note Book"){
+              temparr[j].MNB1=global.assesmentarrs[i].total;
+              temparr[j].NB1=global.assesmentarrs[i].score;
+            }
+            if((global.assesmentarrs[i].assesment_id).trim()=="SEA1"){
+              temparr[j].MSEA1=global.assesmentarrs[i].total;
+              temparr[j].SEA1=global.assesmentarrs[i].score;
+            }
+          }
+          if((global.assesmentarrs[i].term_name).toLowerCase()=="halfyearly"){
+            if(global.assesmentarrs[i].assesment_id=="Periodic Test2"){
+              temparr[j].MPT1=global.assesmentarrs[i].total;
+              temparr[j].PT1=global.assesmentarrs[i].score;
+            }
+            if(global.assesmentarrs[i].assesment_id=="Note Book"){
+              temparr[j].MNB1=global.assesmentarrs[i].total;
+              temparr[j].NB1=global.assesmentarrs[i].score;
+            }
+            if(global.assesmentarrs[i].assesment_id=="SEA2"){
+              temparr[j].MSEA1=global.assesmentarrs[i].total;
+              temparr[j].SEA1=global.assesmentarrs[i].score;
+            }
+          }
+          if((global.assesmentarrs[i].term_name).toLowerCase()=="preannual"){
+            if(assesment[i].assesment_id=="Periodic Test3"){
+              temparr[j].MPT1=global.assesmentarrs[i].total;
+              temparr[j].PT1=global.assesmentarrs[i].score;
+            }
+            if(global.assesmentarrs[i].assesment_id=="Note Book"){
+              temparr[j].MNB1=global.assesmentarrs[i].total;
+              temparr[j].NB1=global.assesmentarrs[i].score;
+            }
+            if(global.assesmentarrs[i].assesment_id=="SEA3"){
+              temparr[j].MSEA1=global.assesmentarrs[i].total;
+              temparr[j].SEA1=global.assesmentarrs[i].score;
+            }
+          }
+          }
+          }
+          // alert(JSON.stringify(temparr));
+        }
+        // alert(JSON.stringify(temparr));
+        for(var i=0;i<temparr.length;i++){
+          if(temparr[i].MPT1==""||temparr[i].MPT1==null)
+            temparr[i].MPT1=0;
+          if(temparr[i].MNB1==""||temparr[i].MNB1==null)
+            temparr[i].MNB1=0;
+          if(temparr[i].MSEA1==""||temparr[i].MSEA1==null)
+            temparr[i].MSEA1=0;
+          temparr[i].mark1=parseFloat(temparr[i].MPT1)+parseFloat(temparr[i].MNB1)+parseFloat(temparr[i].MSEA1);
+          if(req.query.termname=="halfyearly"){
+          if(temparr[i].MPT1==""||temparr[i].MPT1==null)
+            temparr[i].MPT1=0;
+          if(temparr[i].MNB1==""||temparr[i].MNB1==null)
+            temparr[i].MNB1=0;
+          if(temparr[i].MSEA1==""||temparr[i].MSEA1==null)
+            temparr[i].MSEA1=0;
+          temparr[i].mark1=parseFloat(temparr[i].MPT1)+parseFloat(temparr[i].MNB1)+parseFloat(temparr[i].MSEA1);
+          }
+          if(req.query.termname=="preannual"){
+          if(temparr[i].MPT1==""||temparr[i].MPT1==null)
+            temparr[i].MPT1=0;
+          if(temparr[i].MNB1==""||temparr[i].MNB1==null)
+            temparr[i].MNB1=0;
+          if(temparr[i].MSEA1==""||temparr[i].MSEA1==null)
+            temparr[i].MSEA1=0;
+          temparr[i].mark1=parseFloat(temparr[i].MPT1)+parseFloat(temparr[i].MNB1)+parseFloat(temparr[i].MSEA1);
+          }
+
+          // alert(JSON.stringify(temparr));
+          // for(var i=0;i<temparr.length;i++){
+            for(var j=0;j<global.scaleuparrs.length;j++){
+              if(req.query.grade==global.scaleuparrs[j].grade_name&&temparr[i].subject==global.scaleuparrs[j].subject_name){
+              // alert(localStorage.getItem("curr_sess_grade")+" "+scaleup[j].grade_name+" "+temparr[i].subject+" "+scaleup[j].subject_name);
+              // alert('in  '+temparr[i].mark1+"  "+scaleup[j].tot);
+              temparr[i].mark1=parseFloat((parseFloat(temparr[i].mark1)/parseFloat(global.scaleuparrs[j].tot))*100).toFixed(2);
+              // alert(temparr[i].mark1);
+              }
+            }
+          // }
+ 
+          for(var n=0;n<global.gradearrs.length;n++){
+            if(parseFloat(temparr[i].mark1)>=parseFloat(global.gradearrs[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(global.gradearrs[n].upper_limit))
+              temparr[i].grade1=global.gradearrs[n].grade;
+            if(req.query.termname=="halfyearly"){
+            if(parseFloat(temparr[i].mark1)>=parseFloat(global.gradearrs[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(global.gradearrs[n].upper_limit))
+              temparr[i].grade1=global.gradearrs[n].grade;
+            }
+            if(req.query.termname=="preannual"){
+            if(parseFloat(temparr[i].mark1)>=parseFloat(global.gradearrs[n].lower_limit)&&parseFloat(temparr[i].mark1)<=parseFloat(global.gradearrs[n].upper_limit))
+              temparr[i].grade1=global.gradearrs[n].grade;
+            }
+          }
+        }
+
+    for(var i=0;i<global.coarrsvalus.length;i++){
+          for(var j=0;j<global.gradearrss.length;j++){
+      if(parseFloat(global.coarrsvalus[i].total)>=parseFloat(global.gradearrss[j].lower_limit)&&parseFloat(global.coarrsvalus[i].total)<=parseFloat(global.gradearrss[j].higher_limit))
+              global.coarrsvalus[i].grade=global.gradearrss[j].grade;
+          }
+        }
+        var temp=[];
+        var obj={};
+        for(var i=0;i<global.coarrsvalus.length;i++){
+          if(global.coarrsvalus[i].subject_id=="Discipline"){
+            obj=global.coarrsvalus.splice(i,1);
+             temp.push(obj);
+          }
+        }
+     var headers="<center><h2>REPORT CARD</h2></center>";
+
+         var pesonalinfo="<table ><tr><th style='text-align:left;'>Roll No: </th><th style='text-align: left;'>"+studentid+"</th></tr><tr><th style='text-align: left;'>Student’s Name: </th><th style='text-align: left;'>"+studentname+"</th></tr><tr><th style='text-align: left;'>Mother’s/Father’s/Guardian’s Name: </th><th style='text-align: left;'>"+fathername+"</th></tr><tr><th style='text-align: left;'>Date of birth: </th><th style='text-align: left;'>"+dob+"</th></tr><tr><th style='text-align: left;'>Class/Section: </th><th style='text-align: left;'>"+section+"/"+classs+"</th></tr></table><br><br>";
+
+        var scolasticinformation ="<table class='tab' style='border-collapse: collapse; border: solid 2px;' border='1'><tr><th>Scholastic Areas</th><th colspan='5'><center>"+req.query.termname+"</center></th></tr><tr><th>Subjects</th><th>Periodic Test (10)</th><th>Note Book (5)</th><th>Subject Enrich ment (5)</th><th>Marks Obtained (100)</th><th>Grade</th></tr>"
+       for(var i=0;i<temparr.length;i++)
+           {
+            scolasticinformation +="<tr><td>"+temparr[i].subject+"</td><td>"+temparr[i].PT1+"</td><td>"+temparr[i].NB1+"</td><td>"+temparr[i].SEA1+"</td><td>"+temparr[i].mark1+"</td><td>"+temparr[i].grade1+"</td></tr>"
+           }
+          scolasticinformation +="</table><br><br>";
+
+          var coscolasticinformation="<table class='tab1' style='border-collapse: collapse;' border='1'><tr><th style='text-align: left;'>Co scholastic Areas [on a 5 point A – E grading scale]</th><th style='text-align: left;'>Grade</th></tr>"
+           for(var i=0;i<global.coarrsvalus.length;i++){
+
+            coscolasticinformation +="<tr><td>"+global.coarrsvalus[i].subject_id+"</td><td>"+global.coarrsvalus[i].grade+"</td></tr>";
+           }
+           coscolasticinformation +="</table><br><br>";
+
+          var gradingrate ="<table class='tab1' style='border-collapse: collapse;'border='1'><tr><th style='text-align: left;'>[A - E grading scale]</th><th style='text-align: left;''>Grade</th></tr>"
+              for(var i=0;i<temp.length;i++){
+             gradingrate +="<tr><td>"+temp[i].subject_id+"</td><td>"+temp[i].grade+"</td></tr>"    
+              }
+             
+          
+             gradingrate +="</table><br><br>";
+
+          var results="<table class='tab2'><tr><th style='text-align: left;'>Class Teacher's Remarks</th><th>"+req.query.remark+"</th></tr><tr><th style='text-align: left;'>Result</th><th>"+req.query.result+"</th></tr></table><br><br>";
+
+          var  sinfnaturs ="<table style='width: 650px;margin-left:10px;'> <tr><th><center>"+req.query.date+"</center></th><th></th><th><center><img width='100px' height='45px' src="+staff+"></center></th><th></th><th><center><img  width='100px' height='45px' src="+principalxx+"></center></th><th></th></tr>";
+
+          sinfnaturs +="<tr><th><center>Date</center></th><th></th><th><center>Signature of Class Teacher's</center></th><th></th><th><center>Signature of Principal</center></th><th></th></tr></table><br><br><br><br>";
+
+ var ovaraltemplates=headers+pesonalinfo+scolasticinformation+coscolasticinformation+gradingrate+results+sinfnaturs;
+ 
+ var finaloverall="<div style='position: relative;width:650px;height: auto;border: 5px solid #849FDC;top:50px;left: 10px;'>"+ovaraltemplates+"</div>";
+  console.log("45");
+         htmlToPdf.convertHTMLString(finaloverall, './app/reportcard/'+global.global.studentpersonalinfo[0].student_name+'.pdf',
+
+     
+
+    function (error, success) {
+       if (error) {
+            console.log('Oh noes! Errorz!');
+            console.log(error);
+            logfile.write('pdf write:'+error+"\n\n");
+            res.status(200).json({'returnval': 'error in conversion'}); 
+        } else {
+        //   logfile.write('pdf write:success\n\n');
+          console.log('Converted');
+          res.status(200).json({'returnval': 'converted'});     
+        }
+    });
+  
+});
 app.post('/insertattendance-service',  urlencodedParser,function (req,res)
 {   
   var response={
@@ -12274,12 +12707,13 @@ app.post('/fetchnewformatremark-service',  urlencodedParser,function (req,res)
 
 app.post('/fetchnewformatremark-service1',  urlencodedParser,function (req,res)
 {  
-  var qur="SELECT * FROM tr_term_attendance WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_id='"+req.query.termname+"'";
+ var qur="SELECT * FROM tr_term_attendance WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND student_id='"+req.query.studentid+"' and term_id='"+req.query.termname+"'";
   console.log('----------------------------------------');
   console.log(qur);
   connection.query(qur,function(err, rows){
   if(!err)
   { 
+    global.remarkss=rows;
     res.status(200).json({'returnval': rows});
   }
   else
@@ -12296,6 +12730,7 @@ app.post('/fetchstudinfofornewformat-service',  urlencodedParser,function (req,r
   connection.query(qur,function(err, rows){
   if(!err)
   { 
+    global.studentpersonalinfo=rows;
     res.status(200).json({'returnval': rows});
   }
   else
@@ -12320,17 +12755,21 @@ app.post('/fetchnewformatscholasticsubjects-service',  urlencodedParser,function
   if(!err)
   { 
     assesment=rows;
+    global.assesmentarrs=rows;
     connection.query(scalequr,function(err, rows){
     if(!err)
     {
     master=rows;
+      global.masterarrs=rows;
     connection.query(subqur,function(err, rows){
     if(!err)
     {
+      global.subjectarrs=rows;
     subject=rows;
     connection.query(gradequr,function(err, rows){
     if(!err)
     {
+      global.gradearrs=rows;
     res.status(200).json({'assesment': assesment,'master':master,'subject':subject,'grade':rows});
     }
     });
@@ -12366,22 +12805,28 @@ app.post('/fetchnewformatscholasticsubjects-service1',  urlencodedParser,functio
   connection.query(qur,function(err, rows){
   if(!err)
   { 
+      global.assesmentarrs=rows;
     assesment=rows;
+  
     connection.query(scalequr,function(err, rows){
     if(!err)
     {
     master=rows;
+    global.masterarrs=rows;
     connection.query(subqur,function(err, rows){
     if(!err)
     {
+      global.subjectarrs=rows;
     subject=rows;
     connection.query(gradequr,function(err, rows){
     if(!err)
     {
+      global.gradearrs=rows;
     grade=rows;
     connection.query(scaleup,function(err, rows){
     if(!err)
     {
+      global.scaleuparrs=rows;
     res.status(200).json({'assesment': assesment,'master':master,'subject':subject,'grade':grade,'scaleup':rows});
     }
     else
@@ -12422,9 +12867,11 @@ app.post('/fetchnewformatcoscholasticsubjects1-service',  urlencodedParser,funct
   if(!err)
   { 
     cs=rows;
+    global.coarrsvalus=rows;
     connection.query(qur1,function(err, rows){
     if(!err)
     {
+      global.gradearrss=rows;
     res.status(200).json({'coarr': cs,'gradearr':rows});
     }
     });
@@ -12448,9 +12895,11 @@ app.post('/fetchnewformatcoscholasticsubjects-service',  urlencodedParser,functi
   if(!err)
   { 
     cs=rows;
+    global.coarrsvalus=rows;
     connection.query(qur1,function(err, rows){
     if(!err)
     {
+      global.gradearrss=rows;
     res.status(200).json({'coarr': cs,'gradearr':rows});
     }
     });
@@ -14289,7 +14738,29 @@ app.post('/deleteauditmarks1-service',  urlencodedParser,function (req, res)
   });
 });
 
+app.post('/ninetotenemail-service', urlencodedParser,function (req, res)
+{ 
+     
+    var qur="SELECT * from parent where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studentid+"'";
 
+    console.log("-------------Parent information-----------");
+    console.log(qur);
+
+    connection.query(qur,
+      function(err, rows)
+      {
+        if(!err)
+        {    console.log(rows);
+          res.status(200).json({'returnval': rows});
+        }
+        else
+        {
+          console.log(err);
+          res.status(200).json({'returnval': 'fail'});
+        }  
+
+  });
+});
 
 //Node server running port number
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 5000

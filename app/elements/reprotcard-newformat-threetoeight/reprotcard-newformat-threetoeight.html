@@ -127,6 +127,21 @@
     <paper-button  id='email' class="button" on-click='fnemail'>Email</paper-button>
     </span>
     </div>
+      <div>
+      <paper-dialog id="threetoeightdialog" modal>
+        <div>
+          <paper-input readonly label="Student Name" value="{{studentname}}"></paper-input>
+          <paper-input label="Parent Email" value="{{parentemail}}"></paper-input>
+          <paper-input label="Secondary Email" value="{{secemail}}"></paper-input>
+        </div>
+        <div class='dialogbtncard'>
+          <paper-button style="color: white;background-color: black"  id="close" on-click="FnCancel">Cancel</paper-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <paper-button  style="color: white;background-color: black"  id="close" on-click="FnSendEmail">Send</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+   <reprotcard-newformat-service id="newformatservice"></reprotcard-newformat-service>
+    
   </template>
   <script>
   (function() {
@@ -164,7 +179,16 @@
               document.querySelector('home-page').FnHideView(false);
               this.$.email.hidden=false;
               this.$.print.hidden=false;
-      }
+           },
+         fnemail:function(e){
+          this.$.threetoeightdialog.toggle();
+          this.$.newformatservice.ninetotenemail(this.studentid);
+         },
+       FnSendEmail:function(e){
+         this.$.newformatservice.threetoeightvalues(this.class,this.section,this.remark,this.result,this.date);
+         this.$.threetoeightdialog.toggle();
+
+   },
     });
   })();
   </script>

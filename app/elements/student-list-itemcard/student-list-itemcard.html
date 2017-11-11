@@ -49,7 +49,7 @@
     <onetofour-scorecard-service id="otfscorecardservice"></onetofour-scorecard-service>
     <scorecard-service id="scorecardservice"></scorecard-service>
     <report-service id="reportservice"></report-service>
-    <reprotcard-newformat-service id="newformatservice"></reprotcard-newformat-service>
+       <reprotcard-newformat-service id="newformatservice"></reprotcard-newformat-service>
   </template>
   <script>
   (function() {
@@ -84,10 +84,11 @@
         }
         else{
         if(localStorage.getItem("curr_sess_grade")=="Grade-10"||localStorage.getItem("curr_sess_grade")=="Grade-9"){
-        this.$.newformatservice.fetchstudinfofornewformatService(this.studentid);
-        this.$.newformatservice.fetchnewformatscholasticsubjects1(this.studentid);
-        this.$.newformatservice.fetchnewformatcoscholasticsubjects1(this.studentid);
-        this.$.newformatservice.fetchnewformatremark1(this.studentid);
+          this.$.newformatservice.fetchstudinfofornewformatService(this.studentid);
+          this.$.newformatservice.fetchnewformatremark1(this.studentid);
+          this.$.newformatservice.fetchnewformatcoscholasticsubjects1(this.studentid);
+          this.$.newformatservice.fetchnewformatscholasticsubjects1(this.studentid);
+    
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('newformat-reportcard-nineten','');
         }

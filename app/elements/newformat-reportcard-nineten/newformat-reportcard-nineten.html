@@ -134,10 +134,29 @@
     <paper-button  id='email' class="button" on-click='fnemail'>Email</paper-button>
     </span>
     </div>
+
+    <div>
+      <paper-dialog id="showpopup1" modal>
+        <div>
+          <paper-input readonly label="Student Name" value="{{studentname}}"></paper-input>
+          <paper-input label="Parent Email" value="{{parentemail}}"></paper-input>
+          <paper-input label="Secondary Email" value="{{secemail}}"></paper-input>
+        </div>
+        <div class='dialogbtncard'>
+          <paper-button style="color: white;background-color: black"  id="close" on-click="FnCancel">Cancel</paper-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <paper-button  style="color: white;background-color: black"  id="close" on-click="FnSendEmail">Send</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+   <reprotcard-newformat-service id="newformatservice"></reprotcard-newformat-service>
+
   </template>
   <script>
   (function() {
     'use strict';
+   var globtemparr=[];
+   var globcoarr=[];
+    var globdisarr=[];
     Polymer({
       is: 'newformat-reportcard-nineten',
       FnRefresh:function(){
@@ -151,6 +170,13 @@
         this.remark="";
         this.gradescale="";
         this.date="";
+      },
+      fnoverallvalus:function(arr1,arr2,arr3){
+         globtemparr=arr1;
+         globcoarr=arr2;
+         globdisarr=arr3;
+     
+
       },
       FnSetHeaders:function(){
         document.querySelector('#ntimg1').src="../../images/"+sessionStorage.getItem("curr_sess_loggedid").toUpperCase()+sessionStorage.getItem("curr_sess_loggedschoolid")+".jpg";
@@ -172,7 +198,21 @@
               document.querySelector('home-page').FnHideView(false);
               this.$.email.hidden=false;
               this.$.print.hidden=false;
-      }
+      },
+      fnemail:function()
+      {
+        this.$.showpopup1.toggle();
+        this.$.newformatservice.ninetotenemail(this.studentid);
+      },
+     FnCancel:function()
+      {
+       this.$.showpopup1.toggle();
+      },
+   FnSendEmail:function(e){
+ this.$.newformatservice.ntotenoverallvalus(this.class,this.section,this.remark,this.result,this.date);
+       this.$.showpopup1.toggle();
+
+   },
     });
   })();
   </script>
