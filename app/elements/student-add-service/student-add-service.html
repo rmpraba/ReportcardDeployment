@@ -741,8 +741,8 @@ fnstudentadd:function(enroll,fname,midname,lsname,showdate,age,fathername,mother
         {
           var res=e.detail.response.returnval
           //alert('student');
-          //alert(JSON.stringify(res));
-          if(res=='succ')
+        // alert(JSON.stringify(res));
+          if(res=='Inserted!')
           {
             if(localStorage.getItem("curr_sess_page")=="student-add-card")
               document.querySelector('student-add-card').fnsuccessadd();
@@ -751,7 +751,7 @@ fnstudentadd:function(enroll,fname,midname,lsname,showdate,age,fathername,mother
           }
           else
           {
-            alert('Fail');
+            alert('Already Exits');
           }
         },
   fnparentadd:function(enroll,fathername,fatheremail,fathermob,address1,address2,address3,city,pincode,motheremail,mothername)
@@ -778,7 +778,7 @@ fnstudentadd:function(enroll,fname,midname,lsname,showdate,age,fathername,mother
         {
           var res=e.detail.response.returnval
           //alert('parent');
-          //alert(JSON.stringify(res));
+          // alert(JSON.stringify(res));
         },
 
         fngetgrade:function()
