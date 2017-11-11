@@ -71,7 +71,8 @@
         }
         else
         {   
-        if(localStorage.getItem('curr_sess_academicyear')=='2016-2017'){
+        if(localStorage.getItem('curr_sess_academicyear')=='2016-2017')
+        {
         this.$.scorecardservice.callFetchstudentinfoService(this.studentid);
         this.$.scorecardservice.callFetchsubjectinfoService(this.studentid);
         this.$.otfscorecardservice.callfetchhealthattendanceinfoService(this.studentid);

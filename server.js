@@ -8,8 +8,8 @@ var connection = mysql.createConnection({
   // host     : '5919a4ea89f5cfaf40000031-samsidh.rhcloud.com',
   host :'localhost',
   user     : 'root',
-  password : 'admin',
-  database : 'reportcardcheck'
+  password : '',
+  database : 'reportcardcloud'
   // port     : '62631',
   // user     : 'adminM1qnV1d',
   // password : 'HC2bIf7Sk2LD',
@@ -63,7 +63,7 @@ console.log(logfile);
   // connection.query('select id,role_name from md_role where id in (select role_id from md_employee where ? and ? )',[id,password],
   var qur="select distinct(mr.id),mr.role_name,(select name from md_school where id=me.school_id) as name,me.school_id "+
   "from md_role mr join md_employee me on(mr.id=me.role_id) "+
-  "where me.id='"+req.query.username+"' and password='"+req.query.password+"'";
+  "where me.id='"+req.query.username+"' and me.flage='active' and password='"+req.query.password+"'";
 
   console.log('.............role.....................');
   console.log(qur);
@@ -1962,13 +1962,14 @@ app.post('/fetchstudinfo-service',  urlencodedParser,function (req,res)
   var qur="select s.id,p.student_id,s.student_name,s.dob,p.parent_name,p.mother_name,p.email,p.mobile,p.address1,p.address2,p.address3,p.city,p.pincode,p.alternate_mail "+
   "from md_student s join parent p on(s.id=p.student_id) and s.id='"+req.query.studid+"' and s.school_id='"+req.query.schoolid+"' and s.flag='active' and p.school_id='"+req.query.schoolid+"' and s.academic_year='"+req.query.academicyear+"'";
 
-  //console.log(qur);
+  console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
     if(!err)
     {       
       global.studentinfo=rows; 
+      console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -2400,10 +2401,12 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   var schoolid={school_id:req.query.schoolid};
   var studid={student_id:req.query.studid};  
   var academicyear={academic_year:req.query.academicyear}; 
-  var qur="select * from tr_term_attendance ta join tr_term_health_copy th on(ta.student_id=th.student_id)"+
+  var qur="select * from tr_term_attendance ta join tr_term_health th on(ta.student_id=th.student_id and ta.term_id=th.term_id)"+
   " where ta.student_id='"+req.query.studid+"' "+
-  "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"' and th.school_id='"+req.query.schoolid+"'";
-
+  "and ta.school_id='"+req.query.schoolid+"' and  ta.academic_year='"+req.query.academicyear+"' and th.school_id='"+req.query.schoolid+"' and th.academic_year='"+req.query.academicyear+"'";
+  console.log('----------------------');
+   console.log(qur);
+   console.log('----------------------');
 
   var qur1="select * from tr_term_attendance "+
   " where student_id='"+req.query.studid+"' "+
@@ -2413,12 +2416,13 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   "and school_id='"+req.query.schoolid+"' and  academic_year='"+req.query.academicyear+"' ";
   var attendance=[];
   var health=[];
+
   connection.query(qur,function(err, rows)
     {
       //console.log(qur);
     if(!err)
     {  
-      if(rows.length>0){
+      if(rows.length==0){
       global.healthattendanceinfo=rows;     
       res.status(200).json({'returnval': rows});
       }
@@ -2427,6 +2431,7 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
         connection.query(qur1,function(err, rows){
           // global.healthattendanceinfo=rows; 
           attendance=rows; 
+          console.log(rows);
           connection.query(qur2,function(err, rows){   
           health=rows;
           res.status(200).json({'attendance': attendance,'health': health});
@@ -4092,77 +4097,77 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
           if(global.scholasticinfo[i].subject_name=="English"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;    
             engarr.push(obj);
           }
           if(global.scholasticinfo[i].subject_name=="Mathematics"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
             matharr.push(obj);
           }
           if(global.scholasticinfo[i].subject_name=="EVS"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
             evsarr.push(obj);
           }
           if((global.scholasticinfo[i].subject_name).trim()=="Hindi"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
             hinarr.push(obj);
           }
            if((global.scholasticinfo[i].subject_name).trim()=="Kannada"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
             hinarr.push(obj);
           }
           if((global.scholasticinfo[i].subject_name).trim()=="Computer"){            
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
             comarr.push(obj);            
           }          
           if(global.scholasticinfo[i].subject_name=="GK"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
             gkarr.push(obj);
           }          
@@ -4170,33 +4175,33 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
           if(global.scholasticinfo[i].subject_name=="Art&Craft"){            
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;     
             acarr.push(obj);
           }
           if(global.scholasticinfo[i].subject_name=="music"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
             mdarr.push(obj);
           }
           if(global.scholasticinfo[i].subject_name=="dance"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
             dancearr.push(obj);
           }
@@ -4204,11 +4209,11 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
           if(global.scholasticinfo[i].subject_name=="Games"){
             obj.category=global.scholasticinfo[i].category;
             obj.comment=global.scholasticinfo[i].description;
-            if(global.scholasticinfo[i].term_name=="term1")
+            if(global.scholasticinfo[i].term_name=="Term1")
             obj.t1grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term2")
+            if(global.scholasticinfo[i].term_name=="Term2")
             obj.t2grade=global.scholasticinfo[i].term_cat_grade;
-            if(global.scholasticinfo[i].term_name=="term3")
+            if(global.scholasticinfo[i].term_name=="Term3")
             obj.t3grade=global.scholasticinfo[i].term_cat_grade;
             gamearr.push(obj);
           }
@@ -4216,13 +4221,13 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         if(global.scholasticinfo[i].subject_name=="Personality Development"){ 
           obj.category=global.scholasticinfo[i].category; 
           obj.comment=global.scholasticinfo[i].description;      
-          if(global.scholasticinfo[i].term_name=="term1"){            
+          if(global.scholasticinfo[i].term_name=="Term1"){            
           obj.t1grade=global.scholasticinfo[i].term_cat_grade;
           }
-          if(global.scholasticinfo[i].term_name=="term2"){            
+          if(global.scholasticinfo[i].term_name=="Term2"){            
           obj.t2grade=global.scholasticinfo[i].term_cat_grade;
           }
-          if(global.scholasticinfo[i].term_name=="term3"){            
+          if(global.scholasticinfo[i].term_name=="Term3"){            
           obj.t3grade=global.scholasticinfo[i].term_cat_grade;
           }
           parr.push(obj);          
@@ -4267,110 +4272,110 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
        for(var i=0;i<global.overalltermwisegrade.length;i++){
                   
           if(global.overalltermwisegrade[i].subject_id=="English"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             et1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             et2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             et3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="Mathematics"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             mt1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             mt2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             mt3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="EVS"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             evt1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             evt2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             evt3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="Hindi"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             ht1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             ht2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             ht3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="Kannada"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             ht1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             ht2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             ht3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="Computer"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             ct1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             ct2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             ct3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="GK"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             gt1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             gt2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             gt3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="Art&Craft"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             at1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             at2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             at3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="music"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             mdt1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             mdt2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             mdt3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="dance"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             dant1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             dant2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             dant3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="Games"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             gat1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             gat2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             gat3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
           if(global.overalltermwisegrade[i].subject_id=="Personality Development"){      
-            if(global.overalltermwisegrade[i].term_name=="term1")
+            if(global.overalltermwisegrade[i].term_name=="Term1")
             pdt1=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term2")
+            if(global.overalltermwisegrade[i].term_name=="Term2")
             pdt2=global.overalltermwisegrade[i].grade;
-            if(global.overalltermwisegrade[i].term_name=="term3")
+            if(global.overalltermwisegrade[i].term_name=="Term3")
             pdt3=global.overalltermwisegrade[i].grade;   
             // engarr.push(obj);
           }
@@ -4785,11 +4790,11 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
             obj.grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term1")
+            if(submarks[i].term_name=="Term1")
             obj.t1grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term2")
+            if(submarks[i].term_name=="Term2")
             obj.t2grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term3")
+            if(submarks[i].term_name=="Term3")
             obj.t3grade=submarks[i].category_grade;    
             lsarr.push(obj);
           }
@@ -4799,11 +4804,11 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
             obj.grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term1")
+            if(submarks[i].term_name=="Term1")
             obj.t1grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term2")
+            if(submarks[i].term_name=="Term2")
             obj.t2grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term3")
+            if(submarks[i].term_name=="Term3")
             obj.t3grade=submarks[i].category_grade;    
             wkarr.push(obj);
           }
@@ -4814,11 +4819,11 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
             obj.grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term1")
+            if(submarks[i].term_name=="Term1")
             obj.t1grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term2")
+            if(submarks[i].term_name=="Term2")
             obj.t2grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term3")
+            if(submarks[i].term_name=="Term3")
             obj.t3grade=submarks[i].category_grade;    
             vparr.push(obj);
           }
@@ -4828,11 +4833,11 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
             obj.grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term1")
+            if(submarks[i].term_name=="Term1")
             obj.t1grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term2")
+            if(submarks[i].term_name=="Term2")
             obj.t2grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term3")
+            if(submarks[i].term_name=="Term3")
             obj.t3grade=submarks[i].category_grade;    
             avarr.push(obj);
           }
@@ -4841,11 +4846,11 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
             obj.grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term1")
+            if(submarks[i].term_name=="Term1")
             obj.t1grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term2")
+            if(submarks[i].term_name=="Term2")
             obj.t2grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term3")
+            if(submarks[i].term_name=="Term3")
             obj.t3grade=submarks[i].category_grade;    
             ccarr.push(obj);
           }
@@ -4856,11 +4861,11 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
             obj.category=submarks[i].category;
             obj.comment=submarks[i].description;
             obj.grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term1")
+            if(submarks[i].term_name=="Term1")
             obj.t1grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term2")
+            if(submarks[i].term_name=="Term2")
             obj.t2grade=submarks[i].category_grade;
-            if(submarks[i].term_name=="term3")
+            if(submarks[i].term_name=="Term3")
             obj.t3grade=submarks[i].category_grade;    
             hparr.push(obj);
           }
@@ -4950,7 +4955,7 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
 
     var finalpdf=header+studentprofile+signatures+scholasticvalue;
     // console.log("....................................");
-    // console.log(finalpdf);
+     console.log(finalpdf);
 
     htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
     function (error, success) {
@@ -4987,9 +4992,6 @@ sg.API(request, function(err, response) {
 });
 
  
-
-
-
 
 app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req, res)
 {  
@@ -14519,6 +14521,31 @@ app.post('/deleteauditmarks1-service',  urlencodedParser,function (req, res)
   });
 });
 
+
+
+app.post('/fivetoeightreportemail-service',  urlencodedParser,function (req, res)
+{ 
+ 
+    var qur="SELECT * from parent where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studentid+"'";
+
+    console.log("----------------------------------------");
+    console.log(qur);
+
+    connection.query(qur,
+      function(err, rows)
+      {
+        if(!err)
+        {    
+          res.status(200).json({'returnval': rows});
+        }
+        else
+        {
+          console.log(err);
+          res.status(200).json({'returnval': 'fail'});
+        }  
+
+  });
+});
 
 
 //Node server running port number

@@ -338,10 +338,12 @@
       },
       callFetchstudentinfoService:function(studid)
       {
+
         this.fetchstudinfourl=sessionStorage.getItem("addrinfo")+"/fetchstudinfo-service";
         var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.studid=studid;
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.fetchstudinfoparam=obj;
         this.$.fetchstudinfoajax.generateRequest();
       },
@@ -393,9 +395,13 @@
         if(arr[0].parent_name==null||arr[0].parent_name==""){}
         else
         document.querySelector('cce-fivetoten-score-card').fathername=arr[0].parent_name;
-        if(arr[0].address1==null||arr[0].address1==""||arr[0].address2==null||arr[0].address2==""||arr[0].address3==null||arr[0].address3==""||arr[0].city==null||arr[0].city==""||arr[0].pincode==null||arr[0].pincode==""){}
+        if(arr[0].address1==null||arr[0].address1==""||arr[0].address2==null||arr[0].address2==""||arr[0].address3==null||arr[0].address3==""||arr[0].city==null||arr[0].city==""||arr[0].pincode==null||arr[0].pincode=="")
+        {
+            document.querySelector('cce-fivetoten-score-card').address=arr[0].address1+" "+arr[0].address2+" "+arr[0].address3+" "+arr[0].city+" "+arr[0].pincode;
+        }
         else
-        document.querySelector('cce-fivetoten-score-card').address=arr[0].address1+" "+arr[0].address2+" "+arr[0].address3+" "+arr[0].city+" "+arr[0].pincode;
+          document.querySelector('cce-fivetoten-score-card').address=arr[0].address1+" "+arr[0].address2+" "+arr[0].address3+" "+arr[0].city+" "+arr[0].pincode;
+        
         if(arr[0].mobile==null||arr[0].mobile==""){}
         else
         document.querySelector('cce-fivetoten-score-card').mobileno=arr[0].mobile; 
@@ -406,19 +412,23 @@
       }
         }       
       },
-      callfetchhealthattendanceinfoService:function(studid){
+      callfetchhealthattendanceinfoService:function(studid)
+      {
+        alert(2);
         this.fetchhealthattendanceinfourl=sessionStorage.getItem("addrinfo")+"/fetchhealthattendanceinfo-service";
         var obj={"scoolid":"","studid":""};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.studid=studid;
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.fetchhealthattendanceinfoparam=obj;
         this.$.fetchhealthattendanceinfoajax.generateRequest();
       },
       fetchhealthattendanceinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
-        //alert('s'+JSON.stringify(arr));
+        alert('s'+JSON.stringify(arr));
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard")
         {
+          alert(arr[0].working_days);
         document.querySelector('cce-fivetoten-score-card').term1attendance=arr[0].attendance;
         document.querySelector('cce-fivetoten-score-card').term2attendance=arr[1].attendance;
         document.querySelector('cce-fivetoten-score-card').term1wday=arr[0].working_days;
