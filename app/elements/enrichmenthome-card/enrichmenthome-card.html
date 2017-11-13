@@ -52,8 +52,10 @@
     'use strict';
     Polymer({
       is: 'enrichmenthome-card',
-      // attached:function(){
-      //   if(sessionStorage.getItem("curr_sess_loggedroleid")=="management")
+
+      attached:function(){
+        localStorage.setItem("curr_sess_page","enrichmenthome-card");
+      },
       //     this.nonreport=true;
       //   else
       //     this.nonreport=false;

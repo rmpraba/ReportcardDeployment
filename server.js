@@ -583,6 +583,7 @@ var qur="SELECT * FROM tr_beginner_assesment_marks WHERE school_id='"+req.query.
 
 app.post('/fetchsubjectstudent-service',  urlencodedParser,function (req, res)
 {
+console.log(req.query.langpref);
 if(req.query.langpref=="Second Language"||req.query.langpref=="Third Language")
 {
 var qur="select school_id,student_id as id,student_name,class_id from tr_student_to_subject where class_id="+
@@ -3541,7 +3542,7 @@ app.post('/approvemark-service',  urlencodedParser,function (req, res)
 var checkqur="select grade_id from mp_teacher_grade where "+ 
 "id='"+req.query.loggedid+"' and role_id='co-ordinator'";
 
-var qur1="select *,(select subject_category from md_subject where subject_name=subject) as category from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
+var qur1="select *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subject_id from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
 "and grade in(select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where "+ 
 "id='"+req.query.loggedid+"' and role_id='co-ordinator' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'))";
 
@@ -13595,6 +13596,7 @@ connection.query("SELECT * FROM mp_teacher_grade WHERE id='"+req.query.empid+"' 
 app.post('/fnsetsingleemployee-service', urlencodedParser,function (req,res)
 {  
     var qur="SELECT id, grade_id as gradeid,(select grade_name from md_grade where grade_id=gradeid) as gradename, subject_id as subjectid,(select subject_name from md_subject where subject_id=subjectid) as subjectname ,section_id,class_id FROM mp_teacher_grade where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and flage='active' and id='"+req.query.studid+"' and role_id='subject-teacher'";
+    console.log('**********************Staff mapping starts**********************');
     console.log(qur);
     connection.query(qur,
     function(err, rows)
@@ -13763,16 +13765,18 @@ app.post('/fnlaninfomation-service' , urlencodedParser,function (req, res)
       //var obj={"workingschoolid":"","acadamicyear":"","termids":"","termgrade":"","noofdays":""};
         
 
-    console.log(JSON.stringify(response));
-    var qur="SELECT * FROM tr_student_to_subject WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and grade='"+req.query.gradeidzzsss+"'  and class_id='"+req.query.classid+"' and student_id='"+req.query.studid+"'and flag='active' and lang_pref='Second Language'";
+    console.log(JSON.stringify(response));  
+     var fetchqur="SELECT * FROM md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and grade_id='"+req.query.gradeidzzsss+"' and id='"+req.query.studid+"' and flag='active'";
 
-     var qur1="UPDATE tr_student_to_subject set subject_id='"+req.query.secondlan+"' where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'and class_id='"+req.query.classid+"'and grade='"+req.query.gradeidzzsss+"' and academic_year='"+req.query.academic_year+"' and flag='active' and lang_pref='Second Language'";
    
-
+  connection.query(fetchqur,function(err, rows){
+  if(rows.length>0){
+    response.class_id=rows[0].class_id;
+    var qur="SELECT * FROM tr_student_to_subject WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and grade='"+req.query.gradeidzzsss+"'  and class_id='"+rows[0].class_id+"' and student_id='"+req.query.studid+"'and flag='active' and lang_pref='Second Language'";
+    var qur1="UPDATE tr_student_to_subject set subject_id='"+req.query.secondlan+"' where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"' and class_id='"+rows[0].class_id+"' and grade='"+req.query.gradeidzzsss+"' and academic_year='"+req.query.academic_year+"' and flag='active' and lang_pref='Second Language'";
     console.log(qur);
     console.log(qur1)
-   connection.query(qur,
-    function(err, rows)
+   connection.query(qur,function(err, rows)
     {
     console.log(rows.length);
 
@@ -13801,6 +13805,13 @@ app.post('/fnlaninfomation-service' , urlencodedParser,function (req, res)
         });
         } 
       });
+ }
+ else
+ {
+  console.log(err);
+  res.status(200).json({'returnval': 'No rows'});
+ }
+ });
 });
 
 app.post('/fnlaninfomation1-service' , urlencodedParser,function (req, res)
@@ -13812,22 +13823,27 @@ app.post('/fnlaninfomation1-service' , urlencodedParser,function (req, res)
             class_id:req.query.classid,
             student_id:req.query.studid,
             section:req.query.sectionid,
-            subject_id:req.query.thirdlen,
+            subject_id:req.query.secondlan,
             student_name:req.query.name,
-             flag:'active',
+            flag:'active',
             lang_pref:'Third Language',
+
            }
       //var obj={"workingschoolid":"","acadamicyear":"","termids":"","termgrade":"","noofdays":""};
         
 
-    console.log(JSON.stringify(response));
-      var qur="SELECT * FROM tr_student_to_subject WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and grade='"+req.query.gradeidzzsss+"'  and class_id='"+req.query.classid+"' and student_id='"+req.query.studid+"' and flag='active' and lang_pref='Third Language'";
+    console.log(JSON.stringify(response));  
+     var fetchqur="SELECT * FROM md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and grade_id='"+req.query.gradeidzzsss+"' and id='"+req.query.studid+"' and flag='active'";
 
-      var qur1="UPDATE tr_student_to_subject set subject_id='"+req.query.thirdlen+"' where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"'and class_id='"+req.query.classid+"'and grade='"+req.query.gradeidzzsss+"' and academic_year='"+req.query.academic_year+"' and flag='active' and lang_pref='Third Language'";
+  
+  connection.query(fetchqur,function(err, rows){
+  if(rows.length>0){
+    response.class_id=rows[0].class_id;
+    var qur="SELECT * FROM tr_student_to_subject WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and grade='"+req.query.gradeidzzsss+"'  and class_id='"+rows[0].class_id+"' and student_id='"+req.query.studid+"' and flag='active' and lang_pref='Third Language'";
+    var qur1="UPDATE tr_student_to_subject set subject_id='"+req.query.secondlan+"' where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"' and class_id='"+rows[0].class_id+"' and grade='"+req.query.gradeidzzsss+"' and academic_year='"+req.query.academic_year+"' and flag='active' and lang_pref='Third Language'";
     console.log(qur);
     console.log(qur1)
-   connection.query(qur,
-    function(err, rows)
+   connection.query(qur,function(err, rows)
     {
     console.log(rows.length);
 
@@ -13856,6 +13872,13 @@ app.post('/fnlaninfomation1-service' , urlencodedParser,function (req, res)
         });
         } 
       });
+ }
+ else
+ {
+  console.log(err);
+  res.status(200).json({'returnval': 'No rows'});
+ }
+ });
 });
 
 app.post('/fnacadamicsinfomation-service' , urlencodedParser,function (req, res)
@@ -13876,7 +13899,8 @@ app.post('/fnacadamicsinfomation-service' , urlencodedParser,function (req, res)
     console.log(JSON.stringify(response));
       var qur="SELECT * FROM tr_student_to_subject WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and student_id='"+req.query.studid+"' and flag='active' ";
 
-     var qur1="UPDATE tr_student_to_subject set grade='"+req.query.gradeidzzsss+"',section='"+req.query.sectionid+"', class_id='"+req.query.classid+"'where school_id='"+req.query.schoolid+"'and student_id='"+req.query.studid+"' and academic_year='"+req.query.academic_year+"' and flag='active'";
+     var qur1="UPDATE tr_student_to_subject set grade='"+req.query.gradeidzzsss+"',section='"+req.query.sectionid+"', class_id='"+req.query.classid+"' where school_id='"+req.query.schoolid+"' and student_id='"+req.query.studid+"' and academic_year='"+req.query.academic_year+"' and flag='active'";
+    console.log('******************SECTION TRANSFER STARTS*********************'+"PRECEDURE1");
     console.log(qur);
     console.log(qur1)
     console.log("---------------------");
@@ -13927,6 +13951,7 @@ app.post('/fnacadamicsinfomation3-service' , urlencodedParser,function (req, res
             dob:req.query.date,
             ageinmonth:req.query.ageofyrs,
             flag:'active',
+            school_type:req.query.schooltype
           
            }
       //var obj={"workingschoolid":"","acadamicyear":"","termids":"","termgrade":"","noofdays":""};
@@ -13935,7 +13960,8 @@ app.post('/fnacadamicsinfomation3-service' , urlencodedParser,function (req, res
     console.log(JSON.stringify(response));
       var qur="SELECT * FROM md_student WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and id='"+req.query.studid+"' and flag='active'";
 
-      var qur1="UPDATE md_student set class_id='"+req.query.classid+"',grade_id='"+req.query.gradeidzzsss+"'where school_id='"+req.query.schoolid+"' and id='"+req.query.studid+"' and academic_year='"+req.query.academic_year+"' and flag='active'";
+      var qur1="UPDATE md_student set class_id='"+req.query.classid+"',grade_id='"+req.query.gradeidzzsss+"' where school_id='"+req.query.schoolid+"' and id='"+req.query.studid+"' and academic_year='"+req.query.academic_year+"' and flag='active'";
+   console.log('******************SECTION TRANSFER STARTS*********************'+"PRECEDURE2");
     console.log(qur);
     console.log(qur1)
    connection.query(qur,
@@ -13978,7 +14004,7 @@ app.post('/fnacadamicsinfomation1-service',  urlencodedParser,function (req,res)
     var qur4="Delete from tr_term_assesment_overall_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and term_name='"+req.query.termid+"' and grade='"+req.query.gradenamez+"' and student_id='"+req.query.studid+"' and section='"+req.query.sectionid+"'";
 
     var qur5="Delete from tr_term_assesment_overall_assesmentmarks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and term_name='"+req.query.termid+"' and grade='"+req.query.gradenamez+"' and student_id='"+req.query.studid+"' and section='"+req.query.sectionid+"'";
-    
+    console.log('******************SECTION TRANSFER STARTS*********************'+"PRECEDURE3");
     console.log("---------------------------------");
     console.log(qur3);
     console.log("---------------------------------");
@@ -14024,7 +14050,8 @@ app.post('/fnacadamicsinfomation2-service' ,  urlencodedParser,function (req, re
 {  
    
 var qur="Delete from tr_term_fa_assesment_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and term_name='"+req.query.termid+"' and grade='"+req.query.gradenamez+"' and student_id='"+req.query.studid+"' and section='"+req.query.sectionid+"'"; 
-//console.log(qur);
+
+console.log(qur);
   connection.query(qur,
     function(err, rows)
     {
@@ -14407,7 +14434,7 @@ app.post('/fetchstudentinfo-service', urlencodedParser,function (req,res)
 
 app.post('/fngetstudentallinfo-service',  urlencodedParser,function (req,res)
   {  
-var qur1="SELECT dob ,academic_year,id ,grade_id as gradeid,class_id as classid ,gender, ageinmonth, (select  grade_name from md_grade  where grade_id=gradeid)  as grade_name ,(select UPPER( section_id ) from mp_grade_section  where class_id=classid and  grade_id=gradeid and  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' ) as section_name FROM md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'  and  id='"+req.query.studentid+"'  and flag='active'";
+var qur1="SELECT school_type,dob ,academic_year,id ,grade_id as gradeid,class_id as classid ,gender, ageinmonth, (select  grade_name from md_grade  where grade_id=gradeid)  as grade_name ,(select UPPER( section_id ) from mp_grade_section  where class_id=classid and  grade_id=gradeid and  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' ) as section_name FROM md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'  and  id='"+req.query.studentid+"'  and flag='active'";
 
 var qur2="SELECT * FROM parent where school_id='"+req.query.schoolid+"' and  student_id='"+req.query.studentid+"'";
 

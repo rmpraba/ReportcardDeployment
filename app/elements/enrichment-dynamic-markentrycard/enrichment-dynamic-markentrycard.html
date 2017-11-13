@@ -131,27 +131,16 @@
   </div>
  </div> 
   <paper-input value="{{categorylength}}" hidden></paper-input>
-     
 
-    <beginner-assesment-service id="beginnerservice"></beginner-assesment-service>
+  <beginner-assesment-service id="beginnerservice"></beginner-assesment-service>
   </template>
-    <script type="text/javascript">
-// print('AlaSQL v'+alasql.version)
-// print('Please upload txt, json, csv, tsv, tab, xlsx, xls or html file to see the content')
-var array=[];
-function loadFile(event) {
+  <script type="text/javascript">
+  var array=[];
+  function loadFile(event) {
   alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
-    array=data;
-  
+    array=data;  
   });
-}
-
-/*function print(x){
-alert(JSON.stringify(x,  null, '\t')+"\n\n");
-    document.getElementById('output').textContent += JSON.stringify(x,  null, '\t')+"\n\n";
-        
-
-}*/
+  }
   </script>
   <script type="text/javascript">
   var tableToExcel = (function() {
@@ -177,7 +166,7 @@ alert(JSON.stringify(x,  null, '\t')+"\n\n");
       is: 'enrichment-dynamic-markentrycard',
       ready:function(){
       this.disablesave=true;
-        localStorage.setItem("curr_sess_page","beginner-assesment-lang-markentrysheet");
+        // localStorage.setItem("curr_sess_page","enrichment-dynamic-markentrycard");
         this.centheadr=true;
         this.hidebtndivv=true;
         this.excelheader=true;
@@ -186,19 +175,46 @@ alert(JSON.stringify(x,  null, '\t')+"\n\n");
         fngenrategrade:function(arr){
          tempassesmetarr=arr;
        },
+       FnSave:function(){
+        var temp=[];
+        for(var i=0;i<scorearr.length;i++){
+        var obj={};
+        obj.studentid=scorearr[i].student_id;
+        obj.studentname=scorearr[i].student_name;
+        obj.classid=scorearr[i].class_id;
+        obj.assesmenttype=scorearr[i].assesment_type;
+        obj.gradeid=scorearr[i].grade_id;
+        obj.gradename=scorearr[i].grade_name;
+        obj.subjectid=scorearr[i].subject_id;
+        obj.subjectname=scorearr[i].subject_name;
+        obj.categoryid=scorearr[i].category_id;
+        obj.categoryname=scorearr[i].category_name;
+        obj.subcategoryid=scorearr[i].sub_category_id;
+        obj.subcategoryname=scorearr[i].sub_category_name;
+        obj.value=scorearr[i].score;
+        obj.grade=scorearr[i].grade;
+        obj.level=scorearr[i].level;
+        obj.enrichlevel=scorearr[i].enrichlevel;
+        obj.speedlevel=scorearr[i].speedlevel;
+        obj.comprehensionlevel=scorearr[i].comprehensionlevel;
+        temp.push(obj);
+        }       
+        // alert(JSON.stringify(temp)); 
+        document.querySelector("beginner-assesment-card").FnToggleSpinner(true);
+        this.$.beginnerservice.callbamarkinsertService(temp);
+        // alert(JSON.stringify(scorearr));
+        // alert("Mark entry for this section completed!");
+      },
         FnClick:function(){
         var temp=[];
         // alert(JSON.stringify(array));
        if(array.length==0){
         alert("Pls save the file in EXCEL WORKBOOK extension!");
-       document.getElementById("readfile").value = "";
+        document.getElementById("readfile").value = "";
        }
-
-       else{
- 
+       else{ 
         for(var i=0;i<array.length;i++){
              if(JSON.stringify({})==JSON.stringify(array[i])){
-
              }
          else{
         var setarr=[];
@@ -232,13 +248,14 @@ alert(JSON.stringify(x,  null, '\t')+"\n\n");
                      alert("Pls import the corrcet file name");
                      document.getElementById("readfile").value = "";
                      }}}}}
+           document.querySelector("beginner-assesment-card").FnToggleSpinner(true);
            this.$.beginnerservice.callbamarkinsertService(temp);
            temp=[];
            array=[];
            document.getElementById("readfile").value = "";
          this.categorylength="";
-   }
-},
+       }
+      },
       FnSetGrade:function(arr,detail){
         gradearr=arr;
         detailarr=detail;
@@ -431,7 +448,7 @@ alert(JSON.stringify(x,  null, '\t')+"\n\n");
           overall.push(obj);
         }
         this.studarr=overall;
-        alert(JSON.stringify(overall));
+        // alert(JSON.stringify(overall));
         for(var i=0;i<overall.length;i++){
           for(var j=0;j<overall[i].category.length;j++){
             for(var k=0;k<scorearr.length;k++){
@@ -489,8 +506,7 @@ alert(JSON.stringify(x,  null, '\t')+"\n\n");
         obj.enrichlevel=arr[i].enrichlevel;
         temp.push(obj);
         }
-        this.temp=temp;
-        
+        this.temp=temp;        
         // this.$.edmeic.FnSetInfoArray(temp);
       },
       getdynamichead:function()
@@ -504,7 +520,7 @@ alert(JSON.stringify(x,  null, '\t')+"\n\n");
         this.hidebtndivv=true;
       },
        excelmark:function(e)
-    {
+      {
       if(enrtchk.checked==true)
       {
         this.centheadr=false;
@@ -528,7 +544,7 @@ alert(JSON.stringify(x,  null, '\t')+"\n\n");
     },
     fnhideexcelbox:function()
     {
-     this.$.enrichck1.hidden=true;
+     this.$.enrichck1.hidden=false;
     },
     fnviewexcelbox:function()
     {

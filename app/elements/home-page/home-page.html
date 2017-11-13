@@ -689,20 +689,20 @@
       this.page="teacherhomecard";
       document.querySelector('teacherhome-card').FnRefresh();
     }
-    if(localStorage.getItem("curr_sess_page")=="beginner-assesment-lang-markentrysheet")
-    {
+    // if(localStorage.getItem("curr_sess_page")=="beginner-assesment-lang-markentrysheet")
+    // {
       
-      this.page="enrichmenthome-card";
-       document.querySelector('enrichmenthome-card').FnRefresh();
-       document.querySelector('beginner-assesment-card').FnRefresh();
-    }
-     if(localStorage.getItem("curr_sess_page")=="beginner-assesment-markentrysheet")
-    {
+    //   this.page="enrichmenthome-card";
+    //    document.querySelector('enrichmenthome-card').FnRefresh();
+    //    document.querySelector('beginner-assesment-card').FnRefresh();
+    // }
+    //  if(localStorage.getItem("curr_sess_page")=="beginner-assesment-markentrysheet")
+    // {
       
-      this.page="enrichmenthome-card";
-       document.querySelector('enrichmenthome-card').FnRefresh();
-       document.querySelector('beginner-assesment-card').FnRefresh();
-    }
+    //   this.page="enrichmenthome-card";
+    //    document.querySelector('enrichmenthome-card').FnRefresh();
+    //    document.querySelector('beginner-assesment-card').FnRefresh();
+    // }
      if(localStorage.getItem("curr_sess_page")=="consolidatedreport")
     {
       
@@ -1035,6 +1035,7 @@ if(localStorage.getItem("curr_sess_page")=="evaluation-report-card")
      document.querySelector('teacherhome-card').FnRefresh();
      document.querySelector('single-employee-grade-card').fnclear2();
       }
+      localStorage.setItem("curr_sess_page",this.page);
   },
 
   FnsetTitle:function(title){

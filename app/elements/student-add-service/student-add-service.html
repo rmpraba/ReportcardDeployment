@@ -80,7 +80,7 @@
         on-response="deletestudentinfoResponse"
         debounce-duration="300">
       </iron-ajax>
-<iron-ajax
+      <iron-ajax
         method="post"
         id="deletestudtermmarksajax"
         url="{{deletestudtermmarksurl}}"
@@ -579,6 +579,7 @@ fnstudnameinfo:function(fname,lsname,midname,studid,gradename,gradeid,classid,se
                obj.gradenamez=gradenamez;
                obj.classid=classid;
                obj.sectionid=sectionid;
+               // alert(classid+" "+sectionid);
                obj.secondlan=secondlan;
                obj.name=name;
                this.fnlaninfomationparam=obj;
@@ -642,7 +643,7 @@ fnlaninfomation1Response:function(e)
           var res=e.detail.response.returnval;
           document.querySelector('student-information-card').parentsubmitinfo();
         },
- fnacadamicsinfomation3:function(studid,gradeidzzsss,gradenamez,classid,sectionid,termid,name,date,gender,ageofyrs)
+ fnacadamicsinfomation3:function(studid,gradeidzzsss,gradenamez,classid,sectionid,termid,name,date,gender,ageofyrs,schooltype)
            {  
        this.fnacadamicsinfomation3url=sessionStorage.getItem("addrinfo")+"/fnacadamicsinfomation3-service";
                var obj={};
@@ -659,14 +660,14 @@ fnlaninfomation1Response:function(e)
                obj.sectionid=sectionid;
                obj.termid=termid;
                obj.name=name;
+               obj.schooltype=schooltype;
               this.fnacadamicsinfomation3param=obj;
                //alert(JSON.stringify(obj));
         this.$.fnacadamicsinfomation3ajax.generateRequest();
      },
      fnacadamicsinfomation3Response:function(e)
         {
-          var res=e.detail.response.returnval;
-         
+          var res=e.detail.response.returnval;        
         },
       fnacadamicsinfomation1:function(studid,gradeidzzsss,gradenamez,classid,sectionid,termid){
              this.fnacadamicsinfomation1url=sessionStorage.getItem("addrinfo")+"/fnacadamicsinfomation1-service";
@@ -701,7 +702,7 @@ fnacadamicsinfomation1Response:function(e)
                obj.sectionid=sectionid;
                obj.termid=termid;
               this.fnacadamicsinfomation2param=obj;
-               //alert(JSON.stringify(obj));
+               // alert(JSON.stringify(obj));
  this.$.fnacadamicsinfomation2ajax.generateRequest();
       },
 fnacadamicsinfomation2Response:function(e)
@@ -836,6 +837,9 @@ fngetinfosectionerrdilalogResponse:function(e){
         //alert(JSON.stringify(res));
         //alert(JSON.stringify(res1));
 if(res!="empty"){
+if(res.length>0){
+  document.querySelector('student-information-card').termarrinfonatioid=false;
+}
 document.querySelector('student-information-card').termarr=res;
 document.querySelector('student-information-card').termarrinformation1();  
 }
@@ -847,8 +851,12 @@ document.querySelector('student-information-card').termarrinfonatioid=true;
 }
 
 
-  if(res1!="empty")
+  if(res1!="empty"){
+     if(res1.length>0){
+  document.querySelector('student-information-card').langinfomationid=false;
+}
       document.querySelector('student-information-card').langdialogarr=res1;  
+    }
   else
       document.querySelector('student-information-card').langinfomationid=true;  
   },
@@ -941,7 +949,7 @@ fetchstudentinfoResponse:function(e)
         var res1=e.detail.response.langarr;
         var res2=e.detail.response.parentarr;
         
-        
+      if(res2.length>0){ 
       document.querySelector('student-information-card').fathername1=res2[0].parent_name;
 
       document.querySelector('student-information-card').mothername1=res2[0].mother_name;
@@ -952,16 +960,20 @@ fetchstudentinfoResponse:function(e)
       document.querySelector('student-information-card').mothermob=res2[0].mother_mobile;
       document.querySelector('student-information-card').city=res2[0].city;
       document.querySelector('student-information-card').pincode=res2[0].pincode;
+      }
       //document.querySelector('student-information-card').fname=res[0].student_name;
      
       //document.querySelector('student-information-card').ageofyrs=res[0].ageinmonth;
       document.querySelector('student-information-card').academicyear=localStorage.getItem("curr_sess_academicyear"); 
+      if(res.length>0){
+        document.querySelector('student-information-card').schooltype=res[0].school_type;
       document.querySelector('student-information-card').gradeidzzsss=res[0].gradeid;
        document.querySelector('student-information-card').gradeidzzsss1=res[0].gradeid;
        document.querySelector('student-information-card').gradeidnames=res[0].grade_name;
       document.querySelector('student-information-card').classid=res[0].classid;
          document.querySelector('student-information-card').classidszz=res[0].classid;
        document.querySelector('student-information-card').sectionnames=res[0].section_name;  
+      }
          if(res1.length==1){
  //document.querySelector('student-information-card').hidestudentinfolangid=true;
 
@@ -970,7 +982,7 @@ fetchstudentinfoResponse:function(e)
          if(res1.length==2){
  //document.querySelector('student-information-card').hidestudentinfolangid=false;
          document.querySelector('student-information-card').secondlan=res1[0].subject_id;
-      document.querySelector('student-information-card').thirdlen=res1[1].subject_id;
+        document.querySelector('student-information-card').thirdlen=res1[1].subject_id;
          }
 },
 
