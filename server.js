@@ -3,21 +3,25 @@ var mysql      = require('mysql');
 var email   = require("emailjs/email");
 var htmlToPdf = require('html-to-pdf');
 var fs = require('fs');
+var AWS = require('aws-sdk');
+// var fs = require('fs');
 var dbserver_ip_address = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1'
 var connection = mysql.createConnection({
   // host     : '5919a4ea89f5cfaf40000031-samsidh.rhcloud.com',
   host :'localhost',
   user     : 'root',
-  password : '',
-  database : 'reportcardnew'
-
-
+  password : 'admin',
+  database : 'reportcardcheck' 
+  // port     : '62631',
+  // user     : 'adminM1qnV1d',
+  // password : 'HC2bIf7Sk2LD',
+  // database : 'scorecarddb'
 });
-
 
 var bodyParser = require('body-parser'); 
 var app = express();
 var logfile;
+AWS.config.loadFromPath('app/credential.json');
 
 app.use(express.static('app'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -2327,9 +2331,10 @@ app.post('/fetchcocurricularmark-service',  urlencodedParser,function (req,res)
             res.status(200).json({'returnval': 'error in conversion'}); 
         } else {
         //   logfile.write('pdf write:success\n\n');
-          console.log('Converted');
-          res.status(200).json({'returnval': 'converted'});     
-        }
+        console.log('Converted');
+ 
+    res.status(200).json({'returnval': 'converted'});     
+    }
     });
  
 });
@@ -4479,37 +4484,37 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         var img1="./app/images/"+req.query.loggedid+req.query.schoolid+".jpg";
         var img2="./app/images/principal"+req.query.schoolid+".jpg";
 
-        console.log('.........................healthattendanceinfo....................................');
-        console.log(global.healthattendanceinfo.length);
-        console.log('.................................................................................');
+        // console.log('.........................healthattendanceinfo....................................');
+        // console.log(global.healthattendanceinfo.length);
+        // console.log('.................................................................................');
 
-        if(global.healthattendanceinfo.length==1||global.healthattendanceinfo.length==2||global.healthattendanceinfo.length==3){
-        adterm1=global.healthattendanceinfo[0].attendance;
-        wdterm1=global.healthattendanceinfo[0].working_days;
-        pterm1=parseFloat((global.healthattendanceinfo[0].attendance/global.healthattendanceinfo[0].working_days)*100).toFixed(2)+"%";
-        t1height=global.healthattendanceinfo[0].height+"cm";
-        t1weight=global.healthattendanceinfo[0].weight+"kg"; 
-        generic=global.healthattendanceinfo[0].generic; 
-        specific=global.healthattendanceinfo[0].speccomment;        
-        }
-        if(global.healthattendanceinfo.length==2){
-        adterm2=global.healthattendanceinfo[1].attendance;
-        wdterm2=global.healthattendanceinfo[1].working_days;
-        pterm2=parseFloat((global.healthattendanceinfo[1].attendance/global.healthattendanceinfo[1].working_days)*100).toFixed(2)+"%";
-        t2height=global.healthattendanceinfo[1].height+"cm";
-        t2weight=global.healthattendanceinfo[1].weight+"kg";
-        generic=global.healthattendanceinfo[1].generic; 
-        specific=global.healthattendanceinfo[1].speccomment; 
-        }
-        if(global.healthattendanceinfo.length==3){
-        adterm3=global.healthattendanceinfo[2].attendance; 
-        wdterm3=global.healthattendanceinfo[2].working_days;
-        pterm3=parseFloat((global.healthattendanceinfo[2].attendance/global.healthattendanceinfo[2].working_days)*100).toFixed(2)+"%";
-        t3height=global.healthattendanceinfo[2].height+"cm";
-        t3weight=global.healthattendanceinfo[2].weight+"kg";
-        generic=global.healthattendanceinfo[2].generic; 
-        specific=global.healthattendanceinfo[2].speccomment; 
-        }
+        // if(global.healthattendanceinfo.length==1||global.healthattendanceinfo.length==2||global.healthattendanceinfo.length==3){
+        // adterm1=global.healthattendanceinfo[0].attendance;
+        // wdterm1=global.healthattendanceinfo[0].working_days;
+        // pterm1=parseFloat((global.healthattendanceinfo[0].attendance/global.healthattendanceinfo[0].working_days)*100).toFixed(2)+"%";
+        // t1height=global.healthattendanceinfo[0].height+"cm";
+        // t1weight=global.healthattendanceinfo[0].weight+"kg"; 
+        // generic=global.healthattendanceinfo[0].generic; 
+        // specific=global.healthattendanceinfo[0].speccomment;        
+        // }
+        // if(global.healthattendanceinfo.length==2){
+        // adterm2=global.healthattendanceinfo[1].attendance;
+        // wdterm2=global.healthattendanceinfo[1].working_days;
+        // pterm2=parseFloat((global.healthattendanceinfo[1].attendance/global.healthattendanceinfo[1].working_days)*100).toFixed(2)+"%";
+        // t2height=global.healthattendanceinfo[1].height+"cm";
+        // t2weight=global.healthattendanceinfo[1].weight+"kg";
+        // generic=global.healthattendanceinfo[1].generic; 
+        // specific=global.healthattendanceinfo[1].speccomment; 
+        // }
+        // if(global.healthattendanceinfo.length==3){
+        // adterm3=global.healthattendanceinfo[2].attendance; 
+        // wdterm3=global.healthattendanceinfo[2].working_days;
+        // pterm3=parseFloat((global.healthattendanceinfo[2].attendance/global.healthattendanceinfo[2].working_days)*100).toFixed(2)+"%";
+        // t3height=global.healthattendanceinfo[2].height+"cm";
+        // t3weight=global.healthattendanceinfo[2].weight+"kg";
+        // generic=global.healthattendanceinfo[2].generic; 
+        // specific=global.healthattendanceinfo[2].speccomment; 
+        // }
 
         var engarr=[];
         var matharr=[];
@@ -4824,7 +4829,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
     var studinfo= "<table class='studentinfo' style='border-collapse: collapse;width:95%;height: 10%;margin-left: 3%;margin-top: 5%;'><tr><th align='left'>Student Name: </th>"
     studinfo += "<th align='left' colspan='3' style='background-color: white;'>"+global.studentinfo[0].student_name+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr>"
     studinfo += "<th align='left'>Parent Name: </th><th align='left' colspan='3' style='background-color: white;'>"+global.studentinfo[0].parent_name+"</th></tr><tr style='height: 10px;'><th colspan='4'></th></tr><tr><th align='left'>Class: </th>";    
-    studinfo += "<th align='left' style='background-color: white;'>"+global.healthattendanceinfo[0].grade+"&nbsp;&nbsp;"+global.healthattendanceinfo[0].section+"</th><th align='left'>Admission No: </th><th align='left' style='background-color: white;'>"+global.studentinfo[0].student_id+"</th></tr></table> <br><br><br>";
+    studinfo += "<th align='left'>Admission No: </th><th align='left' style='background-color: white;'>"+global.studentinfo[0].student_id+"</th></tr></table> <br><br><br>";
      
     var attendance= "<table style='border-collapse: collapse;width:95%;height: 15%; margin-left: 3%;margin-top: 5%;' class='attendance'><tr><th style='width: 25%;'>Attendance</th><th colspan='2' style='width: 25%;'>Term1</th><th colspan='2' style='width: 25%;'>Term2</th><th colspan='2' style='width: 25%;'>Term3</th></tr>"
     attendance += "<tr style='height: 10px;'><th colspan='7'></th></tr><tr><td style='width: 25%;'>Total Attended Days</td><td align='right' style='width: 13%;'>"+adterm1+"</td>"
@@ -5002,7 +5007,21 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         } else {
           logfile.write('pdf write:success\n\n');
           console.log('Converted');
-          res.status(200).json({'returnval': 'converted'});     
+          // res.status(200).json({'returnval': 'converted'});     
+  fs.readFile('./app/reportcard/'+global.studentinfo[0].student_name+'.pdf', function (err, data) {
+  if (err) { throw err; }
+  var base64data = new Buffer(data, 'binary');
+  var s3 = new AWS.S3();
+  s3.putObject({
+    Bucket: 'samsidh-helpdesk',
+    Key: 'reportcard.pdf',
+    Body: base64data
+  },function (resp) {
+    console.log(arguments);
+    console.log('Successfully uploaded package.');
+    res.status(200).json({'returnval': 'converted'});   
+  });
+  });    
         }
     });
 });
@@ -5322,12 +5341,7 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
      studentprofile+="<tr ><th>Mother's Name</th><th>:</th><th>"+global.studentinfo[0].mother_name+"</th></tr><tr > <th>Father's Name </th><th>:</th><th>"+global.studentinfo[0].parent_name+"</th></tr>"
      studentprofile+="<tr rowspan='2'><th>Residential Address </th><th>:</th><th>"+global.studentinfo[0].address1+" "+global.studentinfo[0].address2+" "+global.studentinfo[0].address3+" "+global.studentinfo[0].city+" "+global.studentinfo[0].pincode+"</th></tr><tr><th>Telephone No </th><th>:</th><th>"+global.studentinfo[0].mobile+"</th></tr></table>"  
      studentprofile+="<table class='attable' style='position: relative;text-align: left;top:150px;width: 700px;left: 50px;'><tr height='25px'><th width='250px'>Attendance:</th><th colspan='3'>Term1</th><th colspan='3'>Term2</th></tr>"
-     studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+"global.healthattendanceinfo[0].attendance"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].attendance"+"</th></tr>"
-     studentprofile+="<tr height='25px'><th> Total Working Days</th><th colspan='7'>"+"global.healthattendanceinfo[0].working_days"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].working_days"+"</th></tr></table>"
-     studentprofile+="<br><br><table class='health' style=' position: relative;text-align: left;top:150px;width: 750px;left: 50px;border: 1px solid black;'><tr height='20px'><th colspan='3'> Health Status</th><th colspan='3'></th><th colspan='3'></th></tr>"
-     studentprofile+="<tr></tr><tr height='22px'><th colspan='3'>Height </th><th>"+"global.healthattendanceinfo[0].height"+"</th><th colspan='7'>Weight </th><th>"+"global.healthattendanceinfo[0].width"+"</th><th colspan='3'></th></tr>"
-     studentprofile+="<tr height='25px'><th colspan='3'>Blood Group </th><th>"+"global.healthattendanceinfo[0].blood_group"+"</th><th colspan='7'>Vision(L) </th><th>"+"global.healthattendanceinfo[0].left_vision"+"</th><th colspan='3'>(R) </th><th>"+"global.healthattendanceinfo[0].right_vision"+"</th></tr>"
-     studentprofile+="<tr height='25px'><th colspan='3'>Dental Hygiene </th><th>"+"global.healthattendanceinfo[0].dental"+"</th><td colspan='7'></td><td colspan='3'></td></tr></table><br><br><br><br><br><br><br><br><br>";
+     studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+"global.healthattendanceinfo[0].attendance"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].attendance"+"</th></tr>";
 
  var signatures="<table  class='signature' style='margin-left: 20%;'><tr><th><img id='img1' width='100px;height:30px;''></th><th></th><th></th><th><img id='img2' width='130px;height:40px;'></th><th></th><th></th><th></th></tr>"
     signatures+="<tr><th>---------------------------------</th><th></th><th></th><th>---------------------------------</th><th></th><th></th>"
