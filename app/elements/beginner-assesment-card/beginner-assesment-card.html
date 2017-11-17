@@ -34,6 +34,15 @@
       --paper-input-container-label: { color: red };
       text-align:center;
       }
+      .spinner{
+      margin-left: 50%;            
+      }
+    #dynamicspinner{
+      margin: 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+    }
     </style>
     <div class='card'>     
     <div class='drop'>      
@@ -63,13 +72,11 @@
               <template is="dom-repeat" items="{{subjectarr}}">
                 <paper-item value="{{item.subject_id}}">{{item.subject_name}}</paper-item>
               </template>
-              <!-- <paper-item value="English">English</paper-item> -->
-              <!-- <paper-item value="Mathematics">Mathematics</paper-item> -->
-              <!-- <paper-item value="EVS">EVS</paper-item> -->
             </paper-menu>
           </paper-dropdown-menu>        
      </div>
     </div>
+    <div class="spinner"><paper-dialog modal id="dynamicspinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
     <component-service id="componentservice"></component-service>
   </template>
@@ -83,17 +90,21 @@
       ready:function(){
         this.flag=0;
         this.hidesheet=true;
-             localStorage.setItem("curr_sess_page","beginner-assesment-card");    },                               
+        localStorage.setItem("curr_sess_page","beginner-assesment-card"); 
+      },  
+      FnToggleSpinner:function(flag){
+        this.$.dynamicspinner.opened=flag;
+      },                             
       FnSelectAssesment:function(e){
         assesmentname = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_assesmentname",assesmentname);
         if(this.flag==1){
-              document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
+        document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
         document.querySelector('#gradenamrrrrr').selected=-1;
         document.querySelector('#sectionnamnnnnn').selected=-1;
         document.querySelector('#subjectnamttttt').selected=-1;
-         document.querySelector('enrichment-dynamic-markentrycard').fullrefresh();
-         document.querySelector('enrichment-dynamic-markentrycard').fnhideexcelbox();
+        document.querySelector('enrichment-dynamic-markentrycard').fullrefresh();
+        document.querySelector('enrichment-dynamic-markentrycard').fnhideexcelbox();
         this.$.bassesmentservice.callEnrichmentSubjectService(assesmentname,gradename);    
         // this.FnServiceCall(); 
         }
@@ -102,7 +113,7 @@
         academicyear = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_academicyear",academicyear);
         if(this.flag==1){
-document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
+        document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
         this.$.bassesmentservice.callEnrichmentSubjectService(assesmentname,gradename);    
         // this.FnServiceCall(); 
         }

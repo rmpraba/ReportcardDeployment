@@ -175,7 +175,7 @@
       },
       fetchstudinfoResponse:function(e){        
         var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));       
+        alert(JSON.stringify(arr));       
         if(localStorage.getItem("curr_sess_grade")=="Grade-1"||localStorage.getItem("curr_sess_grade")=="Grade-2"||localStorage.getItem("curr_sess_grade")=="Grade-3"||localStorage.getItem("curr_sess_grade")=="Grade-4"){
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Scorecard"){          
         document.querySelector('cce-onetofour-score-card').enrno=arr[0].student_id;
@@ -1010,9 +1010,9 @@
         this.$.mailreportcardajax.generateRequest();
       },
       mailreportcardResponse:function(e){
-        // alert(e.detail.response.returnval);
+        alert(e.detail.response.returnval);
         if(e.detail.response.returnval=='converted'){
-          this.sendmailService();
+          // this.sendmailService();
         }
       },
       sendmailService:function(){

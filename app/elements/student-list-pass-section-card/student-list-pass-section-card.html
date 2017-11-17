@@ -45,8 +45,7 @@
           <paper-input  hidden>{{classid}}</paper-input>
           <paper-input  hidden>{{noofstudent}}</paper-input>
           <div hidden$="{{hideinput}}">{{sectionname}}</div>
-          <paper-checkbox  hidden$="{{hidecheck}}" on-change="fnsudentGrade" id="{{id}}" checked="{{check}}">
-          </paper-checkbox>     
+         <paper-checkbox  hidden$="{{hidecheck}}" on-change="fnsudentGrade" id="{{id}}" checked="{{check}}"></paper-checkbox>     
         <div class="outcard">  
          <paper-dialog id="noofstudent1" modal>
          <center>
@@ -55,17 +54,16 @@
          </center>
            
         </paper-dialog>
-                 <!-- </div> -->
+              
       <paper-dialog id="empremapid11" modal>
         <b><label  id="labelid">Already assigned student for this subject, Cannot undo
         </label></b>
              <template is="dom-repeat" items="{{dbsectionvalue}}" as="view">
-                  <h4 style="margin-left: 2%"> * {{view.subjectid}}</h4>
+               <h4 style="margin-left: 2%"> * {{view.subjectid}}</h4>
            </template>
      <div class="buttons">
-       <paper-button  on-click="FnSubmit">Submit</paper-button>
-       <paper-button dialog-confirm autofocus  on-click="fncancal">OK
-          </paper-button>
+     <paper-button  on-click="FnSubmit">Submit</paper-button>
+   <paper-button dialog-confirm autofocus  on-click="fncancal">OK</paper-button>
        </div>
      </paper-dialog>
      
@@ -263,6 +261,7 @@ this.thirdlangrefreturl=sessionStorage.getItem("addrinfo")+"/thirdlangrefret-ser
     
         },   
          studentcheckinfo1:function(arr){
+          // alert(JSON.stringify(arr));
        studentcheckinfoarr=arr;
        },
        f11:function(e){
@@ -303,11 +302,14 @@ var obj={"id":"","school_id":"","gradeid":"","classid":"","academic_year":""};
       this.thirdlangrefret11param=obj;
       this.$.thirdlangrefret11ajax.generateRequest();
     },     
-   overallinfo:function(e){
-      for(var i=0;i<paspstuinfo.length;i++){
-               var empty=paspstuinfo[i].enq_id;
-              document.querySelector('#'+empty).checked=false;           
-             }
+   overallinfo:function(e)
+   {
+ 
+      for(var i=0;i<paspstuinfo.length;i++)
+      {
+        var empty=paspstuinfo[i].enq_id;
+        document.querySelector('#'+empty).checked=false;           
+      }
 
     var obj={"id":"","student_name":"","dob":"","gender":"","enq_id":"","classid":"",};
             obj.id=this.admissinno;
@@ -344,17 +346,6 @@ var obj={"id":"","school_id":"","gradeid":"","classid":"","academic_year":""};
         }
      },
 
-     fnsaveinput:function()
-     {
-      if(paspstuinfo.length!=0)
-      {
-        document.querySelector('Student-to-section-mapping-card').fnsavezz();
-      }
-      else
-      {
-        document.querySelector('Student-to-section-mapping-card').fnnoinput();
-      }
-     }
 
     });
   })();  

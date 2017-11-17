@@ -238,6 +238,7 @@
          obj.subject=subject;
          obj.subjectid=localStorage.getItem("curr_sess_subjectid");
          obj.langpref=localStorage.getItem("curr_sess_languagepref");
+         // alert(localStorage.getItem("curr_sess_languagepref"));
          this.fetchsubjectstudentparam= obj;
          this.$.fetchsubjectstudentajax.generateRequest();        
       },

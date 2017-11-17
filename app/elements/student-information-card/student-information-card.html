@@ -144,7 +144,7 @@
 <button style="color:white;background-color:black;width: 13%;border-radius: 27%;" on-click="fnpesonal">Personal information</button>
 </span> 
 <span class="colapsinfo" id="colapsinfoid3">
-<button style="color:white;background-color:black;width: 13%;border-radius: 27%;" on-click="fnacademic">Section Transfer</button>
+<button style="color:white;background-color:black;width: 13%;border-radius: 27%;" on-click="fnacademic">Section Mapping/Transfer</button>
 </span>
 <span class="colapsinfo" id="colapsinfoid4">
 <button style="color:white;background-color:black;width: 13%;border-radius: 27%;" on-click="fnlanguage">language Mapping</button>
@@ -362,7 +362,7 @@
             <paper-button style="background-color:black;color:white" on-click="fnsetsubmit" dialog-confirm autofocus>Cancel</paper-button>
          </center>
         </paper-dialog>
-       
+<paper-input  hidden  value="{{schooltype}}"></paper-input>       
 <paper-input  hidden  value="{{classidszz}}"></paper-input>
 <paper-input  hidden value="{{sectionnames}}"></paper-input>
 <paper-input  hidden value="{{gradeidnames}}"></paper-input>
@@ -425,7 +425,7 @@ var dobdate;
   if(this.gradenamez=='Nursery'||this.gradenamez=='Junior KG'||this.gradenamez=='Senior KG'||this.gradenamez=='Grade-1'||this.gradenamez=='Grade-2'||this.gradenamez=='Grade-3'||this.gradenamez=='Grade-4'){
     this.langprefs="Second Language";
 this.$.studservice.fnacadamicsinfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.langprefs);
-this.$.studservice.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs);
+this.$.studservice.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.schooltype);
 this.$.studservice.fnacadamicsinfomation1(this.studid,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames,this.termid);
 this.$.studservice.fetchstudentremove();
 
@@ -434,7 +434,7 @@ this.$.studservice.fetchstudentremove();
       this.langprefs="Third Language";
      // alert(this.langprefs);
     this.$.studservice.fnacadamicsinfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.langprefs);
-    this.$.studservice.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs);
+    this.$.studservice.fnacadamicsinfomation3(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.schooltype);
     this.$.studservice.fnacadamicsinfomation2(this.studid,this.gradeidzzsss1,this.gradeidnames,this.classidszz,this.sectionnames,this.termid);
     this.$.studservice.fetchstudentremove();
 
@@ -632,7 +632,7 @@ fnupdatestudent:function(e){
           this.fmrefresh();
       },
 
-FnSearchstudnamezz:function(e)
+    FnSearchstudnamezz:function(e)
      {
       if(e.keyCode==13|| e.keyCode==40)
             this.querySelector('#studentslistz1').focus();
@@ -736,6 +736,9 @@ FnSearchstudnamezz:function(e)
     document.querySelector('#newstudenhifotermid').selected=-1;
     document.querySelector('#thirdlanid').selected=-1;
     document.querySelector('#secondlanid').selected=-1;
+    document.querySelector('#studentgradezid').selected=-1;
+    document.querySelector('#newifosectionidzza').selected=-1;
+    document.querySelector('#newstudenhifotermid').selected=-1;
   },
 
     fnnewreff:function()
@@ -756,6 +759,9 @@ FnSearchstudnamezz:function(e)
        this.$.pesonalinfoid.opened=false;
        this.$.academicinfoid.opened=false; 
        this.$.languageinfoid.opened=false; 
+       document.querySelector('#studentgradezid').selected=-1;
+    document.querySelector('#newifosectionidzza').selected=-1;
+    document.querySelector('#newstudenhifotermid').selected=-1;
        
     },
     parentsubmitinfo:function()
