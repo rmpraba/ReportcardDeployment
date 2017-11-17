@@ -5400,7 +5400,7 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
 
     var finalpdf=header+studentprofile+signatures+scholasticvalue;
     // console.log("....................................");
-     console.log(finalpdf);
+          console.log(finalpdf);
 
     htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
     function (error, success) {
@@ -5485,7 +5485,7 @@ app.post('/fetchhealthinfo-service' ,  urlencodedParser,function (req, res)
     function(err, rows)
     {
     if(!err)
-    {
+    {      
     if(rows.length>0)
     {
       res.status(200).json({'returnval': rows});
@@ -8678,7 +8678,7 @@ app.post('/FngetStudentpasssection-service',  urlencodedParser,function (req,res
       res.status(200).json({'returnval': rows});
     }
     else
-      res.status(200).json({'returnval': ''});
+      res.status(200).json({'returnval': 'no rows'});
   });
 });
 app.post('/SchoolCategorytype-service',  urlencodedParser,function (req,res)
@@ -9280,7 +9280,7 @@ app.post('/fnretrivestudent-service' ,urlencodedParser, function (req, res)
       connection.query(qur,function(err, rows){
         if(!err){
           res.status(200).json({'returnval': rows});
-          console.log(rows);
+          // console.log(rows);
         }
         else
           //console.log(err);
@@ -9366,6 +9366,7 @@ app.post('/fnsetstudentinfo-service' , urlencodedParser,function (req, res)
       gender:req.query.Gender,
       grade_id:req.query.stugradeid,
       academic_year:req.query.academic_year,
+      flag:'active'
       }; 
   // console.log(JSON.stringify(response));
    var qur= "SELECT * FROM  md_student WHERE school_id='"+req.query.school_id+"' and id='"+req.query.id+"' and student_name='"+req.query.student_name+"' and  academic_year='"+req.query.academic_year+"' and flag='active'";
@@ -10759,7 +10760,8 @@ app.post('/fnsubmitsection-service' , urlencodedParser,function (req, res)
       gender:req.query.gender,
       grade_id:req.query.grade_id,
       academic_year:req.query.academic_year,
-      flag:"active"
+      flag:'active'
+     
       }; 
   // console.log(JSON.stringify(qurr1));
    var qur= "SELECT * FROM  md_student WHERE school_id='"+req.query.scholid1+"' and id='"+req.query.id+"' and student_name='"+req.query.student_name+"' and  academic_year='"+req.query.academic_year+"' and flag='active'";
@@ -10769,6 +10771,7 @@ app.post('/fnsubmitsection-service' , urlencodedParser,function (req, res)
 
       console.log("------------Student Section------------");
    console.log(qur);
+   console.log('------------------------------------------');
    console.log(qur11)
    connection.query(qur,
     function(err, rows)
@@ -10805,17 +10808,20 @@ app.post('/fnsubmitsection-service' , urlencodedParser,function (req, res)
 
 app.post('/previoussection-service',  urlencodedParser,function (req,res)
   {
-  /*var qur="SELECT * from md_student where id='"+req.query.admission_no+"'  and school_id='"+req.query.scholid1+"' and grade_id='"+req.query.grade_id+"'and school_type='"+req.query.school_type+"' and academic_year='"+req.query.academic_year+"'";  */
+     
+     var qur="SELECT * from md_student where id='"+req.query.admission_no+"'  and school_id='"+req.query.scholid1+"' and grade_id='"+req.query.grade_id+"'and school_type='"+req.query.school_type+"' and academic_year='"+req.query.academic_year+"' and flag='active'";  
 
-  var qur="SELECT student_name,gender,dob,class_id from md_student where id='"+req.query.admission_no+"'  and school_id='"+req.query.scholid1+"' and grade_id='"+req.query.grade_id+"'and school_type='"+req.query.school_type+"' and academic_year='"+req.query.academic_year+"' and flag='active'";
-  console.log("--------------pre student-----------------")
+ /* var qur="SELECT student_name,gender,dob,class_id from md_student where id='"+req.query.admission_no+"'  and school_id='"+req.query.scholid1+"' and grade_id='"+req.query.grade_id+"'and school_type='"+req.query.school_type+"' and academic_year='"+req.query.academic_year+"' and flag='active'";*/
+
+  console.log("--------------pre student-----------------");
   console.log(qur);
+  console.log('*************************************');
   connection.query(qur,
     function(err, rows)
     {
     if(!err)
     { 
-      //console.log(JSON.stringify(rows));  
+        // console.log(JSON.stringify(rows));  
        if(rows.length>0) 
        {
           console.log(rows);

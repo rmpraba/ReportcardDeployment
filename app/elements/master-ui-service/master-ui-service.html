@@ -1357,11 +1357,9 @@ Generatesectionid:function()
     fnretrivestudentResponse:function(e){
       //  alert('1');
            var res=e.detail.response.returnval; 
-       //      alert(JSON.stringify(res));
+       //alert(JSON.stringify(res));
            document.querySelector('Student-to-section-mapping-card').mappingstudent(res);
           document.querySelector('student-list-pass-section-card').studentcheckinfo1(res); 
-  
-   
        },
        tranfergradeinfo:function(e)
        {
@@ -3435,7 +3433,7 @@ insertschoolTypename:function(schooltypesarr)
                 //alert(JSON.stringify(res));
             if(res!='empty')
             {
-                document.querySelector('specific-student-section-card').getprestudent(res);
+                document.querySelector('specific-student-section-card').getprevistudent(res);
             }    
         },
 
@@ -3472,6 +3470,8 @@ insertschoolTypename:function(schooltypesarr)
         document.querySelector('Student-to-section-mapping-card').dob=res[0].dob;
         
         document.querySelector('Student-to-section-mapping-card').gender=res[0].gender;
+
+         document.querySelector('Student-to-section-mapping-card').fnstudent();
      },
   
         fnsubmitsection:function(setsectionarr1,schooltype)
@@ -3499,7 +3499,7 @@ insertschoolTypename:function(schooltypesarr)
                 obj.school_type=schooltype;
                 obj.academic_year=localStorage.getItem("curr_sess_academicyear");
                 this.fnsubmitsectionparam=obj;
-               
+               // alert(JSON.stringify(obj));
                 this.$.fnsubmitsectionajax.generateRequest();
             }
         },
@@ -3507,8 +3507,12 @@ insertschoolTypename:function(schooltypesarr)
         fnsubmitsectionResponse:function(e)
         {
             var res=e.detail.response.returnval;
-            //alert(JSON.stringify(res));
-             
+
+            if(res=='Inserted!' || res=='updated successfully')
+            {
+                alert("Successfully done");
+            }
+            
         },
         /*gradesectionedit:function(sectiongradename)
         {
