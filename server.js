@@ -2850,10 +2850,12 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   connection.query(qur,function(err, rows)
     {
       //console.log(qur);
+
     if(!err)
     {  
+       global.healthattendanceinfo=rows;     
+    
       if(rows.length==0){
-      global.healthattendanceinfo=rows;     
       res.status(200).json({'returnval': rows});
       }
       else{
@@ -4999,7 +5001,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
             logfile.write('pdf write:'+error+"\n\n");
             res.status(200).json({'returnval': 'error in conversion'}); 
         } else {
-          logfile.write('pdf write:success\n\n');
+        //  logfile.write('pdf write:success\n\n');
           console.log('Converted');
           res.status(200).json({'returnval': 'converted'});     
         }
@@ -5042,8 +5044,10 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
 
         var img1="./app/images/"+req.query.loggedid+req.query.schoolid+".jpg";
         var img2="./app/images/principal"+req.query.schoolid+".jpg";
+
+        var logo1="./app/images/zeesouth.png";
         console.log('asa');
-     /*console.log('.........................healthattendanceinfo....................................');
+      /*console.log('.........................healthattendanceinfo....................................');
         console.log(global.healthattendanceinfo.length);
         console.log('.................................................................................');
 
@@ -5304,37 +5308,40 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('....................schoolname.........................');
     console.log(req.query.schoolname+"   "+req.query.academicyear); 
     console.log('.......................................................');
-    var header="<div class='bbox' style='position: relative;width: 600px;height: 1210px;border: 10px solid green;top:50px;left: 20px;' id='fivescorecard'><div class='relative' style='position: relative;width: 500px;height: 200px;border: 3px solid black;top:60px;left: 20px'>"
-      header+="<img src='../../images/zeesouth.png' height='100px' width='90px'/>"
-      header+="<table border='0' class='scoretbl' style='position:relative;width: 500px;height: 200px;text-align: left;'>"
+    var header="<div class='bbox' style='position: relative;width: 639px;height: 930px;border: 10px solid green;left: 20px;margin-top:1%;' id='fivescorecard'><div class='relative' style='position: relative;width: 500px;height: 200px;border: 3px solid black;margin-left:15%;margin-top:2%;'>"
+      /*header+="<img src='../../images/zeesouth.png' height='100px' width='90px'/>"*/
+
+      header+="<img style='width:90px;height:100px;margin-left:-20%;' src='"+logo1+"'>"
+
+      header+="<table border='0' class='scoretbl' style='position:relative;width: 500px;height: 100px;text-align: left;margin-top:-23%;'>"
       header+="<tr><th colspan='3'><h2><center>"+req.query.schoolname+"</center></h2></th></tr>"
       header+="<tr><th colspan='3'><center>"+req.query.schooladdress+"</center></th></tr>"
       header+="<tr><th>Affiliation No:</th><th colspan='2'>&nbsp;"+req.query.affno+"</th></tr>" 
       header+="<tr><th> Email Id:</th><th colspan='2'>"+req.query.email+"</th></tr>"
        header+="<tr><th> Website:</th><th>"+req.query.website+"</th><th>Phone No :"+req.query.phno+"</th></tr></table></div>";
      var studentprofile="<div class='absolute' style='position: absolute;top: 50px;width: 110px; height: 100px;left: 50px;'><img src='../../images/zeesouth.png' height='100px' width='90px'/></div>"
-     studentprofile+="<div class='pr' style='position: relative;width: 700px;height: 170px;left: 100px;top:100px;'><center><h2>PERFORMANCE PROFILE</h2>Class:"+req.query.grade+" (Session: "+req.query.academicyear+")<h3>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>"
-     studentprofile+="<h4>(Issued by School as per directives of Central Board of Secondary Educational, Delhi)</h4> </center></div>"
-     studentprofile+="<div class='stupr' style='position: relative;width: 700px;top:150px;left: 50px;'><h3>Student Profile</h3></div> <table class='tbl1' style=' position: relative;text-align: left;top:80px;left: 50px' cellspacing='10'>"
+     studentprofile+="<div class='pr' style='position: relative;width: 700px;height: 100px;margin-left:-1%;margin-top:-2%;'><center><h2>PERFORMANCE PROFILE</h2><h4 style='margin-top:-2%;'>Class:"+req.query.grade+" (Session: "+req.query.academicyear+")</h4><h3 style='margin-top:-1%;'>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>"
+     studentprofile+="<h4 style='margin-left:-6%;margin-top:-2%;'>(Issued by School as per directives of Central Board of Secondary Educational, Delhi)</h4> </center></div>"
+     studentprofile+="<div class='stupr' style='position: relative;width: 680px;left: 50px;margin-top:-3%;'><h3>Student Profile</h3></div> <table  class='tbl1'  style=' position: relative;text-align: left;left: 50px;margin-top:-3%;' cellspacing='9'>"
      studentprofile+="<tr ><th>Admission No.</th><th>:</th><th>"+global.studentinfo[0].student_id+"</th></tr><tr><td>(allotted by the school)</td></tr>"
      studentprofile+="<tr ><th>Name </th><th>:</th><th>"+global.studentinfo[0].student_name+"</th></tr><tr><th>Date of Birth </th> <th>:</th><th>"+global.studentinfo[0].dob+"</th></tr>"
      studentprofile+="<tr ><th>Mother's Name</th><th>:</th><th>"+global.studentinfo[0].mother_name+"</th></tr><tr > <th>Father's Name </th><th>:</th><th>"+global.studentinfo[0].parent_name+"</th></tr>"
      studentprofile+="<tr rowspan='2'><th>Residential Address </th><th>:</th><th>"+global.studentinfo[0].address1+" "+global.studentinfo[0].address2+" "+global.studentinfo[0].address3+" "+global.studentinfo[0].city+" "+global.studentinfo[0].pincode+"</th></tr><tr><th>Telephone No </th><th>:</th><th>"+global.studentinfo[0].mobile+"</th></tr></table>"  
-     studentprofile+="<table class='attable' style='position: relative;text-align: left;top:150px;width: 700px;left: 50px;'><tr height='25px'><th width='250px'>Attendance:</th><th colspan='3'>Term1</th><th colspan='3'>Term2</th></tr>"
-     studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+"global.healthattendanceinfo[0].attendance"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].attendance"+"</th></tr>"
-     studentprofile+="<tr height='25px'><th> Total Working Days</th><th colspan='7'>"+"global.healthattendanceinfo[0].working_days"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].working_days"+"</th></tr></table>"
-     studentprofile+="<br><br><table class='health' style=' position: relative;text-align: left;top:150px;width: 750px;left: 50px;border: 1px solid black;'><tr height='20px'><th colspan='3'> Health Status</th><th colspan='3'></th><th colspan='3'></th></tr>"
-     studentprofile+="<tr></tr><tr height='22px'><th colspan='3'>Height </th><th>"+"global.healthattendanceinfo[0].height"+"</th><th colspan='7'>Weight </th><th>"+"global.healthattendanceinfo[0].width"+"</th><th colspan='3'></th></tr>"
-     studentprofile+="<tr height='25px'><th colspan='3'>Blood Group </th><th>"+"global.healthattendanceinfo[0].blood_group"+"</th><th colspan='7'>Vision(L) </th><th>"+"global.healthattendanceinfo[0].left_vision"+"</th><th colspan='3'>(R) </th><th>"+"global.healthattendanceinfo[0].right_vision"+"</th></tr>"
-     studentprofile+="<tr height='25px'><th colspan='3'>Dental Hygiene </th><th>"+"global.healthattendanceinfo[0].dental"+"</th><td colspan='7'></td><td colspan='3'></td></tr></table><br><br><br><br><br><br><br><br><br>";
+     studentprofile+="<table class='attable' style='position: relative;text-align: left;width: 700px;left: 50px;margin-top:-1%;'><tr height='25px'><th width='250px'>Attendance:</th><th colspan='4'>Term1</th><th colspan='4'>Term2</th></tr>"
+   studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+global.healthattendanceinfo[0].attendance+"</th><th colspan='3'>"+global.healthattendanceinfo[1].attendance+"</th></tr>"
+     studentprofile+="<tr height='25px'><th> Total Working Days</th><th colspan='7'>"+global.healthattendanceinfo[0].working_days+"</th><th colspan='3'>"+global.healthattendanceinfo[1].working_days+"</th></tr></table>"
+     studentprofile+="<br><br><table class='health' style=' position: relative;text-align: left;width: 510px;left: 10%;border: 1px solid black;margin-top:-5%;'><tr height='20px'><th colspan='3'> Health Status</th><th colspan='3'></th><th colspan='3'></th></tr>"
+     studentprofile+="<tr></tr><tr height='22px'><th colspan='3'>Height </th><th>"+global.healthattendanceinfo[0].height+"</th><th colspan='7'>Weight </th><th>"+global.healthattendanceinfo[0].width+"</th><th colspan='3'></th></tr>"
+     studentprofile+="<tr height='25px'><th colspan='3'>Blood Group </th><th>"+global.healthattendanceinfo[0].blood_group+"</th><th colspan='7'>Vision(L) </th><th>"+global.healthattendanceinfo[0].left_vision+"</th><th colspan='3'>(R) </th><th>"+global.healthattendanceinfo[0].right_vision+"</th></tr>"
+     studentprofile+="<tr height='25px'><th colspan='3'>Dental Hygiene </th><th>"+global.healthattendanceinfo[0].dental+"</th><td colspan='7'></td><td colspan='3'></td></tr></table><br><br><br><br><br><br><br><br><br>";
 
- var signatures="<table  class='signature' style='margin-left: 20%;'><tr><th><img id='img1' width='100px;height:30px;''></th><th></th><th></th><th><img id='img2' width='130px;height:40px;'></th><th></th><th></th><th></th></tr>"
+ var signatures="<table  class='signature' style='margin-left: 11%;margin-top:-15%;'><tr><th><img src='"+img1+"' width='100px;height:30px;'></th><th></th><th></th><th><img src='"+img2+"' width='130px;height:40px;'></th><th></th><th></th><th></th></tr>"
     signatures+="<tr><th>---------------------------------</th><th></th><th></th><th>---------------------------------</th><th></th><th></th>"
     signatures+=" <th>----------------------------------</th><th></th><th></th></tr>"
     signatures+="<tr><th>Class Teacher</th><th></th><th></th><th>Principal</th><th></th><th></th><th>Parent</th><th></th><th></th></tr></table><br><br><br><br></div>";
 
-var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px; height: auto; border: 20px solid green; top:90px; left: 100px'><table border='1'><tr><th colspan='16'> <h2>PART1-ACADEMIC PERFOMANCE: Scholastic Areas</h2><br> "   
-  scholasticvalue+= "</th></tr><tr><th colspan='4'>Subject Code and Name</th><th colspan='4'>Term1(grade)</th><th colspan='4'>Term2(grade)</th><th colspan='4'>Overall Term1+Term2</th></tr><tr><th colspan='4'></th><th>FA1</th><th>FA2</th><th>SA1</th><th>TOT1</th><th>FA3</th><th>FA4</th><th>SA2</th><th>TOT2</th><th>FA</th><th>SA</th><th>Overallgrade</th><th>GradePoint(Gp)</th></tr>"
+var scholasticvalue="<div class='bbbox' style='position: relative; width: 614px; height: 3900px; border: 10px solid green;margin-left:1%;margin-top:1%;><table border='1'><tr><th colspan='16'> <h2>PART1-ACADEMIC PERFOMANCE: Scholastic Areas</h2></th></tr><br> "   
+  scholasticvalue+= "<tr><th colspan='4'>Subject Code and Name</th><th colspan='4'>Term1(grade)</th><th colspan='4'>Term2(grade)</th><th colspan='4'>Overall Term1+Term2</th></tr><tr><th colspan='4'></th><th>FA1</th><th>FA2</th><th>SA1</th><th>TOT1</th><th>FA3</th><th>FA4</th><th>SA2</th><th>TOT2</th><th>FA</th><th>SA</th><th>Overallgrade</th><th>GradePoint(Gp)</th></tr>"
   for(var i=0;i<finalarr.length;i++)
   {
  scholasticvalue+= " <tr><td colspan='4'>"+finalarr[i].subject_name+"</td>"
@@ -5343,7 +5350,7 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
     scholasticvalue+= "<td>"+finalarr[i].FA+"</td><td>"+finalarr[i].SA+"</td><td>"+finalarr[i].grade+"</td><td>"+finalarr[i].point+"</td></tr>"
   }
     scholasticvalue+="<tr><th colspan='16'>CumlativeGradePointAverage<br>"
-     scholasticvalue+="<p>the CGPAis the average of grade point obtained in all the subjects excluding additional 6th subject as per Scheme of studies An indicative eqivalence of grade point and percentage of marks can be completed as-subject wise indicative percentage of markes=9.5*of the subject overallindicative percentage of mark=9.5*CGPA</p></th></tr>"
+     scholasticvalue+="<p>CGPA is the average of grade point obtained in all the subjects excluding additional 6th subject as per Scheme of studies An indicative eqivalence of grade point and percentage of marks can be completed as-subject wise indicative percentage of markes=9.5*of the subject overallindicative percentage of mark=9.5*CGPA</p></th></tr>"
    scholasticvalue+="<tr><th colspan='16'><br><h2>part2- Co-Scholastic Areas</h2> </th></tr><tr><th colspan='16'>2(A) Life Skills</th></tr><tr><th colspan='8'>Life Skills</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
     for(var i=0;i<lsarr.length;i++)
   {
@@ -5395,7 +5402,7 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
             logfile.write('pdf write:'+error+"\n\n");
             res.status(200).json({'returnval': 'error in conversion'}); 
         } else {
-          logfile.write('pdf write:success\n\n');
+        //  logfile.write('pdf write:success\n\n');
           console.log('Converted');
           res.status(200).json({'returnval': 'converted'});     
         }
@@ -5405,7 +5412,7 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
 
 
 
-app.post('/sendmail-service', urlencodedParser,function (req, res) {
+/*app.post('/sendmail-service', urlencodedParser,function (req, res) {
 
 sg.API(request, function(err, response) {
     console.log(err, response);
@@ -5420,7 +5427,7 @@ sg.API(request, function(err, response) {
     }
 });
 });
-
+*/
  
 
 app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req, res)
