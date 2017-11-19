@@ -48,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-dialog id="sdgdf" modal>
      <center>
-      <b><label  id="labelid">Already Students are mapped to this Section, Cannot undo
+      <b><label  id="labelid">Already Students are mapped to this Section,Are you sure want delete?
         </label></b>
         <div>
         <paper-button style="background-color:black;color:white;margin-top: 8%;" dialog-confirm autofocus> close</paper-button>
@@ -104,6 +104,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
   var delsecarr=[];
   var studenttablearr=[];
+  var c1=0;
+  var c2=0;
     Polymer({
       is: 'school-section-creation-item-card',
        
@@ -114,6 +116,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }, 
 
    fnoveralldelete:function(e){
+    c1=studenttablearr.length;
  for(var i=0;i<studenttablearr.length;i++){
      this.sectionconfics1url=sessionStorage.getItem("addrinfo")+"/fnsectioninfo-service";
 
@@ -129,7 +132,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        obj.gradename1=this.sectiongradenamezx;
        obj.classid1=this.classid;
        obj.section1=this.sectiongradeid;
-       alert(JSON.stringify(obj));
+      // alert(JSON.stringify(obj));
        this.sectionconfics1param=obj;
        this.$.sectionconfics1ajax.generateRequest();
 
@@ -137,8 +140,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
 
      sectionconfics1Response:function(e){
-    var res =e.detail.response.returnval; 
+      c2++;
+      if(c1==c2){
+       var res =e.detail.response.returnval; 
         alert(JSON.stringify(res));
+           document.querySelector('school-grade-section-creation-card').f1();
+            document.querySelector('school-grade-section-creation-card').f2(); 
+            c1=0;
+            c2=0; 
+       }
+    
       }, 
   fngetsectiongrade:function(e)
        {

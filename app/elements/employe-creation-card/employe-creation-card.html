@@ -38,7 +38,7 @@
             <paper-input value="{{empnames}}" hidden></paper-input>
             <paper-input value="{{employeesetidz}}" hidden></paper-input>
             <div hidden$="{{hideinput}}">{{subjectname}}</div>
-<paper-checkbox hidden$="{{hidecheck}}" on-change="fnempsetsubject" id="{{id}}" checked="{{check}}"></paper-checkbox>
+            <paper-checkbox hidden$="{{hidecheck}}" on-change="fnempsetsubject" id="{{id}}" checked="{{check}}"></paper-checkbox>
             <!-- </div> -->
       <paper-dialog id="empremapid" modal>
         <b><label  id="labelid">Already assigned sections for this subject, Cannot undo
@@ -162,14 +162,7 @@
 
        },
 
-     /*  stupersonalinfo11:function(arr){
-          for(var i=0;i<arr.length;i++){
-
-            if(arr[i].admno==rr){
-                var m=arr[i].dd;
-           document.querySelector('#'+m).checked=false;
-
-           }}},*/
+   
    
       f11:function(e){
         
