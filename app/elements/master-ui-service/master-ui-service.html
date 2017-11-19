@@ -163,6 +163,16 @@
         on-response="FnSetschoolInfoResponse"
         debounce-duration="300"
     >
+      <iron-ajax        
+        id="FnSetschoolInfo1ajax"
+        url="{{FnSetschoolInfo1url}}"
+        params="{{FnSetschoolInfo1param}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnSetschoolInfo1Response"
+        debounce-duration="300"
+    >
     <iron-ajax        
         id="fnschoolidgenerateajax"
         url="{{fnschoolidgenerateurl}}"
@@ -1632,10 +1642,8 @@ this.tranfersectionurl=sessionStorage.getItem("addrinfo")+"/tranfersection-servi
              obj.mailid=mailid;
              obj.flage='active';
              obj.academic_year=localStorage.getItem("curr_sess_academicyear");
-    
-          // alert(JSON.stringify(obj));
-          this.emppersonaldetailsparam=obj;
-          this.$.emppersonaldetailsajax.generateRequest();
+         this.emppersonaldetailsparam=obj;
+         this.$.emppersonaldetailsajax.generateRequest();
 
   for(var j=0;j<empschooltypearr.length;j++){
 
@@ -2314,7 +2322,14 @@ insertschoolTypename:function(schooltypesarr)
         obj.Board=Board;
         this.FnSetschoolInfoparam=obj;
         //alert(JSON.stringify(obj));
-        this.$.FnSetschoolInfoajax.generateRequest();
+         this.$.FnSetschoolInfoajax.generateRequest();
+
+       this.FnSetschoolInfo1url=sessionStorage.getItem("addrinfo")+"/FnSetschoolInfo1-service";
+        var obj1={};
+        obj1.school=schoolid1;
+        this.FnSetschoolInfo1param=obj1;
+      //  alert(JSON.stringify(obj1));
+        this.$.FnSetschoolInfo1ajax.generateRequest();
       },
       FnSetschoolInfoResponse(e){
           var res=e.detail.response.returnval;

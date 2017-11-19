@@ -10,8 +10,8 @@ var connection = mysql.createConnection({
   // host     : '5919a4ea89f5cfaf40000031-samsidh.rhcloud.com',
   host :'localhost',
   user     : 'root',
-  password : 'admin',
-  database : 'reportcardcheck' 
+  password : '',
+  database : 'reportcardcloud' 
   // port     : '62631',
   // user     : 'adminM1qnV1d',
   // password : 'HC2bIf7Sk2LD',
@@ -9748,6 +9748,32 @@ app.post('/generatebooksequence-service',  urlencodedParser,function (req,res)
   });
 });
 
+app.post('/FnSetschoolInfo1-service',  urlencodedParser,function (req,res)
+  {  
+    var response={
+         school_id:req.query.school,
+         emp_prefix:'STF',
+         emp_sequence:'1',
+         sec_prefix:'CLS',
+         sec_sequence:'1',
+    };
+     console.log(response);
+    var qur="INSERT INTO school_sequence SET ?";
+    console.log('------------book insert-------------');
+    console.log(qur);
+    connection.query(qur,[response],
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'Inserted!!'});
+    }
+    else{
+      console.log(err);
+     res.status(200).json({'returnval': 'Not Inserted!!'}); 
+    }
+  });
+});
 app.post('/insertbookinfo-service',  urlencodedParser,function (req,res)
   {  
     var response={
