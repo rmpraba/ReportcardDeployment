@@ -1203,7 +1203,17 @@
             method="post"
             on-response="teacherupdatesectionResponse"
             debounce-duration="300">
-      </iron-ajax>
+          </iron-ajax>
+           <iron-ajax
+            id="curiculamdeleteajax"
+            url="{{curiculamdeleteurl}}"
+            params="{{curiculamdeleteparam}}"
+            handle-as="json"
+            content-type="application/json"
+            method="post"
+            on-response="curiculamdeleteResponse"
+            debounce-duration="300">
+           </iron-ajax>
  
 
       <demosumbit-card id="service1"></demosumbit-card>
@@ -2743,16 +2753,19 @@ insertschoolTypename:function(schooltypesarr)
       {
         var obj={"school_id":"","employeeid":"","employeename":"","flage":""};
             obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+             obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+
             obj.employeeid=employeeid;
             obj.employeename=employeename;
             obj.flage="passive";
-       this.Fnempdeleteinfourl=sessionStorage.getItem("addrinfo")+"/Fnempdeleteinfoz-service";
+          this.Fnempdeleteinfourl=sessionStorage.getItem("addrinfo")+"/Fnempdeleteinfoz-service";
         this.Fnempdeleteinfoparam=obj;
         this.$.Fnempdeleteinfoajax.generateRequest();
 
            var obj={"school_id":"","employeeid":"","employeename":"","flage":""};
             obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
-            obj.employeeid=employeeid;
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+              obj.employeeid=employeeid;
             obj.employeename=employeename;
             obj.flage="passive";
        this.Fnempdeleteinforoleurl=sessionStorage.getItem("addrinfo")+"/Fnempdeleteinforole-service";
@@ -2761,6 +2774,7 @@ insertschoolTypename:function(schooltypesarr)
      
         var obj={"school_id":"","employeeid":"","employeename":"","flage":""};
             obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+           obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
             obj.employeeid=employeeid;
             obj.employeename=employeename;
             obj.flage="passive";
@@ -2770,6 +2784,7 @@ insertschoolTypename:function(schooltypesarr)
 
           var obj={"school_id":"","employeeid":"","employeename":"","flage":""};
             obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
             obj.employeeid=employeeid;
             obj.employeename=employeename;
             obj.flage="passive";
@@ -2779,12 +2794,23 @@ insertschoolTypename:function(schooltypesarr)
 
            var obj={"school_id":"","employeeid":"","employeename":"","flage":""};
             obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
             obj.employeeid=employeeid;
             obj.employeename=employeename;
             obj.flage="passive";
           this.empsubjectdectiveurl=sessionStorage.getItem("addrinfo")+"/empsubjectdective-service";
         this.empsubjectdectiveparam=obj;
         this.$.empsubjectdectiveajax.generateRequest();
+      
+    var obj={"school_id":"","employeeid":"","employeename":"","flage":""};
+            obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
+            obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+            obj.employeeid=employeeid;
+            obj.employeename=employeename;
+            obj.flage="passive";
+          this.curiculamdeleteurl=sessionStorage.getItem("addrinfo")+"/curiculamdelete-service";
+        this.curiculamdeleteparam=obj;
+        this.$.curiculamdeleteajax.generateRequest();
      
      
       },

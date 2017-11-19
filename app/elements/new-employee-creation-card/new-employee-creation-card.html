@@ -214,11 +214,11 @@
           <paper-input value={{empid}} hidden></paper-input>
       <div class="horizontalframes">
         <div class="field">
-          <paper-input label="Employee name" id="empname" required error-message="needs employee name!" value="{{name}}"  allowed-pattern="[a-zA-Z ]" ></paper-input>
+          <paper-input label="Employee name" id="empname" required auto-validate error-message="needs employee name!" value="{{name}}"  allowed-pattern="[a-zA-Z ]" ></paper-input>
         </div>
 
         <div class="field" style="margin-left: 6%;">
-          <paper-input label="Mobile Number" id="empTelephone" required error-message="needs telepnoneno!" value="{{Telephone}}"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
+          <paper-input label="Mobile Number" id="empTelephone" required auto-validate error-message="needs telepnoneno!" value="{{Telephone}}"  allowed-pattern="[0-9]" maxlength="10"></paper-input>
         </div>
       </div>    
         
@@ -228,7 +228,7 @@
         </div>
 
         <div class="field" style="margin-left: 6%;">
-          <gold-email-input label="Email" id="empmailid" required error-message="needs mailid!" value="{{mailid}}"></gold-email-input>
+          <gold-email-input label="Email" id="empmailid" required auto-validate error-message="needs mailid!" value="{{mailid}}"></gold-email-input>
         </div>
 
         <div class="field">
@@ -426,16 +426,22 @@
       },  
       FnSubmit:function()
       { 
-        if(this.name=="")
+        if(this.name=="" && this.Telephone=="" && this.mailid=="")
         {
                 this.$.empname.validate();
-                // this.$.empTelephone.validate();
+                this.$.empTelephone.validate();
                 //this.$.empMobile.validate();  
                 //this.$.emppassword.validate();
-                // this.$.empmailid.validate();
+                 this.$.empmailid.validate();
         }
-        else  
-        {
+        else if(empschooltypearr.length==0) {
+       alert("Please Check the Schooltype.....");
+
+        }
+        else if(setrolearr.length==0) {
+       alert("Please Check the Role.....");
+         }
+       else {
 
               emplyname=this.toTitleCase(this.name);
               // alert(JSON.stringify(empschooltypearr));

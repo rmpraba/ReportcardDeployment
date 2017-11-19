@@ -7442,9 +7442,11 @@ app.post('/Fnpersonalinfo-service' ,  urlencodedParser,function (req, res)
 });
 app.post('/Fnempdeleteinfoz-service' ,  urlencodedParser,function (req, res)
 {  
-  var qur="update  md_employee_creation set flage='"+req.query.flage+"' where emp_id='"+req.query.employeeid+"' and emp_name='"+req.query.employeename+"' and school_id='"+req.query.school_id+"'";
-    //console.log(qur);
-    connection.query(qur,function(err, rows)
+  var qur="update  md_employee_creation set flage='"+req.query.flage+"' where emp_id='"+req.query.employeeid+"' and emp_name='"+req.query.employeename+"' and school_id='"+req.query.school_id+"' and academic_year='"+req.query.academic_year+"'";
+ 
+  console.log("------empcreation--------------");
+   console.log(qur);
+     connection.query(qur,function(err, rows)
      {
     if(!err)
     {
@@ -7459,8 +7461,9 @@ app.post('/Fnempdeleteinfoz-service' ,  urlencodedParser,function (req, res)
     
 });app.post('/Fnempdeleteinforole-service' ,  urlencodedParser,function (req, res)
 {  
-  var qur="update  md_employee  set  flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and id='"+req.query.employeeid+"'  and name='"+req.query.employeename+"'";
-    //console.log(qur);
+  var qur="update  md_employee  set  flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and id='"+req.query.employeeid+"'  and name='"+req.query.employeename+"'and academic_year='"+req.query.academic_year+"'";
+  console.log("------emprole--------------");
+    console.log(qur);
     connection.query(qur,function(err, rows)
      {
     if(!err)
@@ -7477,8 +7480,9 @@ app.post('/Fnempdeleteinfoz-service' ,  urlencodedParser,function (req, res)
 });
 app.post('/fnschoolsubjetflage-service' ,  urlencodedParser,function (req, res)
 {  
-  var qur="update  md_employee_subject  set  flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and emp_id='"+req.query.employeeid+"'  and emp_name='"+req.query.employeename+"'";
-    //console.log(qur);
+  var qur="update  md_employee_subject  set  flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and emp_id='"+req.query.employeeid+"'  and emp_name='"+req.query.employeename+"'and academic_year='"+req.query.academic_year+"'";
+  console.log("------empsubject--------------");
+    console.log(qur);
     connection.query(qur,function(err, rows)
      {
     if(!err)
@@ -7494,8 +7498,9 @@ app.post('/fnschoolsubjetflage-service' ,  urlencodedParser,function (req, res)
     });
 app.post('/empsubjectdective-service' ,  urlencodedParser,function (req, res)
   {  
-  var qur="update  mp_teacher_grade set flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and id='"+req.query.employeeid+"'";
-    //console.log(qur);
+  var qur="update  mp_teacher_grade set flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and id='"+req.query.employeeid+"'and academic_year='"+req.query.academic_year+"'";
+  console.log("------empmapping section--------------");
+    console.log(qur);
     connection.query(qur,function(err, rows)
      {
     if(!err)
@@ -7510,10 +7515,30 @@ app.post('/empsubjectdective-service' ,  urlencodedParser,function (req, res)
 
     });
     });
+app.post('/curiculamdelete-service' ,  urlencodedParser,function (req, res)
+  {  
+  var qur="delete  from  md_curriculum_planning_approval where school_id='"+req.query.school_id+"'  and academic_year='"+req.query.academic_year+"'and id='"+req.query.employeeid+"'";
+
+  console.log("-----------------curicullam-------------");
+    console.log(qur);
+    connection.query(qur,function(err, rows)
+     {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Deleted!'});
+    }
+    else
+    {
+      //console.log(err);
+      res.status(200).json({'returnval': 'Not Deleted!'});
+    }
+
+    });
+    });
 
 app.post('/Fnempdeleteinfotype-service' ,  urlencodedParser,function (req, res)
 {  
-  var qur="update  employee_to_school_type_category_mapping set flage='"+req.query.flage+"' where emp_id='"+req.query.employeeid+"' and emp_name='"+req.query.employeename+"' and school_id='"+req.query.school_id+"'";
+  var qur="update  employee_to_school_type_category_mapping set flage='"+req.query.flage+"' where emp_id='"+req.query.employeeid+"' and emp_name='"+req.query.employeename+"' and school_id='"+req.query.school_id+"'and academic_year='"+req.query.academic_year+"'";
     //console.log(qur);
     connection.query(qur,function(err, rows)
      {
