@@ -7525,12 +7525,12 @@ app.post('/curiculamdelete-service' ,  urlencodedParser,function (req, res)
      {
     if(!err)
     {
-      res.status(200).json({'returnval': 'Deleted!'});
+      res.status(200).json({'returnval': 'deleted!'});
     }
     else
     {
       //console.log(err);
-      res.status(200).json({'returnval': 'Not Deleted!'});
+      res.status(200).json({'returnval': 'Not update!'});
     }
 
     });
@@ -13808,6 +13808,27 @@ var qur="UPDATE "+req.query.studenttable+" SET "+req.query.dbstudentname+"='"+re
   });
 });
 
+app.post('/fnsectioninfo-service',  urlencodedParser,function (req,res)
+  {  
+
+ var qur="delete from "+req.query.studenttable+" WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and ("+req.query.dbgradeid+"='"+req.query.gradeid1+"' or "+req.query.dbgradename+"='"+req.query.gradename1+"' )and ("+req.query.dbclassid+"='"+req.query.classid1+"' or  "+req.query.dbsection+"='"+req.query.section1+"')";
+     console.log('------------update return status -------------');
+     console.log(qur);
+     console.log('---------------------------------------------');
+     connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'delete!!'});
+    }
+    else
+    {
+     console.log(err);
+     res.status(200).json({'returnval': 'Not delete!!'}); 
+    }
+  });
+});
 
 app.post('/fnstudpersonalinfo-service',  urlencodedParser,function (req,res)
   {  
