@@ -157,6 +157,18 @@
           }
           if(flag==0)
           {
+        if(subcatarr[i].mark=='A')
+          subcatarr[i].mark=5;
+        if(subcatarr[i].mark=='B')
+          subcatarr[i].mark=4;
+        if(subcatarr[i].mark=='C')
+          subcatarr[i].mark=3;
+        if(subcatarr[i].mark=='D')
+          subcatarr[i].mark=2;
+        if(subcatarr[i].mark=='E')
+          subcatarr[i].mark=1;
+        if(subcatarr[i].mark=='')
+          subcatarr[i].mark=0;
             sum=parseFloat(sum)+parseFloat(subcatarr[i].mark);
             t++;
           }

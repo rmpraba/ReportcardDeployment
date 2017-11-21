@@ -562,6 +562,18 @@
           {
             if(coarr[i].sub_metrics==categoryarr[j].sub_category)
             {
+              if(categoryarr[j].mark=='5')
+                categoryarr[j].mark="A";
+              if(categoryarr[j].mark=='4')
+                categoryarr[j].mark="B";
+              if(categoryarr[j].mark=='3')
+                categoryarr[j].mark="C";
+              if(categoryarr[j].mark=='2')
+                categoryarr[j].mark="D";
+              if(categoryarr[j].mark=='1')
+                categoryarr[j].mark="E";
+              if(categoryarr[j].mark=='0')
+                categoryarr[j].mark="";
               coarr[i].mark=categoryarr[j].mark;
             }
           }
