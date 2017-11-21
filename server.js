@@ -16,6 +16,7 @@ var connection = mysql.createConnection({
   user     : 'adminM1qnV1d',
   password : 'HC2bIf7Sk2LD',
   database : 'scorecarddb'
+
 });
 
 var bodyParser = require('body-parser'); 
@@ -2856,10 +2857,12 @@ app.post('/fetchhealthattendanceinfo-service',  urlencodedParser,function (req,r
   connection.query(qur,function(err, rows)
     {
       //console.log(qur);
+
     if(!err)
     {  
+       global.healthattendanceinfo=rows;     
+    
       if(rows.length==0){
-      global.healthattendanceinfo=rows;     
       res.status(200).json({'returnval': rows});
       }
       else{
@@ -5005,7 +5008,7 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
             logfile.write('pdf write:'+error+"\n\n");
             res.status(200).json({'returnval': 'error in conversion'}); 
         } else {
-          logfile.write('pdf write:success\n\n');
+        //  logfile.write('pdf write:success\n\n');
           console.log('Converted');
           // res.status(200).json({'returnval': 'converted'});     
   fs.readFile('./app/reportcard/'+global.studentinfo[0].student_name+'.pdf', function (err, data) {
@@ -5062,8 +5065,10 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
 
         var img1="./app/images/"+req.query.loggedid+req.query.schoolid+".jpg";
         var img2="./app/images/principal"+req.query.schoolid+".jpg";
+
+        var logo1="./app/images/zeesouth.png";
         console.log('asa');
-     /*console.log('.........................healthattendanceinfo....................................');
+      /*console.log('.........................healthattendanceinfo....................................');
         console.log(global.healthattendanceinfo.length);
         console.log('.................................................................................');
 
@@ -5324,32 +5329,42 @@ app.post('/fmailreportcard-service' ,  urlencodedParser,function (req, res)
     console.log('....................schoolname.........................');
     console.log(req.query.schoolname+"   "+req.query.academicyear); 
     console.log('.......................................................');
-    var header="<div class='bbox' style='position: relative;width: 600px;height: 1210px;border: 10px solid green;top:50px;left: 20px;' id='fivescorecard'><div class='relative' style='position: relative;width: 500px;height: 200px;border: 3px solid black;top:60px;left: 20px'>"
-      header+="<img src='../../images/zeesouth.png' height='100px' width='90px'/>"
-      header+="<table border='0' class='scoretbl' style='position:relative;width: 500px;height: 200px;text-align: left;'>"
+    var header="<div class='bbox' style='position: relative;width: 639px;height: 930px;border: 10px solid green;left: 20px;margin-top:1%;' id='fivescorecard'><div class='relative' style='position: relative;width: 500px;height: 200px;border: 3px solid black;margin-left:15%;margin-top:2%;'>"
+      /*header+="<img src='../../images/zeesouth.png' height='100px' width='90px'/>"*/
+
+      header+="<img style='width:90px;height:100px;margin-left:-20%;' src='"+logo1+"'>"
+
+      header+="<table border='0' class='scoretbl' style='position:relative;width: 500px;height: 100px;text-align: left;margin-top:-23%;'>"
       header+="<tr><th colspan='3'><h2><center>"+req.query.schoolname+"</center></h2></th></tr>"
       header+="<tr><th colspan='3'><center>"+req.query.schooladdress+"</center></th></tr>"
       header+="<tr><th>Affiliation No:</th><th colspan='2'>&nbsp;"+req.query.affno+"</th></tr>" 
       header+="<tr><th> Email Id:</th><th colspan='2'>"+req.query.email+"</th></tr>"
        header+="<tr><th> Website:</th><th>"+req.query.website+"</th><th>Phone No :"+req.query.phno+"</th></tr></table></div>";
      var studentprofile="<div class='absolute' style='position: absolute;top: 50px;width: 110px; height: 100px;left: 50px;'><img src='../../images/zeesouth.png' height='100px' width='90px'/></div>"
-     studentprofile+="<div class='pr' style='position: relative;width: 700px;height: 170px;left: 100px;top:100px;'><center><h2>PERFORMANCE PROFILE</h2>Class:"+req.query.grade+" (Session: "+req.query.academicyear+")<h3>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>"
-     studentprofile+="<h4>(Issued by School as per directives of Central Board of Secondary Educational, Delhi)</h4> </center></div>"
-     studentprofile+="<div class='stupr' style='position: relative;width: 700px;top:150px;left: 50px;'><h3>Student Profile</h3></div> <table class='tbl1' style=' position: relative;text-align: left;top:80px;left: 50px' cellspacing='10'>"
+     studentprofile+="<div class='pr' style='position: relative;width: 700px;height: 100px;margin-left:-1%;margin-top:-2%;'><center><h2>PERFORMANCE PROFILE</h2><h4 style='margin-top:-2%;'>Class:"+req.query.grade+" (Session: "+req.query.academicyear+")</h4><h3 style='margin-top:-1%;'>CONTINUOUS AND COMPREHENSIVE EVALUATION </h3>"
+     studentprofile+="<h4 style='margin-left:-6%;margin-top:-2%;'>(Issued by School as per directives of Central Board of Secondary Educational, Delhi)</h4> </center></div>"
+     studentprofile+="<div class='stupr' style='position: relative;width: 680px;left: 50px;margin-top:-3%;'><h3>Student Profile</h3></div> <table  class='tbl1'  style=' position: relative;text-align: left;left: 50px;margin-top:-3%;' cellspacing='9'>"
      studentprofile+="<tr ><th>Admission No.</th><th>:</th><th>"+global.studentinfo[0].student_id+"</th></tr><tr><td>(allotted by the school)</td></tr>"
      studentprofile+="<tr ><th>Name </th><th>:</th><th>"+global.studentinfo[0].student_name+"</th></tr><tr><th>Date of Birth </th> <th>:</th><th>"+global.studentinfo[0].dob+"</th></tr>"
      studentprofile+="<tr ><th>Mother's Name</th><th>:</th><th>"+global.studentinfo[0].mother_name+"</th></tr><tr > <th>Father's Name </th><th>:</th><th>"+global.studentinfo[0].parent_name+"</th></tr>"
      studentprofile+="<tr rowspan='2'><th>Residential Address </th><th>:</th><th>"+global.studentinfo[0].address1+" "+global.studentinfo[0].address2+" "+global.studentinfo[0].address3+" "+global.studentinfo[0].city+" "+global.studentinfo[0].pincode+"</th></tr><tr><th>Telephone No </th><th>:</th><th>"+global.studentinfo[0].mobile+"</th></tr></table>"  
-     studentprofile+="<table class='attable' style='position: relative;text-align: left;top:150px;width: 700px;left: 50px;'><tr height='25px'><th width='250px'>Attendance:</th><th colspan='3'>Term1</th><th colspan='3'>Term2</th></tr>"
-     studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+"global.healthattendanceinfo[0].attendance"+"</th><th colspan='3'>"+"global.healthattendanceinfo[1].attendance"+"</th></tr>";
 
- var signatures="<table  class='signature' style='margin-left: 20%;'><tr><th><img id='img1' width='100px;height:30px;''></th><th></th><th></th><th><img id='img2' width='130px;height:40px;'></th><th></th><th></th><th></th></tr>"
+     studentprofile+="<table class='attable' style='position: relative;text-align: left;width: 700px;left: 50px;margin-top:-1%;'><tr height='25px'><th width='250px'>Attendance:</th><th colspan='4'>Term1</th><th colspan='4'>Term2</th></tr>"
+   studentprofile+="<tr></tr><tr height='25px'><th>Total attendance of the student</th><th colspan='7'>"+global.healthattendanceinfo[0].attendance+"</th><th colspan='3'>"+global.healthattendanceinfo[1].attendance+"</th></tr>"
+     studentprofile+="<tr height='25px'><th> Total Working Days</th><th colspan='7'>"+global.healthattendanceinfo[0].working_days+"</th><th colspan='3'>"+global.healthattendanceinfo[1].working_days+"</th></tr></table>"
+     studentprofile+="<br><br><table class='health' style=' position: relative;text-align: left;width: 510px;left: 10%;border: 1px solid black;margin-top:-5%;'><tr height='20px'><th colspan='3'> Health Status</th><th colspan='3'></th><th colspan='3'></th></tr>"
+     studentprofile+="<tr></tr><tr height='22px'><th colspan='3'>Height </th><th>"+global.healthattendanceinfo[0].height+"</th><th colspan='7'>Weight </th><th>"+global.healthattendanceinfo[0].width+"</th><th colspan='3'></th></tr>"
+     studentprofile+="<tr height='25px'><th colspan='3'>Blood Group </th><th>"+global.healthattendanceinfo[0].blood_group+"</th><th colspan='7'>Vision(L) </th><th>"+global.healthattendanceinfo[0].left_vision+"</th><th colspan='3'>(R) </th><th>"+global.healthattendanceinfo[0].right_vision+"</th></tr>"
+     studentprofile+="<tr height='25px'><th colspan='3'>Dental Hygiene </th><th>"+global.healthattendanceinfo[0].dental+"</th><td colspan='7'></td><td colspan='3'></td></tr></table><br><br><br><br><br><br><br><br><br>";
+
+ var signatures="<table  class='signature' style='margin-left: 11%;margin-top:-15%;'><tr><th><img src='"+img1+"' width='100px;height:30px;'></th><th></th><th></th><th><img src='"+img2+"' width='130px;height:40px;'></th><th></th><th></th><th></th></tr>"
+
     signatures+="<tr><th>---------------------------------</th><th></th><th></th><th>---------------------------------</th><th></th><th></th>"
     signatures+=" <th>----------------------------------</th><th></th><th></th></tr>"
     signatures+="<tr><th>Class Teacher</th><th></th><th></th><th>Principal</th><th></th><th></th><th>Parent</th><th></th><th></th></tr></table><br><br><br><br></div>";
 
-var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px; height: auto; border: 20px solid green; top:90px; left: 100px'><table border='1'><tr><th colspan='16'> <h2>PART1-ACADEMIC PERFOMANCE: Scholastic Areas</h2><br> "   
-  scholasticvalue+= "</th></tr><tr><th colspan='4'>Subject Code and Name</th><th colspan='4'>Term1(grade)</th><th colspan='4'>Term2(grade)</th><th colspan='4'>Overall Term1+Term2</th></tr><tr><th colspan='4'></th><th>FA1</th><th>FA2</th><th>SA1</th><th>TOT1</th><th>FA3</th><th>FA4</th><th>SA2</th><th>TOT2</th><th>FA</th><th>SA</th><th>Overallgrade</th><th>GradePoint(Gp)</th></tr>"
+var scholasticvalue="<div class='bbbox' style='position: relative; width: 614px; height: 3900px; border: 10px solid green;margin-left:1%;margin-top:1%;><table border='1'><tr><th colspan='16'> <h2>PART1-ACADEMIC PERFOMANCE: Scholastic Areas</h2></th></tr><br> "   
+  scholasticvalue+= "<tr><th colspan='4'>Subject Code and Name</th><th colspan='4'>Term1(grade)</th><th colspan='4'>Term2(grade)</th><th colspan='4'>Overall Term1+Term2</th></tr><tr><th colspan='4'></th><th>FA1</th><th>FA2</th><th>SA1</th><th>TOT1</th><th>FA3</th><th>FA4</th><th>SA2</th><th>TOT2</th><th>FA</th><th>SA</th><th>Overallgrade</th><th>GradePoint(Gp)</th></tr>"
   for(var i=0;i<finalarr.length;i++)
   {
  scholasticvalue+= " <tr><td colspan='4'>"+finalarr[i].subject_name+"</td>"
@@ -5358,7 +5373,7 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
     scholasticvalue+= "<td>"+finalarr[i].FA+"</td><td>"+finalarr[i].SA+"</td><td>"+finalarr[i].grade+"</td><td>"+finalarr[i].point+"</td></tr>"
   }
     scholasticvalue+="<tr><th colspan='16'>CumlativeGradePointAverage<br>"
-     scholasticvalue+="<p>the CGPAis the average of grade point obtained in all the subjects excluding additional 6th subject as per Scheme of studies An indicative eqivalence of grade point and percentage of marks can be completed as-subject wise indicative percentage of markes=9.5*of the subject overallindicative percentage of mark=9.5*CGPA</p></th></tr>"
+     scholasticvalue+="<p>CGPA is the average of grade point obtained in all the subjects excluding additional 6th subject as per Scheme of studies An indicative eqivalence of grade point and percentage of marks can be completed as-subject wise indicative percentage of markes=9.5*of the subject overallindicative percentage of mark=9.5*CGPA</p></th></tr>"
    scholasticvalue+="<tr><th colspan='16'><br><h2>part2- Co-Scholastic Areas</h2> </th></tr><tr><th colspan='16'>2(A) Life Skills</th></tr><tr><th colspan='8'>Life Skills</th><th colspan='3' style='text-align: center;'>Term1</th><th colspan='5' style='text-align: center;'>Descriptive Indicators</th></tr>"
     for(var i=0;i<lsarr.length;i++)
   {
@@ -5400,7 +5415,7 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
 
     var finalpdf=header+studentprofile+signatures+scholasticvalue;
     // console.log("....................................");
-     console.log(finalpdf);
+          console.log(finalpdf);
 
     htmlToPdf.convertHTMLString(finalpdf, './app/reportcard/'+global.studentinfo[0].student_name+'.pdf',
     function (error, success) {
@@ -5410,7 +5425,7 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
             logfile.write('pdf write:'+error+"\n\n");
             res.status(200).json({'returnval': 'error in conversion'}); 
         } else {
-          logfile.write('pdf write:success\n\n');
+        //  logfile.write('pdf write:success\n\n');
           console.log('Converted');
           res.status(200).json({'returnval': 'converted'});     
         }
@@ -5420,7 +5435,7 @@ var scholasticvalue="<div class='bbbox' style=' position: relative; width: 900px
 
 
 
-app.post('/sendmail-service', urlencodedParser,function (req, res) {
+/*app.post('/sendmail-service', urlencodedParser,function (req, res) {
 
 sg.API(request, function(err, response) {
     console.log(err, response);
@@ -5435,7 +5450,7 @@ sg.API(request, function(err, response) {
     }
 });
 });
-
+*/
  
 
 app.post('/fetchoveralltermwisegrade-service' ,  urlencodedParser,function (req, res)
@@ -5485,7 +5500,7 @@ app.post('/fetchhealthinfo-service' ,  urlencodedParser,function (req, res)
     function(err, rows)
     {
     if(!err)
-    {
+    {      
     if(rows.length>0)
     {
       res.status(200).json({'returnval': rows});
@@ -7428,9 +7443,11 @@ app.post('/Fnpersonalinfo-service' ,  urlencodedParser,function (req, res)
 });
 app.post('/Fnempdeleteinfoz-service' ,  urlencodedParser,function (req, res)
 {  
-  var qur="update  md_employee_creation set flage='"+req.query.flage+"' where emp_id='"+req.query.employeeid+"' and emp_name='"+req.query.employeename+"' and school_id='"+req.query.school_id+"'";
-    //console.log(qur);
-    connection.query(qur,function(err, rows)
+  var qur="update  md_employee_creation set flage='"+req.query.flage+"' where emp_id='"+req.query.employeeid+"' and emp_name='"+req.query.employeename+"' and school_id='"+req.query.school_id+"' and academic_year='"+req.query.academic_year+"'";
+ 
+  console.log("------empcreation--------------");
+   console.log(qur);
+     connection.query(qur,function(err, rows)
      {
     if(!err)
     {
@@ -7445,8 +7462,9 @@ app.post('/Fnempdeleteinfoz-service' ,  urlencodedParser,function (req, res)
     
 });app.post('/Fnempdeleteinforole-service' ,  urlencodedParser,function (req, res)
 {  
-  var qur="update  md_employee  set  flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and id='"+req.query.employeeid+"'  and name='"+req.query.employeename+"'";
-    //console.log(qur);
+  var qur="update  md_employee  set  flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and id='"+req.query.employeeid+"'  and name='"+req.query.employeename+"'and academic_year='"+req.query.academic_year+"'";
+  console.log("------emprole--------------");
+    console.log(qur);
     connection.query(qur,function(err, rows)
      {
     if(!err)
@@ -7463,8 +7481,9 @@ app.post('/Fnempdeleteinfoz-service' ,  urlencodedParser,function (req, res)
 });
 app.post('/fnschoolsubjetflage-service' ,  urlencodedParser,function (req, res)
 {  
-  var qur="update  md_employee_subject  set  flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and emp_id='"+req.query.employeeid+"'  and emp_name='"+req.query.employeename+"'";
-    //console.log(qur);
+  var qur="update  md_employee_subject  set  flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and emp_id='"+req.query.employeeid+"'  and emp_name='"+req.query.employeename+"'and academic_year='"+req.query.academic_year+"'";
+  console.log("------empsubject--------------");
+    console.log(qur);
     connection.query(qur,function(err, rows)
      {
     if(!err)
@@ -7480,8 +7499,9 @@ app.post('/fnschoolsubjetflage-service' ,  urlencodedParser,function (req, res)
     });
 app.post('/empsubjectdective-service' ,  urlencodedParser,function (req, res)
   {  
-  var qur="update  mp_teacher_grade set flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and id='"+req.query.employeeid+"'";
-    //console.log(qur);
+  var qur="update  mp_teacher_grade set flage='"+req.query.flage+"' where school_id='"+req.query.school_id+"' and id='"+req.query.employeeid+"'and academic_year='"+req.query.academic_year+"'";
+  console.log("------empmapping section--------------");
+    console.log(qur);
     connection.query(qur,function(err, rows)
      {
     if(!err)
@@ -7496,10 +7516,30 @@ app.post('/empsubjectdective-service' ,  urlencodedParser,function (req, res)
 
     });
     });
+app.post('/curiculamdelete-service' ,  urlencodedParser,function (req, res)
+  {  
+  var qur="delete  from  md_curriculum_planning_approval where school_id='"+req.query.school_id+"'  and academic_year='"+req.query.academic_year+"'and id='"+req.query.employeeid+"'";
+
+  console.log("-----------------curicullam-------------");
+    console.log(qur);
+    connection.query(qur,function(err, rows)
+     {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'deleted!'});
+    }
+    else
+    {
+      //console.log(err);
+      res.status(200).json({'returnval': 'Not update!'});
+    }
+
+    });
+    });
 
 app.post('/Fnempdeleteinfotype-service' ,  urlencodedParser,function (req, res)
 {  
-  var qur="update  employee_to_school_type_category_mapping set flage='"+req.query.flage+"' where emp_id='"+req.query.employeeid+"' and emp_name='"+req.query.employeename+"' and school_id='"+req.query.school_id+"'";
+  var qur="update  employee_to_school_type_category_mapping set flage='"+req.query.flage+"' where emp_id='"+req.query.employeeid+"' and emp_name='"+req.query.employeename+"' and school_id='"+req.query.school_id+"'and academic_year='"+req.query.academic_year+"'";
     //console.log(qur);
     connection.query(qur,function(err, rows)
      {
@@ -8678,7 +8718,7 @@ app.post('/FngetStudentpasssection-service',  urlencodedParser,function (req,res
       res.status(200).json({'returnval': rows});
     }
     else
-      res.status(200).json({'returnval': ''});
+      res.status(200).json({'returnval': 'no rows'});
   });
 });
 app.post('/SchoolCategorytype-service',  urlencodedParser,function (req,res)
@@ -9280,7 +9320,7 @@ app.post('/fnretrivestudent-service' ,urlencodedParser, function (req, res)
       connection.query(qur,function(err, rows){
         if(!err){
           res.status(200).json({'returnval': rows});
-          console.log(rows);
+          // console.log(rows);
         }
         else
           //console.log(err);
@@ -9366,6 +9406,7 @@ app.post('/fnsetstudentinfo-service' , urlencodedParser,function (req, res)
       gender:req.query.Gender,
       grade_id:req.query.stugradeid,
       academic_year:req.query.academic_year,
+      flag:'active'
       }; 
   // console.log(JSON.stringify(response));
    var qur= "SELECT * FROM  md_student WHERE school_id='"+req.query.school_id+"' and id='"+req.query.id+"' and student_name='"+req.query.student_name+"' and  academic_year='"+req.query.academic_year+"' and flag='active'";
@@ -9733,6 +9774,32 @@ app.post('/generatebooksequence-service',  urlencodedParser,function (req,res)
   });
 });
 
+app.post('/FnSetschoolInfo1-service',  urlencodedParser,function (req,res)
+  {  
+    var response={
+         school_id:req.query.school,
+         emp_prefix:'STF',
+         emp_sequence:'1',
+         sec_prefix:'CLS',
+         sec_sequence:'1',
+    };
+     console.log(response);
+    var qur="INSERT INTO school_sequence SET ?";
+    console.log('------------book insert-------------');
+    console.log(qur);
+    connection.query(qur,[response],
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'Inserted!!'});
+    }
+    else{
+      console.log(err);
+     res.status(200).json({'returnval': 'Not Inserted!!'}); 
+    }
+  });
+});
 app.post('/insertbookinfo-service',  urlencodedParser,function (req,res)
   {  
     var response={
@@ -10759,7 +10826,8 @@ app.post('/fnsubmitsection-service' , urlencodedParser,function (req, res)
       gender:req.query.gender,
       grade_id:req.query.grade_id,
       academic_year:req.query.academic_year,
-      flag:"active"
+      flag:'active'
+     
       }; 
   // console.log(JSON.stringify(qurr1));
    var qur= "SELECT * FROM  md_student WHERE school_id='"+req.query.scholid1+"' and id='"+req.query.id+"' and student_name='"+req.query.student_name+"' and  academic_year='"+req.query.academic_year+"' and flag='active'";
@@ -10769,6 +10837,7 @@ app.post('/fnsubmitsection-service' , urlencodedParser,function (req, res)
 
       console.log("------------Student Section------------");
    console.log(qur);
+   console.log('------------------------------------------');
    console.log(qur11)
    connection.query(qur,
     function(err, rows)
@@ -10805,17 +10874,20 @@ app.post('/fnsubmitsection-service' , urlencodedParser,function (req, res)
 
 app.post('/previoussection-service',  urlencodedParser,function (req,res)
   {
-  /*var qur="SELECT * from md_student where id='"+req.query.admission_no+"'  and school_id='"+req.query.scholid1+"' and grade_id='"+req.query.grade_id+"'and school_type='"+req.query.school_type+"' and academic_year='"+req.query.academic_year+"'";  */
+     
+     var qur="SELECT * from md_student where id='"+req.query.admission_no+"'  and school_id='"+req.query.scholid1+"' and grade_id='"+req.query.grade_id+"'and school_type='"+req.query.school_type+"' and academic_year='"+req.query.academic_year+"' and flag='active'";  
 
-  var qur="SELECT student_name,gender,dob,class_id from md_student where id='"+req.query.admission_no+"'  and school_id='"+req.query.scholid1+"' and grade_id='"+req.query.grade_id+"'and school_type='"+req.query.school_type+"' and academic_year='"+req.query.academic_year+"' and flag='active'";
-  console.log("--------------pre student-----------------")
+ /* var qur="SELECT student_name,gender,dob,class_id from md_student where id='"+req.query.admission_no+"'  and school_id='"+req.query.scholid1+"' and grade_id='"+req.query.grade_id+"'and school_type='"+req.query.school_type+"' and academic_year='"+req.query.academic_year+"' and flag='active'";*/
+
+  console.log("--------------pre student-----------------");
   console.log(qur);
+  console.log('*************************************');
   connection.query(qur,
     function(err, rows)
     {
     if(!err)
     { 
-      //console.log(JSON.stringify(rows));  
+        // console.log(JSON.stringify(rows));  
        if(rows.length>0) 
        {
           console.log(rows);
@@ -13737,6 +13809,27 @@ var qur="UPDATE "+req.query.studenttable+" SET "+req.query.dbstudentname+"='"+re
   });
 });
 
+app.post('/fnsectioninfo-service', urlencodedParser,function (req,res)
+  {  
+
+ var qur="delete from "+req.query.studenttable+" WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and ("+req.query.dbgradeid+"='"+req.query.gradeid1+"' or "+req.query.dbgradename+"='"+req.query.gradename1+"' )and ("+req.query.dbclassid+"='"+req.query.classid1+"' or  "+req.query.dbsection+"='"+req.query.section1+"')";
+     console.log('------------update return status -------------');
+     console.log(qur);
+     console.log('---------------------------------------------');
+     connection.query(qur,
+    function(err, rows)
+    {
+     if(!err)
+    {    
+       res.status(200).json({'returnval': 'delete!!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not delete!!'}); 
+    }
+  });
+});
 
 app.post('/fnstudpersonalinfo-service',  urlencodedParser,function (req,res)
   {  

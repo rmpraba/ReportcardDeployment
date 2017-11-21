@@ -1,0 +1,54 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="single-student-markentry-service">
+ 
+  <template>
+   
+    <iron-ajax  
+        method="post"
+        id="singlestudentgradeajax"
+        url="{{singlestudentgradeurl}}"
+        params="{{singlestudentgradeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="singlestudentgradeResponse"
+        debounce-duration="300"
+    >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'single-student-markentry-service',
+
+      singlestudentgrade:function(){
+         this.singlestudentgradeurl=sessionStorage.getItem("addrinfo")+"/singlestudentgrade-service";
+         var obj={"schoolid":"","loggedid":"","roleid":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         this.singlestudentgradeparam= obj;
+         this.$.singlestudentgradeajax.generateRequest();
+        
+      },
+  singlestudentgradeResponse:function(e){
+         var res=e.detail.response.returnval;
+         alert(JSON.stringify(res));
+        
+      },
+    });
+  })();
+  </script>
+</dom-module>
