@@ -840,8 +840,8 @@
         }
        }
        else{
-
-        for(var i=0;i<conarr.length;i++){
+    
+      for(var i=0;i<conarr.length;i++){
         var valueid="";
         var valuename="";
         for(var j=0;j<valuearr.length;j++){
@@ -890,7 +890,7 @@
                 else
                 bldvalueid=bldvalueid+","+bldvaluearr[j].bldvalueid;
                 if(bldvaluename=="")
-                bldvaluename=skarr[j].bldvaluename;
+                bldvaluename=bldvaluearr[j].bldvaluename;
                 else
                 bldvaluename=bldvaluename+","+bldvaluearr[j].bldvaluename;
             }
@@ -915,7 +915,8 @@
         obj.conceptname=conarr[i].conceptname;
         obj.subconceptid="";
         obj.subconceptname="";
-        obj.period=period;
+         obj.period=period;
+         obj.sno=sno;
        obj.plannedfromdate=localStorage.getItem("localsess_from_service");
         obj.plannedtodate=localStorage.getItem("localsess_last_service");
         obj.skill=conarr[i].skillname;
@@ -999,12 +1000,12 @@
       var subarr1=[];
       var bldvaluearr1=[];
  
-       /* alert(JSON.stringify(gloconarr));
+      /*  alert(JSON.stringify(gloconarr));
         alert(JSON.stringify(glovaluearr));
         alert(JSON.stringify(gloskarr));
         alert(JSON.stringify(glosubarr));
-        alert(JSON.stringify(globldvaluearr));*/
-
+        alert(JSON.stringify(globldvaluearr));
+*/
       conarr1=gloconarr;
       valuearr1=glovaluearr;
       skarr1=gloskarr;
@@ -1110,7 +1111,7 @@ if(subarr1.length!=0){
         obj.teachingaid=teachingaid;
         obj.remarks=remark;
         obj.termid=sessionStorage.getItem("termid"); 
-     //   alert(JSON.stringify(obj));
+     //  alert(JSON.stringify(obj));
         this.fnmasterplaneditparam=obj;
        this.$.fnmasterplaneditajax.generateRequest();      
         }
@@ -1166,7 +1167,7 @@ if(subarr1.length!=0){
                 else
                 bldvalueid=bldvalueid+","+bldvaluearr1[j].bldvalueid;
                 if(bldvaluename=="")
-                bldvaluename=skarr1[j].bldvaluename;
+                bldvaluename=bldvaluearr1[j].bldvaluename;
                 else
                 bldvaluename=bldvaluename+","+bldvaluearr1[j].bldvaluename;
             }
@@ -1176,7 +1177,7 @@ if(subarr1.length!=0){
         }
         c1=conarr1.length;
         for(var i=0;i<conarr1.length;i++){
- this.fnmasterplanediturl=sessionStorage.getItem("addrinfo")+"/fnmasterplanedit-service";
+    this.fnmasterplanediturl=sessionStorage.getItem("addrinfo")+"/fnmasterplanedit-service";
         var obj={};
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
@@ -1192,6 +1193,7 @@ if(subarr1.length!=0){
         obj.subconceptid="";
         obj.subconceptname="";
         obj.period=period;
+        obj.sno=sno;
        obj.plannedfromdate=localStorage.getItem("localsess_from_service");
         obj.plannedtodate=localStorage.getItem("localsess_last_service");
         obj.skill=conarr1[i].skillname;
@@ -1205,6 +1207,7 @@ if(subarr1.length!=0){
         obj.remarks=remark;
         obj.termid=sessionStorage.getItem("termid"); 
         this.fnmasterplaneditparam=obj;
+        alert(JSON.stringify(obj));
         this.$.fnmasterplaneditajax.generateRequest();      
         }}}
   

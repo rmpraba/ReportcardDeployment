@@ -9,14 +9,13 @@ var dbserver_ip_address = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1'
 var connection = mysql.createConnection({
   // host     : '5919a4ea89f5cfaf40000031-samsidh.rhcloud.com',
   host :'localhost',
-  // user     : 'root',
-  // password : 'admin',
-  // database : 'reportcardcheck' 
-  port     : '62631',
-  user     : 'adminM1qnV1d',
-  password : 'HC2bIf7Sk2LD',
-  database : 'scorecarddb'
-
+  user     : 'root',
+  password : '',
+  database : 'reportcardcloud' 
+  // port     : '62631',
+  // user     : 'adminM1qnV1d',
+  // password : 'HC2bIf7Sk2LD',
+  // database : 'scorecarddb'
 });
 
 var bodyParser = require('body-parser'); 
@@ -13719,7 +13718,7 @@ app.post('/fnpersonalinfomation-service',  urlencodedParser,function (req,res)
 app.post('/sectionupdate1-service',  urlencodedParser,function (req,res)
   {  
 
-   var qur="UPDATE md_section SET section_id='"+req.query.newsection+"',section_name='"+req.query.newsection1+"  WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and section_id='"+req.query.section1+"'";
+   var qur="UPDATE md_section SET section_id='"+req.query.newsection+"',section_name='"+req.query.newsection1+"'  WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and section_id='"+req.query.section1+"'";
     console.log('------------++++++++++++++++++++ -------------');
     console.log(qur);
     connection.query(qur,
