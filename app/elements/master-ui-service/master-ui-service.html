@@ -1171,39 +1171,19 @@
             on-response="secctionupdateResponse"
             debounce-duration="300">
       </iron-ajax>
-
       <iron-ajax
-            id="secctionupdatezzajax"
-            url="{{secctionupdatezzurl}}"
-            params="{{secctionupdatezzparam}}"
+            id="secctionupdate1ajax"
+            url="{{secctionupdate1url}}"
+            params="{{secctionupdate1param}}"
             handle-as="json"
             content-type="application/json"
             method="post"
-            on-response="secctionupdatezzResponse"
+            on-response="secctionupdate1Response"
             debounce-duration="300">
       </iron-ajax>
+      
 
-      <iron-ajax
-            id="secctionupdateyyyajax"
-            url="{{secctionupdateyyyurl}}"
-            params="{{secctionupdateyyyparam}}"
-            handle-as="json"
-            content-type="application/json"
-            method="post"
-            on-response="secctionupdateyyyResponse"
-            debounce-duration="300">
-      </iron-ajax>
-
-            <iron-ajax
-            id="teacherupdatesectionajax"
-            url="{{teacherupdatesectionurl}}"
-            params="{{teacherupdatesectionparam}}"
-            handle-as="json"
-            content-type="application/json"
-            method="post"
-            on-response="teacherupdatesectionResponse"
-            debounce-duration="300">
-          </iron-ajax>
+      
            <iron-ajax
             id="curiculamdeleteajax"
             url="{{curiculamdeleteurl}}"
@@ -3573,75 +3553,56 @@ insertschoolTypename:function(schooltypesarr)
             alert(JSON.stringify(res));
             document.querySelector('student-edit-card').secionupdatezarr=res;
         },*/
-        secctionupdate:function(editpassarr)
+        secctionupdate:function(sectgradeid,sectgradename,sectionname,sectionid,newsectionname,studenttablearr)
         {
-            for(var i=0;i<editpassarr.length;i++)
+            this.secctionupdate1url=sessionStorage.getItem("addrinfo")+"/sectionupdate1-service";
+                   var obj={};
+                    obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+                    obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+                   obj.section1=localStorage.getItem('curr_sess_oldsectionname');
+                    obj.newsection=newsectionname.toUpperCase();
+                    obj.newsection1=newsectionname.toLowerCase();;
+                   this.secctionupdate1param=obj;
+            //       alert(JSON.stringify(obj));
+                  this.$.secctionupdate1ajax.generateRequest();
+            for(var i=0;i<studenttablearr.length;i++)
             {
-                var grade_id=editpassarr[i].gradeid;
-                var grade_name=editpassarr[i].gradename;
-                var sectionid=editpassarr[i].sectionid;
-                var class_id=editpassarr[i].classid;
-                var sectionname=editpassarr[i].newsectionname;
 
+       if(studenttablearr[i].studenttable !="md_student"){
+         
+         this.secctionupdateurl=sessionStorage.getItem("addrinfo")+"/sectionupdate-service";
+                   var obj={};
+                    obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+                    obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+                    obj.studenttable=studenttablearr[i].studenttable;
+                    obj.dbgradeid=studenttablearr[i].grade_id;
+                    obj.dbgradename=studenttablearr[i].gradename;
+                    obj.dbclassid=studenttablearr[i].classid;
+                    obj.dbsection=studenttablearr[i].section;
+                    obj.gradeid1=sectgradeid;
+                    obj.gradename1=sectgradename;
+                    obj.classid1=sectionid;
+                    obj.section1=localStorage.getItem('curr_sess_oldsectionname');
+                    obj.newsection=newsectionname;
+                   this.secctionupdateparam=obj;
+                  // alert(JSON.stringify(obj));
+                  this.$.secctionupdateajax.generateRequest();
+               }
 
-                this.secctionupdateurl=sessionStorage.getItem("addrinfo")+"/fnupdatesectionzzz-service";
-                 var obj={"school_id":"","sectionid":"","sectionname":"","academic_year":"","oldsection":""};
-                 obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
-                 obj.sectionid=sectionid;
-                 obj.oldsection=localStorage.getItem('curr_sess_oldsectionname');
-                 //obj.classid=classid;
-                 obj.sectionname=sectionname;
-                 obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
-                    //alert(JSON.stringify(obj));
-                 this.secctionupdateparam=obj;
-                 this.$.secctionupdateajax.generateRequest();
+              }  
 
-
-
-                 this.secctionupdatezzurl=sessionStorage.getItem("addrinfo")+"/fnupdatesectionzzz11-service";
-                 var obj={"school_id":"","grade_id":"","sectionid":"","classid":"","academic_year":""};
-                 obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
-                 obj.grade_id=grade_id;
-                 obj.sectionid=sectionid;
-                 obj.classid=class_id;
-                 obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
-                    //alert(JSON.stringify(obj));
-                 this.secctionupdatezzparam=obj;
-                 this.$.secctionupdatezzajax.generateRequest();
-
-                this.secctionupdateyyyurl=sessionStorage.getItem("addrinfo")+"/fnupdatesectionzzz222-service";
-                 var obj={"school_id":"","grade_name":"","sectionid":"","classid":"","academic_year":""};
-                 obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
-                 obj.grade_name=grade_name;
-                 obj.sectionid=sectionid;
-                 obj.classid=class_id;
-                 obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
-                    //alert(JSON.stringify(obj));
-                 this.secctionupdateyyyparam=obj;
-                 this.$.secctionupdateyyyajax.generateRequest();
-
-
-                 this.teacherupdatesectionurl=sessionStorage.getItem("addrinfo")+"/fnteachersect-service";
-                 var obj={"school_id":"","sectionid":"","classid":"","academic_year":""};
-                 obj.school_id=sessionStorage.getItem("curr_sess_loggedschoolid");
-                 obj.sectionid=sectionid;
-                 obj.classid=class_id;
-                 obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
-                    //alert(JSON.stringify(obj));
-                 this.teacherupdatesectionparam=obj;
-                 this.$.teacherupdatesectionajax.generateRequest();
-
-             }  
-        },
+           
+          
+           },
         secctionupdateResponse:function(e)
         {
             var res=e.detail.response.returnval;
-           // alert(JSON.stringify(res));
+         //  alert(JSON.stringify(res));
         },
-        secctionupdatezzResponse:function(e)
+        secctionupdate1Response:function(e)
         {
             var res=e.detail.response.returnval;
-            //alert(JSON.stringify(res));
+          //  alert(JSON.stringify(res));
         },
         secctionupdateyyyResponse:function(e)
         {

@@ -136,10 +136,16 @@
       FnSelectType:function(e){
         type=e.target.selectedItem.value;
         this.$.mappingservice.fetchgradesforgradetorolemapService(type);
+         if(roleid!='class-teacher'){
+        document.querySelector('school-grade-to-role-mapping-item').fnsetvalue();
+
+         }
+      
       },
       FnSelectGrade:function(e){
         gradeid=e.target.selectedItem.value;
         gradename=(e.target.selectedItem.textContent).trim();
+        document.querySelector('school-grade-to-role-mapping-item').fnsetvalue();
       },
       FnSetRole:function(selectedrole){
         this.FnCancel();
@@ -178,12 +184,9 @@
         document.querySelector('#gradetoroleschooltype').selected=-1;
         document.querySelector('#gradetorolegrade').selected=-1;
       },
-      FnSetSelectedRole:function(rolearr){
-        // alert(document.querySelector('school-grade-to-role-mapping-item'));
-        this.$.sgtrmi.FnSetSelectedRole(rolearr);
-        // arr=rolearr;
-        // alert(JSON.stringify(arr));
-      },
+    FnSetSelectedRole:function(rolearr){
+       this.$.sgtrmi.FnSetSelectedRole(rolearr);
+       },
       FnRefresh:function(){
         mappingarr=[];
         this.rolesarr=[];
@@ -191,7 +194,7 @@
         this.hidebtn=true;
         this.hidegradeselection=true;
         this.hidegeneratebtn=true;
-        document.querySelector('#gradetoroleschooltype').selected=-1;
+         document.querySelector('#gradetoroleschooltype').selected=-1;
         document.querySelector('#gradetorolegrade').selected=-1;
       }
     });

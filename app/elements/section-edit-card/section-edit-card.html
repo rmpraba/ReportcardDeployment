@@ -1,12 +1,4 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
@@ -88,13 +80,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             on-response="gradesectioneditResponse"
             debounce-duration="300">
       </iron-ajax>  
-
+      <iron-ajax           
+        id="sectionconficsajax"
+        url="../../configfile/section.json"
+        params="{{sectionconficsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="sectionconficsResponse"
+        debounce-duration="300">
+     </iron-ajax>
   </template>
   <script>
   (function() {
     'use strict';
 
       var editpassarr=[];
+      var studenttablearr=[];
     Polymer({
       is: 'section-edit-card',
 
@@ -102,6 +103,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      {
         this.sectgradename=e.target.selectedItem.textContent.trim();
         this.sectgradeid=e.target.selectedItem.value;
+
+        this.$.sectionconficsajax.generateRequest();
+
        // alert(this.sectgradename);
         //this.$.uiservice.gradesectionedit(this.sectgradename);
 
@@ -113,8 +117,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               this.gradesectioneditparam=obj1;
              // alert(JSON.stringify(obj1));
               this.$.gradesectioneditajax.generateRequest();
-     },
-
+       },
+    sectionconficsResponse:function(e){
+    studenttablearr=e.detail.response; 
+       // alert(JSON.stringify(studenttablearr));
+      },
       gradesectioneditResponse:function(e)
         {
             var res=e.detail.response.returnval;   
@@ -127,6 +134,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.sectionid=e.target.selectedItem.value;
           this.oldsectionname=e.target.selectedItem.textContent.trim();
           //alert(this.sectionid+" "+this.oldsectionname);
+        this.$.sectionconficsajax.generateRequest();
+
      },
 
      fnsectionsubmit:function()
@@ -139,19 +148,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           else
           {
-            localStorage.setItem('curr_sess_oldsectionname',this.oldsectionname);
-
-            var newsectionname=this.sectionname.toUpperCase();
+         localStorage.setItem('curr_sess_oldsectionname',this.oldsectionname);
+              var newsectionname=this.sectionname.toUpperCase();
               var obj={"gradeid":"","gradename":"","sectionid":"","classid":"","newsectionname":""};
               obj.gradeid=this.sectgradeid;
               obj.gradename=this.sectgradename;
               obj.sectionid=this.sectionname;
               obj.classid=this.sectionid;
               obj.newsectionname=newsectionname;
-              editpassarr.push(obj);
               //alert(JSON.stringify(editpassarr));
-
-                  this.$.uiservice.secctionupdate(editpassarr); 
+            this.$.uiservice.secctionupdate(this.sectgradeid,this.sectgradename,this.sectionname,this.sectionid,newsectionname,studenttablearr); 
                   this.$.mydialog.toggleDialog();
                   this.FnRefresh();
           }

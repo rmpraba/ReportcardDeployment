@@ -8437,6 +8437,8 @@ app.post('/deletesubjectz-service' ,  urlencodedParser,function (req, res)
     }
     });
     });
+
+ 
 app.post('/deletesubjectz11-service' ,  urlencodedParser,function (req, res)
 {  
    /*      var qur="SELECT * FROM mp_teacher_grade where school_id='"+req.query.school_id+"' and id='"+req.query.empid+"'and subject_id='"+req.query.subjectid+"'"; 
@@ -11190,81 +11192,9 @@ app.post('/fnupdatesectionzzz-service' ,  urlencodedParser,function (req, res)
 });
 
 
-app.post('/fnupdatesectionzzz11-service' ,  urlencodedParser,function (req, res)
-{  
-
-    var qur="UPDATE  mp_grade_section SET section_id='"+req.query.sectionid+"' where school_id='"+req.query.school_id+"' and grade_id='"+req.query.grade_id+"' and class_id='"+req.query.classid+"' and academic_year='"+req.query.academic_year+"'";
-
-    console.log("-------Section creation------------");
-    console.log(qur);
-
-    connection.query(qur,
-    function(err, rows)
-    {
-    if(!err)
-    {
-      res.status(200).json({'returnval': 'Updated!'});
-    }
-    else
-    {
-    //  console.log(err);
-      res.status(200).json({'returnval': 'Not Updated!'});
-    }
-    });
-    
-});
-
-
-app.post('/fnupdatesectionzzz222-service' ,  urlencodedParser,function (req, res)
-{  
-
-
-    var qur="UPDATE  md_class_section SET section='"+req.query.sectionid+"' where school_id='"+req.query.school_id+"' and class='"+req.query.grade_name+"' and id='"+req.query.classid+"' and academic_year='"+req.query.academic_year+"' ";
-
-    console.log("-------Section creation------------");
-    console.log(qur);
-
-    connection.query(qur,
-    function(err, rows)
-    {
-    if(!err)
-    {
-      res.status(200).json({'returnval': 'Updated!'});
-    }
-    else
-    {
-    //  console.log(err);
-      res.status(200).json({'returnval': 'Not Updated!'});
-    }
-    });
-    
-});
 
 
 
-app.post('/fnteachersect-service' ,  urlencodedParser,function (req, res)
-{  
-
-    var qur="UPDATE  mp_teacher_grade  SET section_id='"+req.query.sectionid+"' where school_id='"+req.query.school_id+"' and class_id='"+req.query.classid+"' and academic_year='"+req.query.academic_year+"' ";
-
-    console.log("-------Section creation------------");
-    console.log(qur);
-
-    connection.query(qur,
-    function(err, rows)
-    {
-    if(!err)
-    {
-      res.status(200).json({'returnval': 'Updated!'});
-    }
-    else
-    {
-    //  console.log(err);
-      res.status(200).json({'returnval': 'Not Updated!'});
-    }
-    });
-    
-});
 
 
 app.post('/gradesectioneditzzzz-service',  urlencodedParser,function (req,res)
@@ -13785,7 +13715,27 @@ app.post('/fnpersonalinfomation-service',  urlencodedParser,function (req,res)
     }
   });
 });
+app.post('/sectionupdate1-service',  urlencodedParser,function (req,res)
+  {  
 
+   var qur="UPDATE md_section SET section_id='"+req.query.newsection+"',section_name='"+req.query.newsection1+"  WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and section_id='"+req.query.section1+"'";
+    console.log('------------++++++++++++++++++++ -------------');
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      console.log(rows);
+      res.status(200).json({'returnval': 'Updated!!'});
+    }
+    else
+    {
+     console.log(err);
+     res.status(200).json({'returnval': 'Not Updated!!'}); 
+    }
+  });
+});
 app.post('/fnstudnameinfo-service',  urlencodedParser,function (req,res)
   {  
 
@@ -13807,6 +13757,29 @@ var qur="UPDATE "+req.query.studenttable+" SET "+req.query.dbstudentname+"='"+re
     }
   });
 });
+
+app.post('/sectionupdate-service',  urlencodedParser,function (req,res)
+  {  
+
+var qur="UPDATE "+req.query.studenttable+" SET "+req.query.dbsection+"='"+req.query.newsection+"' WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and ("+req.query.dbgradeid+"='"+req.query.gradeid1+"' or "+req.query.dbgradename+"='"+req.query.gradename1+"' )and ("+req.query.dbclassid+"='"+req.query.classid1+"' or  "+req.query.dbsection+"='"+req.query.section1+"')";
+     console.log('------------delete return status -------------');
+     console.log(qur);
+     console.log('---------------------------------------------');
+     connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {    
+      res.status(200).json({'returnval': 'Updated!!'});
+    }
+    else
+    {
+     console.log(err);
+     res.status(200).json({'returnval': 'Not Updated!!'}); 
+    }
+  });
+});
+
 
 app.post('/fnsectioninfo-service', urlencodedParser,function (req,res)
   {  

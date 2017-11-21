@@ -97,6 +97,9 @@
               </span> -->
             </div>
           </div>
+     <paper-dialog id="emplyspinisz" modal>
+      <paper-spinner id="empspinneridz"></paper-spinner>
+    </paper-dialog>
           <student-add-service id="studservice"></student-add-service>
   </template>
   <script>
@@ -295,6 +298,7 @@
           this.$.studservice.fetchstudentinfo();
 
           this.fnrefremve();
+          this.openspinr();
          }
          else{
           this.$.studservice.deletestudentinfo(this.studentid,this.gradeid,this.classid);
@@ -303,11 +307,12 @@
           this.$.studservice.fetchstudentinfo();
 
           this.fnrefremve();
+          this.openspinr();
         }}},
         recall:function(e){
          this.$.studservice.fetchstudentinfo();
          this.$.studservice.fetchstudentremove();
-
+         this.clsspiner();
         },
     fnrefremve:function()
     {
@@ -321,7 +326,16 @@
         document.querySelector('#studtermremvid').selected=-1;
         this.hideremovecls=true;
     },
-   
+     clsspiner:function()
+      {
+          this.$.empspinneridz.active=false;
+          document.querySelector('#emplyspinisz').close();
+      },
+      openspinr:function()
+      {
+          document.querySelector('#emplyspinisz').open();
+          this.$.empspinneridz.active=true;
+      }
 
     });
   })();
