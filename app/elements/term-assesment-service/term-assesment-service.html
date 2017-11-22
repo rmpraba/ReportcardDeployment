@@ -569,12 +569,13 @@
       },
       callGradeService:function(){
          this.gradeurl=sessionStorage.getItem("addrinfo")+"/grade-service";
-         var obj={"schoolid":"","loggedid":"","roleid":""};
+         var obj={"schoolid":"","loggedid":"","roleid":"","term":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
-         this.gradeparam= obj;
+         obj.term=localStorage.getItem('curr_sess_termname');
+         this.gradeparam=obj;
          this.$.gradeajax.generateRequest();
          this.callFetchGrade();
       },

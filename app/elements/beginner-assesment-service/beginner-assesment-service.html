@@ -260,6 +260,8 @@
          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.term=localStorage.getItem('curr_sess_termname');
+         
          this.gradeparam= obj;
          this.$.gradeajax.generateRequest();
       },

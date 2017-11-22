@@ -222,6 +222,70 @@ app.post('/grade-service',  urlencodedParser,function (req, res)
   {
     var qur="select grade_name,grade_id from md_grade where grade_id "+
   "in(select grade_id from mp_teacher_grade where "+
+  "school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and academic_year='"+req.query.academicyear+"') and grade_id in( select  grade_id from md_grade_assesment_mapping where  school_id='"+req.query.schoolid+"'  and academic_year='"+req.query.academicyear+"' and  term_name='"+req.query.term+"')";
+  }
+  else if(req.query.roleid=='class-teacher')
+  {
+    var qur="select grade_name,grade_id from md_grade where grade_id "+
+    "in(select grade_id from mp_teacher_grade where "+
+    "school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and academic_year='"+req.query.academicyear+"') and grade_id in( select  grade_id from md_grade_assesment_mapping where  school_id='"+req.query.schoolid+"'  and academic_year='"+req.query.academicyear+"' and  term_name='"+req.query.term+"')";
+  }
+   else if(req.query.roleid=='co-ordinator')
+  {
+    var qur="select grade_name,grade_id from md_grade where grade_id "+
+    "in(select grade_id from mp_teacher_grade where "+
+    "school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and academic_year='"+req.query.academicyear+"') and grade_id in( select  grade_id from md_grade_assesment_mapping where  school_id='"+req.query.schoolid+"'  and academic_year='"+req.query.academicyear+"'and  term_name='"+req.query.term+"')";
+  }
+  else if(req.query.roleid=='headmistress')
+  {
+    var qur="select grade_name,grade_id from md_grade where grade_id "+
+    "in(select grade_id from mp_teacher_grade where "+
+    "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')";
+  }
+   else if(req.query.roleid=='principal'||req.query.roleid=='viceprincipal'||req.query.roleid=='headofedn'||req.query.roleid=='management')
+  {
+    var qur="select grade_name,grade_id from md_grade where grade_id "+
+    "in(select grade_id from mp_teacher_grade where "+
+    "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')";
+  }
+
+  console.log('-------------------grade----------------------');
+  console.log(qur);
+
+  // connection.query('select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where ? and ? and ?)',[roleid,schoolid,loggedid],
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
+
+
+
+app.post('/grade1-service',  urlencodedParser,function (req, res)
+{
+  var schoolid={school_id:req.query.schoolid};
+  var loggedid={id:req.query.loggedid};
+  var roleid={role_id:req.query.roleid};
+  console.log(roleid);
+  // var qur="select grade_name from md_grade where grade_id in(select grade_id from mp_teacher_grade where id='"+loggedid+"')";
+  if(req.query.roleid=='subject-teacher')
+  {
+    var qur="select grade_name,grade_id from md_grade where grade_id "+
+  "in(select grade_id from mp_teacher_grade where "+
   "school_id='"+req.query.schoolid+"' and id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and academic_year='"+req.query.academicyear+"')";
   }
   else if(req.query.roleid=='class-teacher')
@@ -272,6 +336,15 @@ app.post('/grade-service',  urlencodedParser,function (req, res)
       console.log(err);
   });
 });
+
+
+
+
+
+
+
+
+
 
 //fetching section info
 app.post('/section-service',  urlencodedParser,function (req, res)
