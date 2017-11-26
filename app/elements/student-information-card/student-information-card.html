@@ -302,13 +302,15 @@
         </paper-dropdown-menu>
         </div>
          <div class="fields">
-      <paper-dropdown-menu  label=" Term">
-        <paper-menu id="newstudenhifotermid" class="dropdown-content" on-iron-select="fnsetstudentterm">
-         <paper-item value="{{Term1}}">Term1</paper-item>
-         <paper-item value="{{Term2}}">Term2</paper-item>
-         <paper-item value="{{Term3}}">Term3</paper-item>
-        </paper-menu>
-        </paper-dropdown-menu>
+     
+      <paper-dropdown-menu id="term" label="Select Term">
+           <paper-menu id="newstudenhifotermid" class="dropdown-content"   on-iron-select="fnsetstudentterm" attr-for-selected="value" required>
+                  <template is="dom-repeat" items="{{termarrrs}}" as="items">
+                  <paper-item value="{{items.term_name}}">{{items.term_name}}</paper-item>
+                 </template>
+              </paper-menu>
+     </paper-dropdown-menu>
+        
         </div>
       </div>
       <center>  <paper-button on-click="fnacadamics" style="color:white;background-color:black;">Submit</paper-button>  </center>
@@ -423,8 +425,8 @@ var dobdate;
              this.$.studservice.fnlaninfomation1(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.thirdlen,this.value);
       }
        },
-      fnacadamics:function(e){
-  if(this.gradenamez=='Nursery'||this.gradenamez=='Junior KG'||this.gradenamez=='Senior KG'||this.gradenamez=='Grade-1'||this.gradenamez=='Grade-2'||this.gradenamez=='Grade-3'||this.gradenamez=='Grade-4'){
+fnacadamics:function(e){
+    if(this.gradenamez=='Nursery'||this.gradenamez=='Junior KG'||this.gradenamez=='Senior KG'||this.gradenamez=='Grade-1'||this.gradenamez=='Grade-2'||this.gradenamez=='Grade-3'||this.gradenamez=='Grade-4'){
     this.langprefs="Second Language";
     this.schooltype='primary';
 this.$.studservice.fnacadamicsinfomation(this.studid,this.gradeidzzsss,this.gradenamez,this.classid,this.sectionid,this.termid,this.value,this.showdate,gender,this.ageofyrs,this.langprefs);
@@ -630,6 +632,8 @@ fnupdatestudent:function(e){
           document.querySelector('#studentslistz1').selected=-1;
           this.$.studservice.fngetstudentallinfo(this.studentid);
           this.$.studservice.fngetstudname1(this.studentid);
+            this.$.studservice.getalltermmarks1(this.studentid);
+      
           this.studid=this.studentid;
           document.querySelector('#newifosectionidzza').selected=-1;
           this.classid="";
@@ -743,7 +747,7 @@ fnupdatestudent:function(e){
     document.querySelector('#secondlanid').selected=-1;
     document.querySelector('#studentgradezid').selected=-1;
     document.querySelector('#newifosectionidzza').selected=-1;
-    document.querySelector('#newstudenhifotermid').selected=-1;
+  //  document.querySelector('#newstudenhifotermid').selected=-1;
   },
 
     fnnewreff:function()
@@ -766,7 +770,7 @@ fnupdatestudent:function(e){
        this.$.languageinfoid.opened=false; 
        document.querySelector('#studentgradezid').selected=-1;
     document.querySelector('#newifosectionidzza').selected=-1;
-    document.querySelector('#newstudenhifotermid').selected=-1;
+   document.querySelector('#newstudenhifotermid').selected=-1;
        
     },
     parentsubmitinfo:function()

@@ -586,6 +586,7 @@ var qur="select subject_sub_category_name from md_subject_sub_category where sub
     connection.query(qur1,function(err, rows){
     if(!err)
     {  
+      
       if(rows[0].grade_id=='g2'|| rows[0].grade_id=='g3' || rows[0].grade_id=='g4' ||rows[0].grade_id=='g1'){
      
      qur="select distinct(term_name) from tr_term_assesment_marks where student_id='"+req.query.studentid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'";

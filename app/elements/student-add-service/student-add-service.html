@@ -331,6 +331,16 @@
         on-response="getalltermmarksResponse"
         debounce-duration="300">
       </iron-ajax>
+       <iron-ajax
+        method="post"
+        id="getalltermmarks1ajax"
+        url="{{getalltermmarks1url}}"
+        params="{{getalltermmarks1param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getalltermmarks1Response"
+        debounce-duration="300">
+      </iron-ajax>
      <iron-ajax           
         id="studentconficsajax"
         url="../../configfile/student.json"
@@ -387,15 +397,29 @@ getalltermmarks:function(stuid)
       obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
       obj.studentid=stuid;
       this.getalltermmarksparam=obj;
-      alert(JSON.stringify(obj));
       this.$.getalltermmarksajax.generateRequest();
         },
 getalltermmarksResponse:function(e)
         {
   var res=e.detail.response.returnval;
-  alert(JSON.stringify(res));
-  document.querySelector("student-remove-card").termarrs=res;
+   document.querySelector("student-remove-card").termarrs=res;
         }, 
+        getalltermmarks1:function(stuid)
+        {
+  this.getalltermmarks1url=sessionStorage.getItem("addrinfo")+"/getalltermmarks-service";
+  var obj={"school_id":"","academic_year":""};
+      obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+      obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+      obj.studentid=stuid;
+      this.getalltermmarks1param=obj;
+      
+      this.$.getalltermmarks1ajax.generateRequest();
+        },
+getalltermmarks1Response:function(e)
+        {
+  var res=e.detail.response.returnval;
+  document.querySelector("student-information-card").termarrrs=res;
+      }, 
 fnsinglegrademapping:function(empid,arr,subjectid){
   len1=arr.length;
     for(var i=0;i<arr.length;i++){
