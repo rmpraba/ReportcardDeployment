@@ -73,9 +73,9 @@
         text-transform: none;
       }
     </style>
-    <div>
+    <div>  
       <div class="hrspace" id="enrichck1">
-          <paper-checkbox style="margin-left: -9%;" id="enrtchk" on-change="excelmark">Excel Upload</paper-checkbox>  
+   <paper-checkbox style="margin-left: -9%;" id="enrtchk" on-change="excelmark">Excel Upload</paper-checkbox>  
               <!-- <label>Excel Uploading</label> -->
           <input type="button" id="btn2" onclick="tableToExcel('dynamicreporttable11', 'Mark Report')" value="Download Template">
       </div>
@@ -136,9 +136,22 @@
   </template>
   <script type="text/javascript">
   var array=[];
+  var array1=[];
+  var tempstudentarr=[];
+  
   function loadFile(event) {
   alasql('SELECT * FROM FILE(?,{headers:true})',[event],function(data){
-    array=data;  
+    array1=data; 
+     for(var i=0;i<array1.length;i++){
+       for(var j=0;j<tempstudentarr.length;j++){
+       // alert(array[i].StudentNo+"  "+tempstudentarr[j].student_id);
+       if(array1[i].StudentNo==tempstudentarr[j].id){
+          array.push(array1[i]);
+         }
+      
+    }  
+    }
+       
   });
   }
   </script>
@@ -162,18 +175,22 @@
     var gradearr=[];
     var detailarr=[];
     var tempassesmetarr=[];
-    Polymer({
+     Polymer({
       is: 'enrichment-dynamic-markentrycard',
       ready:function(){
-      this.disablesave=true;
-        // localStorage.setItem("curr_sess_page","enrichment-dynamic-markentrycard");
-        this.centheadr=true;
-        this.hidebtndivv=true;
-        this.excelheader=true;
+       this.disablesave=true;
+       this.centheadr=true;
+       this.hidebtndivv=true;
+       this.excelheader=true;
         // this.$.componentservice.callcomponentService();        
       },
+      fnstudentarrvalue:function(arr){
+      tempstudentarr=arr;
+     //   alert(JSON.stringify(tempstudentarr));
+
+      },
         fngenrategrade:function(arr){
-         tempassesmetarr=arr;
+        tempassesmetarr=arr;
        },
        FnSave:function(){
         var temp=[];
@@ -207,8 +224,8 @@
       },
         FnClick:function(){
         var temp=[];
-        // alert(JSON.stringify(array));
-       if(array.length==0){
+     
+         if(array.length==0){
         alert("Pls save the file in EXCEL WORKBOOK extension!");
         document.getElementById("readfile").value = "";
        }
@@ -230,13 +247,13 @@
           obj.studentname=array[i].StudentName;
           obj.classid=localStorage.getItem("curr_sess_classid");
           obj.assesmenttype=localStorage.getItem("curr_sess_assesmentname");
-         obj.gradeid=localStorage.getItem("curr_sess_gradeid");;
-         obj.gradename=localStorage.getItem("curr_sess_grade");
-         obj.subjectid=localStorage.getItem("curr_sess_subjectid");
-         obj.subjectname=localStorage.getItem("curr_sess_subject");
-         obj.categoryid=tempassesmetarr[k].category_id;
-         obj.categoryname=tempassesmetarr[k].category_name;
-         obj.subcategoryid=tempassesmetarr[k].sub_category_id;
+          obj.gradeid=localStorage.getItem("curr_sess_gradeid");;
+          obj.gradename=localStorage.getItem("curr_sess_grade");
+          obj.subjectid=localStorage.getItem("curr_sess_subjectid");
+          obj.subjectname=localStorage.getItem("curr_sess_subject");
+          obj.categoryid=tempassesmetarr[k].category_id;
+          obj.categoryname=tempassesmetarr[k].category_name;
+          obj.subcategoryid=tempassesmetarr[k].sub_category_id;
           obj.subcategoryname=tempassesmetarr[k].sub_category_name;
           obj.value=array[i][m];
           obj.grade="";
@@ -245,6 +262,8 @@
                  else{
                       temp=[];
                       array=[];
+                      array1=[];
+                      tempstudentarr=[];
                      alert("Pls import the corrcet file name");
                      document.getElementById("readfile").value = "";
                      }}}}}
@@ -252,6 +271,9 @@
            this.$.beginnerservice.callbamarkinsertService(temp);
            temp=[];
            array=[];
+           array1=[];
+            tempstudentarr=[];
+
            document.getElementById("readfile").value = "";
          this.categorylength="";
        }

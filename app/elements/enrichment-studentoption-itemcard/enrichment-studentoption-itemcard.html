@@ -31,7 +31,7 @@
               studarr.splice(i,1);
             }
           }
-          var obj={};
+         var obj={};
           obj.studentid=this.studentid;
           obj.studentname=this.studentname;
           selectstudentid=this.studentid;
@@ -48,6 +48,13 @@
           }
           document.querySelector('enrichment-studentlevel-card').FnSetStudents(studarr);
           // alert(JSON.stringify(studarr));
+      },
+      Fnsetinfo11:function(arr){
+      for(var i=0;i<studarr.length;i++){
+           var r=studarr[i].studentid;
+           document.querySelector('#studoption'+r).checked=false;
+         }
+       studarr=[];
       }
     });
   })();

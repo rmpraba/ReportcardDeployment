@@ -74,12 +74,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.studensectiongetgradeajax.generateRequest();
         }
           for(var i=0;i<scltypearr.length;i++)
-        {
-             if(scltypearr[i].id!=this.id){
+         {
+              if(scltypearr[i].id!=this.id){
                var sctype=scltypearr[i].id;
                document.querySelector('#'+sctype).checked=false;
                 scltypearr.splice(i,1); 
-        }
+         }
         }
     },
    studensectiongetgradeResponse:function(e)

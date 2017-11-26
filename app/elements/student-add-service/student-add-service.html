@@ -321,6 +321,16 @@
         on-response="fnacadamicsinfomation3Response"
         debounce-duration="300">
       </iron-ajax>
+       <iron-ajax
+        method="post"
+        id="getalltermmarksajax"
+        url="{{getalltermmarksurl}}"
+        params="{{getalltermmarksparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getalltermmarksResponse"
+        debounce-duration="300">
+      </iron-ajax>
      <iron-ajax           
         id="studentconficsajax"
         url="../../configfile/student.json"
@@ -367,6 +377,24 @@ fetchsinglestaffResponse:function(e)
   var res=e.detail.response.returnval;
   //alert(JSON.stringify(res));
   document.querySelector('single-staff-mapping-card').getstudentdet(res);
+        }, 
+        
+getalltermmarks:function(stuid)
+        {
+ this.getalltermmarksurl=sessionStorage.getItem("addrinfo")+"/getalltermmarks-service";
+  var obj={"school_id":"","academic_year":""};
+      obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+      obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+      obj.studentid=stuid;
+      this.getalltermmarksparam=obj;
+      alert(JSON.stringify(obj));
+      this.$.getalltermmarksajax.generateRequest();
+        },
+getalltermmarksResponse:function(e)
+        {
+  var res=e.detail.response.returnval;
+  alert(JSON.stringify(res));
+  document.querySelector("student-remove-card").termarrs=res;
         }, 
 fnsinglegrademapping:function(empid,arr,subjectid){
   len1=arr.length;
@@ -609,7 +637,7 @@ fnlaninfomationResponse:function(e)
                obj.thirdlen=thirdlen;
                obj.name=name;
                this.fnlaninfomation1param=obj;
-               //alert(JSON.stringify(obj));
+              // alert(JSON.stringify(obj));
                this.$.fnlaninfomation1ajax.generateRequest();
         },
 fnlaninfomation1Response:function(e)

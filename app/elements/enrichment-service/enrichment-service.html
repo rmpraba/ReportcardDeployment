@@ -269,17 +269,19 @@
       },
       FnFetchAllBooks:function(){
          this.fetchallbooksurl=sessionStorage.getItem("addrinfo")+"/fetchallbooks-service";
-         var obj={};
-         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-         obj.academicyear=localStorage.getItem("curr_sess_academicyear");  
+          var obj={};
+          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+          obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          this.fetchallbooksparam= obj;
          this.$.fetchallbooksajax.generateRequest();
-      },
+       }, 
       fetchallbooksResponse:function(e){
         var arr=e.detail.response.returnval;
         document.querySelector('enrichment-evaluationmapping-card').bookarr=arr;
       },
-      FnInsertEnrichmentParameterMapping:function(arr){
+        FnInsertEnrichmentParameterMapping:function(arr){
         this.insertenrichmentparametermappingurl=sessionStorage.getItem("addrinfo")+"/insertenrichmentparametermapping-service";
          var obj={};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -439,17 +441,15 @@
         document.querySelector('books-issuance-card').categoryarr=arr;
         document.querySelector('enrichment-booksmapping-card').categoryarr=arr;
       },
-      FnFetchStudentForIssue:function(assesment,gradeid,sectionid,subjectid,categoryid){
+      FnFetchStudentForIssue:function(gradeid,sectionid,subjectid){
         this.fetchstudentforissueurl=sessionStorage.getItem("addrinfo")+"/fetchstudentforissue-service";
         var obj={}; 
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
-        obj.assesment=assesment;
         obj.gradeid=gradeid;
         obj.sectionid=sectionid;
         obj.subjectid=subjectid;
-        obj.categoryid=categoryid;
-        this.fetchstudentforissueparam= obj;
+         this.fetchstudentforissueparam= obj;
         this.$.fetchstudentforissueajax.generateRequest();
       },
       fetchstudentforissueResponse:function(e){
@@ -551,7 +551,7 @@
         }
       },
       assignbooktostudentResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
+         alert(JSON.stringify(e.detail.response.returnval));
         count2++;
         if(count1==count2){
           alert('Mapped successfully!!');

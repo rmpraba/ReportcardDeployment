@@ -65,7 +65,7 @@
                 <paper-input readonly value="{{studid}}"></paper-input>
               </div>
               <div class="field">
-                <paper-input readonly value="{{grade}}"></paper-input>
+       <paper-input readonly value="{{grade}}" on-change="fngetterm"></paper-input>
                 <paper-item hidden>{{gradeid}}</paper-item>
               </div>
             </div>
@@ -79,9 +79,9 @@
               <div class="field">
                 <paper-dropdown-menu id="term" label="Select Term">
                   <paper-menu id="studtermremvid" class="dropdown-content"   on-iron-select="fntermstud" attr-for-selected="value" required>
-                    <paper-item value="Term1">Term1</paper-item>
-                    <paper-item value="Term2">Term2</paper-item>
-                    <paper-item value="Term3">Term3</paper-item>
+                  <template is="dom-repeat" items="{{termarrs}}" as="item">
+                  <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
+                </template>
                   </paper-menu>
               </paper-dropdown-menu>
               </div>
@@ -92,9 +92,6 @@
                 <paper-button id="btn" on-click="fnstuddelete" style="color:white;background-color:black;">Delete</paper-button>
               </span>
 
-              <!-- <span>
-                <paper-button id="btt" on-click="fnstudclear" style="color:white;background-color:black">Cancel</paper-button>
-              </span> -->
             </div>
           </div>
      <paper-dialog id="emplyspinisz" modal>
@@ -113,7 +110,7 @@
       {
         this.hideremovecls=true;
       },
-
+ 
      getstudentdet:function(arr)
      {
         studentnamearr=arr;
@@ -276,8 +273,14 @@
           this.itemArray=[];
          document.querySelector('#'+this.studentslist).selected=-1;
           this.$.studservice.prestudentremovedet(this.studentid);
+            this.$.studservice.getalltermmarks(this.studentid);
+
           this.studid=this.studentid;
           this.hideremovecls=false;
+        },
+        fngetterm:function(e){
+        this.$.studservice.getalltermmarks(this.studentid,this.gradeid);
+       
         },
         fntermstud:function(e)
         {

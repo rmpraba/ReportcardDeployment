@@ -77,6 +77,8 @@
       FnEavaluationMapping:function(){
         document.querySelector('home-page').setPage('enrichment-evaluationmapping-card','');
         document.querySelector('enrichment-evaluationmapping-card').callService();
+              this.$.enrichmentservice.FnFetchAllBooks();
+   
       },
       FnBooksMapping:function(){
         document.querySelector('home-page').setPage('enrichment-booksmapping-card','');

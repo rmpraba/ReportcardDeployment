@@ -100,7 +100,7 @@
               <!-- </template> -->
             </paper-menu>
         </paper-dropdown-menu>
-        <paper-checkbox id="createnewenrichment" on-change="FnNew">Create New</paper-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<paper-checkbox id="createnewenrichment" on-change="FnNew">Create New</paper-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <paper-checkbox id="useexistingenrichment" on-change="FnExisting">Search Existing</paper-checkbox> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <paper-checkbox hidden$="{{hidebookactivity}}" id="enrichmentbook" on-change="FnBook">Book</paper-checkbox>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <paper-checkbox hidden$="{{hidebookactivity}}" id="enrichmentactivity" on-change="FnActivity">Activity</paper-checkbox>        
@@ -115,6 +115,9 @@
       </paper-listbox>
       <paper-input label="{{namelabel}}" value="{{bookname}}" hidden$="{{hidenewbookactivity}}"></paper-input>
       <paper-input label="{{namespeclabel}}" value="{{authorname}}"></paper-input>
+           <input id="readfile" type="file" on-change="loadFile">
+    
+
       <paper-dropdown-menu id="enrichmentbookcreationsubjectt" label="Select Subject" disabled="{{read}}" required>
             <paper-menu id="enrichmentbookcreationsubject" class="dropdown-content"  on-iron-select="FnSelectSubject"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{subjectarr}}">
@@ -167,6 +170,9 @@
         this.hideoldbookactivity=true;
         this.querySelector('#enrichmentsearchbook').style.visibility='hidden';
       },
+       loadFile:function(event){
+  alert(event);
+  },
       FnSetBookInfo:function(bookname,author,subid,subname,catid,catname,quantity){
         this.bookname=bookname;
         this.authorname=author;

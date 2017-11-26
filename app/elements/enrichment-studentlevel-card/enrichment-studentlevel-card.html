@@ -33,6 +33,8 @@
           @apply(--layout-vertical);
           /*@apply(--layout-wrap);*/
           width: 50%;
+          overflow-x: hidden;
+          overflow-y: scroll;
       }
       enrichment-booksoption-itemcard{
         margin-top: 5%;
@@ -41,7 +43,7 @@
         margin-left: 3%;
         margin-top: 5%;
       }
-      .button{
+        .button{
             background: #252626;
             color: white;
             margin-top: 2%;
@@ -63,7 +65,7 @@
     <div  class="innercard1">
     <template is="dom-repeat" items="{{booklevelarr}}">
       <enrichment-booksoption-itemcard bookid="{{item.id}}" bookname="{{item.book_name}}"></enrichment-booksoption-itemcard>
-    </template>
+    </template>   
     </div>
     <div class="innercard">
     <div class="innercard2">
@@ -71,10 +73,10 @@
       <enrichment-studentoption-itemcard studentid="{{item.student_id}}" studentname="{{item.student_name}}"></enrichment-studentoption-itemcard>
     </template>
     </div>
-    <paper-button on-click="FnSubmit" id="btn2" class="button">Submit</paper-button>
     </div>
     </div>
-    
+    <center><paper-button on-click="FnSubmit" id="btn2" class="button">Submit</paper-button></center>
+   
     <enrichment-service id="enrichmentservice"></enrichment-service>
     
   </template>
@@ -95,13 +97,22 @@
         // this.$.enrichmentservice.FnSaveBook();
         if(studarr.length>0)
         this.$.enrichmentservice.FnAssignBookToStudent(studarr);
-      },
-      FnSetStudents:function(stud){
+        this.fnrefres();
+       },
+       FnSetStudents:function(stud){
         studarr=stud;
       },
       FnSetBooks:function(book){
         bookarr=book;
-      }
+      },
+      fnrefres:function(e){
+         alert(JSON.stringify(bookarr));
+         alert(JSON.stringify(studarr));
+        
+    document.querySelector('enrichment-studentoption-itemcard').Fnsetinfo11(studarr);
+          document.querySelector('enrichment-booksoption-itemcard').Fnsetinfo(bookarr);
+ 
+      },
     });
   })();
   </script>

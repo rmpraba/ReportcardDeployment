@@ -88,8 +88,12 @@
         </div>
         <div class="list-group col-sm-12 panel-body form-category">
           <paper-input value={{schoolid}} hidden></paper-input>
-          <div class="col-sm-6">
+          
+           <div class="col-sm-6">
             <paper-input label="School Name"  value="{{schoolname}}" ></paper-input>
+          </div>
+          <div class="col-sm-6">
+            <paper-input label="School Name"  value="{{shortname}}" ></paper-input>
           </div>
           <div class="col-sm-6">
             <paper-input label="Telephone Number" value="{{telnum}}"  allowed-pattern="[0-9]"></paper-input>
@@ -162,7 +166,7 @@
         showupdetails:function()
         {  
           document.querySelector('school-creation-card').fnnedit();
-          document.querySelector('school-creation-card').fn1(this.schoolid,this.schoolname,this.telnum,this.mobile,this.mailid,this.wesite,this.affiliationno,this.boardselection,this.addr,this.addr1,this.addr2,this.addr3);
+        document.querySelector('school-creation-card').fn1(this.schoolid,this.schoolname,this.telnum,this.mobile,this.mailid,this.wesite,this.affiliationno,this.boardselection,this.addr,this.addr1,this.addr2,this.addr3,this.shortname);
          // document.querySelector('school-creation-card').getfocus();
         }
 

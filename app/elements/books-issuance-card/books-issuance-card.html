@@ -15,28 +15,28 @@
         display: block;
       }    
       .card{
-        @apply(--layout-vertical);
+        @apply(--layout-vertical);  
       }
 
       .drop{        
         @apply(--layout-horizontal);
         margin-top:2%;
-        margin-left: 10%;
+        margin-left: 15%;
       }
       paper-dropdown-menu{
         width: 15%;
-        margin-left: 3%;
+        margin-left: 5%;
       }
-      paper-dropdown-menu{
+    paper-dropdown-menu{
       width: 15%;
-      margin-left: 3%;
+      margin-left: 5%;
       --paper-input-container-label: { color: red };
       text-align:center;
       }
     </style>
     <div class='card'>     
     <div class='drop'>      
-          <paper-dropdown-menu id="bbooksissuancetypee" label="Select Assesment" disabled="{{read}}" required>
+          <paper-dropdown-menu id="bbooksissuancetypee" label="Select Assesment" disabled="{{read}}" required hidden>
             <paper-menu class="dropdown-content" id="bbooksissuancetype" on-iron-select="FnSelectAssesment"  attr-for-selected="value" required>  
               <template is="dom-repeat" items="{{assesmentarr}}">
                 <paper-item value="{{item.assesment_category_id}}">{{item.assesment_category_name}}</paper-item>                            
@@ -64,13 +64,13 @@
             </template>
             </paper-menu>
           </paper-dropdown-menu>  
-          <paper-dropdown-menu id="bbooksissuancesubcategoryy" label="Select Category" disabled="{{read}}" required>
+          <paper-dropdown-menu id="bbooksissuancesubcategoryy" label="Select Category" disabled="{{read}}" required hidden>
             <paper-menu id="bbooksissuancesubcategory"  class="dropdown-content"  on-iron-select="FnSelectCategory"  attr-for-selected="value" required> 
             <template is="dom-repeat" items="{{categoryarr}}">
               <paper-item value="{{item.category_id}}">{{item.category_name}}</paper-item>
             </template>
             </paper-menu>
-          </paper-dropdown-menu>      
+          </paper-dropdown-menu >      
      </div>
      <hr>
      <div class="enrichmentstudentlist" hidden$="{{hidecard}}">
@@ -108,21 +108,25 @@
         localStorage.setItem("curr_sess_grade",gradename);
         localStorage.setItem("curr_sess_gradeid",gradeid);
         this.$.bassesmentservice.callSectionService(gradename);
+        document.querySelector("#bbooksissuancesection").selected=-1;
+         document.querySelector("#bbooksissuancesubject").selected=-1; 
       },
       FnSelectSection:function(e){
         sectionname = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_sectionname",sectionname);
         sectionid = e.target.selectedItem.value.trim();
         localStorage.setItem("curr_sess_sectionid",sectionid);
-      },
+       this.$.enrichmentservice.FnFetchStudentForIssue(gradeid,sectionid,subjectid);
+          document.querySelector("#bbooksissuancesubject").selected=-1; 
+
+   },
       FnSelectCategory:function(e)
       {
         categoryname = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_categoryname",categoryname);
         categoryid = e.target.selectedItem.value.trim();
         localStorage.setItem("curr_sess_categoryid",categoryid);
-        this.$.enrichmentservice.FnFetchStudentForIssue(assesment,gradeid,sectionid,subjectid,categoryid);
-      },
+          },
       FnShowList:function(){
         this.hidecard=false;
       },

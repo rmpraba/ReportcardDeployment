@@ -173,6 +173,16 @@
         on-response="FnSetschoolInfo1Response"
         debounce-duration="300"
     >
+      <iron-ajax        
+        id="FnSetschoolInfo2ajax"
+        url="{{FnSetschoolInfo2url}}"
+        params="{{FnSetschoolInfo2param}}"
+        handle-as="json"
+        content-type="application/json"
+        method="post"
+        on-response="FnSetschoolInfo2Response"
+        debounce-duration="300"
+    >
     <iron-ajax        
         id="fnschoolidgenerateajax"
         url="{{fnschoolidgenerateurl}}"
@@ -2292,7 +2302,7 @@ insertschoolTypename:function(schooltypesarr)
    
          },
 
-      FnSetschoolInfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation,Board)
+      FnSetschoolInfo:function(school,schoolid1,Telephone,MobileNumber,Emailid,Website,address,address1,address2,address3,affiliation,Board,shortname)
 
       {
        
@@ -2310,6 +2320,7 @@ insertschoolTypename:function(schooltypesarr)
         obj.schoolid1=schoolid1;
         obj.affiliation=affiliation;
         obj.Board=Board;
+        obj.shortname=shortname;
         this.FnSetschoolInfoparam=obj;
         //alert(JSON.stringify(obj));
          this.$.FnSetschoolInfoajax.generateRequest();
@@ -2320,6 +2331,14 @@ insertschoolTypename:function(schooltypesarr)
         this.FnSetschoolInfo1param=obj1;
       //  alert(JSON.stringify(obj1));
         this.$.FnSetschoolInfo1ajax.generateRequest();
+        
+         this.FnSetschoolInfo2url=sessionStorage.getItem("addrinfo")+"/FnSetschoolInfo2-service";
+        var obj2={};
+        obj2.school=schoolid1;
+        obj2.shortname=shortname+" "+"Admin";
+        this.FnSetschoolInfo2param=obj2;
+      //  alert(JSON.stringify(obj1));
+        this.$.FnSetschoolInfo2ajax.generateRequest();
       },
       FnSetschoolInfoResponse(e){
           var res=e.detail.response.returnval;
@@ -2330,7 +2349,7 @@ insertschoolTypename:function(schooltypesarr)
           this.fnschoolcreation();
           }
       },
-      Fnsaveschoolinfo:function(school,schoolid1,telnum,MobileNumber,Emailid,Website,addr,addr1,addr2,addr3,affiliation,Boardselection)
+      Fnsaveschoolinfo:function(school,schoolid1,telnum,MobileNumber,Emailid,Website,addr,addr1,addr2,addr3,affiliation,Boardselection,shortname)
       {
        
         this.Fnsaveschoolinfourl=sessionStorage.getItem("addrinfo")+"/Fnsaveschoolinfo-service";
@@ -2348,6 +2367,7 @@ insertschoolTypename:function(schooltypesarr)
         obj.schoolid1=schoolid1;
         obj.affiliation=affiliation;
         obj.Boardselection=Boardselection;
+        obj.shortname=shortname;
         this.Fnsaveschoolinfoparam=obj;
         //alert(JSON.stringify(obj));
         this.$.Fnsaveschoolinfoajax.generateRequest();

@@ -89,7 +89,7 @@
      <div class="enrichmentstudentlevellist" hidden$="{{hidestudlistcard}}">
      <enrichment-studentlevel-card studlevelarr="{{studlevelarr}}" booklevelarr="{{booklevelarr}}"></enrichment-studentlevel-card>
      </div>
-     </div>
+     </div>  
     </div>
     <enrichment-service id="enrichmentservice"></enrichment-service>
     <beginner-assesment-service id="bassesmentservice"></beginner-assesment-service>
@@ -111,12 +111,17 @@
         this.$.enrichmentservice.subjectforenrichmentService();
       },
       FnSelectAssesment:function(e){
-        assesment=e.target.selectedItem.textContent.trim();
+          assesment=e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_assesmentname",assesment);
         if(this.flag==1){
           this.hidecard=true;        
           this.hidestudlistcard=true; 
           this.$.enrichmentservice.FnFetchStudentCategoryForIssue(assesment,gradeid,sectionid,subjectid,categoryid);
+           document.querySelector("#enrichmentbookmappinggradee").selected=-1;
+        document.querySelector("#enrichmentbookmappingsectionn").selected=-1;
+        document.querySelector("#enrichmentbookmappingcategoryy").selected=-1;
+        document.querySelector("#enrichmentbookmappingsubjectt").selected=-1;  
+    
         }
       },
       FnSelectSubject:function(e){
@@ -130,6 +135,9 @@
           this.hidestudlistcard=true; 
           this.$.enrichmentservice.FnFetchStudentCategoryForIssue(assesment,gradeid,sectionid,subjectid,categoryid);
         }
+          document.querySelector("#enrichmentbookmappingcategoryy").selected=-1;
+      
+
       },
       FnSelectGrade:function(e){
         gradename = e.target.selectedItem.textContent.trim();
@@ -143,7 +151,12 @@
           this.hidestudlistcard=true; 
           this.$.enrichmentservice.FnFetchStudentCategoryForIssue(assesment,gradeid,sectionid,subjectid,categoryid);
         }
+        document.querySelector("#enrichmentbookmappingsectionn").selected=-1;
+        document.querySelector("#enrichmentbookmappingcategoryy").selected=-1;
+        document.querySelector("#enrichmentbookmappingsubjectt").selected=-1;  
+    
       },
+
       FnSelectSection:function(e){
         sectionname = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_sectionname",sectionname);
@@ -155,6 +168,9 @@
           this.hidestudlistcard=true; 
           this.$.enrichmentservice.FnFetchStudentCategoryForIssue(assesment,gradeid,sectionid,subjectid,categoryid);
         }
+        document.querySelector("#enrichmentbookmappingcategoryy").selected=-1;
+        document.querySelector("#enrichmentbookmappingsubjectt").selected=-1;  
+    
       },
       FnSelectCategory:function(e)
       {
@@ -193,13 +209,11 @@
         this.hidecard=true;
         this.hidestudlistcard=true; 
         this.studlevelarr="";
-        this.booklevelarr=""; 
-      },
+       },
       FnTempRefresh:function(){
         this.hidestudlistcard=true;
         this.studlevelarr="";
-        this.booklevelarr="";
-      },
+       },
       FnSetStudents:function(stud){
         document.querySelector('enrichment-studentlevel-card').FnSetBooks(stud);
       },
