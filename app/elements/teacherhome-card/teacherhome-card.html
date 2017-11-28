@@ -601,6 +601,11 @@
         <h4>Teacher Management</h4>
         </paper-button>
       </div>
+      <div class="card" hidden$="{{singlestudentinfo}}">
+        <paper-button on-click="Fnsinglestudentinfo" no ink><img src="../../images/singlestudent.jpg" height="180px" width="180px">
+        <h4>Singl Student Mark </h4>
+        </paper-button>
+      </div>
     </div>
     </div>
     <!-- General ssschooladmin master ends-->
@@ -965,8 +970,12 @@
         document.querySelector('home-page').setPage('single-staff-mapping-card','');
         this.$.studservice.fetchsinglestaff();
         this.$.studservice.fetchsinglegrade();
-      }  
-      this.$.cdialog.close();   
+      }
+  if(localStorage.getItem('curr_sess_loggedassesmenttype')=="singlestudentinfo")
+       {
+          this.$.assesmentservice.callTermService("Term");
+       }
+        this.$.cdialog.close();   
       },
       FnStudent:function()
       {
@@ -1034,6 +1043,11 @@
         else if(localStorage.getItem('curr_sess_report')=="3"){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('approvalstatus');
+        this.$.assesmentservice.FnFetchApprovalStatus();
+        }
+         else if(localStorage.getItem('curr_sess_report')=="6"){
+        document.querySelector('app-card').setPage('homepage','');
+        document.querySelector('home-page').setPage('single-student-markentry-card');
         this.$.assesmentservice.FnFetchApprovalStatus();
         }
         else
@@ -1603,8 +1617,13 @@
             document.querySelector('single-staff-mapping-card').empinforefresh();
             document.querySelector('single-staff-mapping-card').newempreffff();
             this.$.cdialog.toggle();
+          },
+          Fnsinglestudentinfo:function(e){
+            localStorage.setItem('curr_sess_loggedassesmenttype','singlestudentinfo');
+            localStorage.setItem('curr_sess_report','6');
+    
+           this.$.cdialog.toggle();
           }
-
        
     });
   })();

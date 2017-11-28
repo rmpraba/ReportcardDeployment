@@ -2282,7 +2282,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },
     faapproveService:function(){  
      localStorage.setItem('curr_sess_report',4);
-    if(localStorage.getItem("curr_sess_subject")=="Work Education"||localStorage.getItem("curr_sess_subject")=="Life Skills"||localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"||localStorage.getItem("curr_sess_subject")=="Attitudes And values"||localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"||localStorage.getItem("curr_sess_subject")=="Health and Physical Education")
+    if(localStorage.getItem("curr_sess_subject")=="Work Education"||localStorage.getItem("curr_sess_subject")=="Life Skills"||localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"||localStorage.getItem("curr_sess_subject")=="Attitudes And values"||localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"||localStorage.getItem("curr_sess_subject")=="Health and Physical Education" ||localStorage.getItem("curr_sess_subject")=="Discipline")
      {
        
        var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
@@ -2297,7 +2297,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        {
         // this.faapproveService();
         obj1.flag=1;
-        this.updatefaflagurl=sessionStorage.getItem("addrinfo")+"/updatefaflag-service";
+        this.updatefaflagurl=sessionStorage.getItem("addrinfo")+"/updatefaflag1-service";
         this.updatefaflagparam=obj1;
         this.$.updatefaflagajax.generateRequest();
         }

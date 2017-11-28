@@ -879,10 +879,9 @@ fngetinfosectionerrdilalog:function(gradeid,sectionid,gradename,sectionname,stud
             obj.sectionname=sectionname;
             obj.studid=studid;
             //alert(JSON.stringify(obj));
-
-     this.fngetinfosectionerrdilalogparam=obj;
-    this.$.fngetinfosectionerrdilalogajax.generateRequest();
-        },
+            this.fngetinfosectionerrdilalogparam=obj;
+            this.$.fngetinfosectionerrdilalogajax.generateRequest();
+         },
 fngetinfosectionerrdilalogResponse:function(e){
         var res=e.detail.response.termarr;
         var res1=e.detail.response.langarr;

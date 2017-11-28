@@ -54,7 +54,7 @@
     <paper-dialog-scrollable style="height: 80%;">
     <template is="dom-repeat" items="{{coarr}}">
       <cs-sub-metrics-item-card errormessage="{{item.errormessage}}" submetric="{{item.sub_metrics}}" score1="{{item.mark}}"></cs-sub-metrics-item-card>
-    </template>
+    </template>  
     <center>  
     <div class="submitbutton">
       <paper-button class="button" on-click="click">Submit</paper-button>
@@ -64,7 +64,7 @@
     </paper-dialog>
     <co-scholastic-service id="coscholasticservice"></co-scholastic-service>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
-    <iron-ajax        
+    <iron-ajax         
         method="post"
         id="fetchgradeforeduajax"
         url="{{fetchgradeforeduurl}}"

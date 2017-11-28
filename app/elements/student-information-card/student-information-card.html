@@ -158,7 +158,7 @@
 <div style="border:2px solid black;width:31%">  
       <div class="horizontalframe1">
         <div class="fields">
-          <paper-input label="Father's Name" value="{{fathername1}}"></paper-input>
+        <paper-input label="Father's Name" value="{{fathername1}}"></paper-input>
         </div>
         <div class="fields">
           <paper-input label="Mother's Name" id="momname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{mothername1}}"></paper-input>
@@ -209,7 +209,9 @@
           <paper-input id="fpin" label="Pincode" allowed-pattern="[0-9]" value="{{pincode}}"></paper-input>
         </div>
         </div>
-      <center>  <paper-button on-click="fnparents" style="color:white;background-color:black;">Submit</paper-button>  </center>
+      <center>
+       <paper-button on-click="fnparents" style="color:white;background-color:black;">Submit</paper-button> 
+       </center>
      </div>
      
   </span>
@@ -241,8 +243,8 @@
           <paper-input label="First Name" value="{{fname}}"></paper-input>
         </div>
         <div class="fields" >
-          <paper-input label="Middle Name" value="{{midname}}"></paper-input>
-        </div>
+           <paper-input label="Middle Name" value="{{midname}}"></paper-input>
+         </div>
         </div>
    
 
@@ -370,7 +372,7 @@
 <paper-input  hidden value="{{gradeidnames}}"></paper-input>
 <paper-input  hidden value="{{gradeidzzsss1}}"></paper-input>
 <student-add-service id="studservice"></student-add-service>
- <demosumbit-card id="mydialog"></demosumbit-card> 
+<demosumbit-card id="mydialog"></demosumbit-card> 
 </div>
 </template>
   <script>
@@ -397,7 +399,7 @@ var dobdate;
    termarrinformation1:function(e){
   this.$.termarrinformationid.open();
       },
-      fnsetsubmit:function(e){
+fnsetsubmit:function(e){
      this.$.termarrinformationid.close();
       }, 
       fnparents:function(e){
@@ -488,7 +490,6 @@ this.termid=e.target.selectedItem.textContent.trim();
 fnselsetsection:function(e){
 this.classid=e.target.selectedItem.value;
 this.sectionid=e.target.selectedItem.textContent.trim();
-
 if(this.classid!=this.classidszz)
   this.$.studservice.fngetinfosectionerrdilalog(this.gradeidzzsss1,this.classidszz,this.gradeidnames,this.sectionnames,this.studid);        
 },

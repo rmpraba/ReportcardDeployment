@@ -203,7 +203,7 @@
              <td style="width: 8.1%;">
                 <paper-input style="margin-left:11%;" hidden$="{{hidecheck}}" value="{{planneddate}}" ></paper-input>
                 <div class="card"  hidden$="{{hidecheck1}}">
-            <paper-input label="From date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+              <paper-input label="From date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
                     <paper-dialog id="dialog" class="paper-date-picker-dialog" modal   on-iron-overlay-closed="FnDismissDialog">
                  <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
                         <div class="buttons">
@@ -220,9 +220,9 @@
              <from-book-date-picker hidden$="{{hidecheck1}}"></from-book-date-picker></td>
              <td style="width: 8.1%;padding-left: 2%;">
       <paper-icon-button   hidden$="{{hidecheck1}}" icon="add" on-click="fngetskill" style="color:#6699ff;float: right;"></paper-icon-button>
-             <template is="dom-repeat" items="{{skillarrzx}}" as="r">
-                          <h4 style="margin-left: -11%;width: 35%;word-wrap: break-word;">{{r.skillname}}</h4>
-                  </template>
+      <template is="dom-repeat" items="{{skillarrzx}}" as="r">
+       <h4 style="margin-left: -11%;width: 35%;word-wrap: break-word;">{{r.skillname}}</h4>
+             </template>
         <h4 hidden$="{{hidedbskill}}" style="margin-left: -11%;width: 90%;word-wrap: break-word;">{{skill}}</h4>
              </td>
              <td style="width: 8.01%;padding-left: 2%;">
@@ -274,14 +274,14 @@
 
     <paper-dialog id="dzfsd" modal>
        <h3>Concept Name</h3>
-       <div class="concptcard">  
+       <div class="concptcard">    
         <template is="dom-repeat" items="{{conceparr}}" as="s">
           <concept-check-card conceptid="{{s.concept_id}}" id="FFYJ{{rowid}}{{iddate}}{{s.concept_id}}" conceptname="{{s.concept}}" check="{{s.check}}" rowid="{{rowid}}"></concept-check-card>
         </template>  
        </div> 
       <center style="margin-top: 5%;">
           <paper-button on-click="fnsubmit"  style="background-color:black;color:white">Submit</paper-button>
-         <paper-button on-click="fnclose" style="background-color:black;color:white">Close</paper-button>
+  <paper-button on-click="fnclose" style="background-color:black;color:white">Close</paper-button>
       </center>  
     </paper-dialog>
 
