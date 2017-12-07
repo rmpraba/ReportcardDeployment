@@ -7,10 +7,13 @@ var AWS = require('aws-sdk');
 var dbserver_ip_address = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1'
 var connection = mysql.createConnection({
   host :'localhost',
-  user     : 'root',
-  password : '',
-  database : 'reportcardlocal' 
-  
+  // user     : 'root',
+  // password : 'admin',
+  // database : 'reportcardcheck' 
+  port     : '62631',
+  user     : 'adminM1qnV1d',
+  password : 'HC2bIf7Sk2LD',
+  database : 'scorecarddb'
 });
 
 var bodyParser = require('body-parser'); 
@@ -470,9 +473,14 @@ app.post('/subject-service',  urlencodedParser,function (req, res)
   }
   else if(req.query.roleid=='headmistress')
   {
-    var qur="select * from md_subject where subject_id in "+
-    "(select subject_id from mp_grade_subject where "+
-    "grade_id in('g1','g2','g3','g4')) and subject_category in('"+req.query.subjectcategory+"')";
+    var qur="select distinct(s.subject_id),s.subject_name,s.language_pref from md_subject s join "+
+    " mp_grade_subject g on(s.subject_id=g.subject_id) join mp_teacher_grade t "+
+    " on(g.grade_id=t.grade_id) where g.school_id='"+req.query.schoolid+"' and g.academic_year='"+req.query.academicyear+"' "+
+    " and t.id='"+req.query.loggedid+"' and t.school_id='"+req.query.schoolid+"' and t.academic_year='"+req.query.academicyear+"' and "+
+    " t.role_id='"+req.query.roleid+"' and s.subject_category in('"+req.query.subjectcategory+"')";
+   
+    // var qur="select * from md_subject where subject_id in "+
+    // "(select subject_id from mp_grade_subject) and subject_category in('"+req.query.subjectcategory+"')";
   }
    else if(req.query.roleid=='principal'||req.query.roleid=='viceprincipal'||req.query.roleid=='headofedn'||req.query.roleid=='management')
   {

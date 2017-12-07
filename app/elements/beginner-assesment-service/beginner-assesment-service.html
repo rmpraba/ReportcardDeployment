@@ -576,8 +576,12 @@
         obj.comprehensionlevel=arr[i].comprehensionlevel;
         // obj.studname=studname;
         this.insertbamarkparam= obj;  
-        // alert(JSON.stringify(obj));      
+        // alert(JSON.stringify(obj));    
+        if(navigator.onLine)
         this.$.insertbamarkajax.generateRequest();
+        else
+        alert('Please check your internet connection!!');  
+        
         }
       },
       insertbamarkResponse:function(e){         

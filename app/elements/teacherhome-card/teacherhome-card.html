@@ -456,6 +456,9 @@
       </div>
     </div>
     <div class="inner1" hidden$="{{hidereportcardcontainer}}">
+    <!-- <div class="card" hidden$="{{Report}}">
+      <paper-button on-click="FnGenerateScorecard" no ink><img src="../../images/scorelogo.jpg" height="180px" width="180px"></paper-button>
+    </div>  --> 
     <div class="card" hidden$="{{GeneratemgmtReportt}}" >
       <paper-button on-click="FnGeneratemgmtReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
     </div>
@@ -776,8 +779,7 @@
               document.querySelector('app-card').setPage('homepage','');
               document.querySelector('home-page').setPage('new-employee-creation-card','');
               document.querySelector('new-employee-creation-card').fnnewemp();
-              this.$.uiservice.fnschoolemployeepersonal();
-              
+              this.$.uiservice.fnschoolemployeepersonal();              
               //alert('2');
         }
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="studentmanagement")
@@ -788,8 +790,8 @@
         }
         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Term")
         {   
-            this.$.assesmentservice.callTermService("Term");
-          }
+          this.$.assesmentservice.callTermService("Term");
+        }
           if(localStorage.getItem('curr_sess_loggedassesmenttype')=="feecollectionupdate") 
          {
           document.querySelector('app-card').setPage('homepage','');
