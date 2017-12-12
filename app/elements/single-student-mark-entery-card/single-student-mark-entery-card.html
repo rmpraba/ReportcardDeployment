@@ -459,7 +459,14 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
           document.querySelector('#studentmarkid').selected=-1;
          this.$.singleservice.getsection(this.studentid);
           },
+
           fnscolasticid:function(e){
+        this.$.talentsubjectid.hidden=true;
+        this.$.generalsubjectid.hidden=true
+        this.$.cocurricularscolasticsubjectid.hidden=true;
+        this.$.coscolasticsubjectid.hidden=true;
+        this.$.scolasticsubjectid.hidden=false;
+        this.$.scolasticsubjectid1.hidden=false;
              if(document.querySelector("#scolasticid").checked==true){
                  this.$.singleservice.Fngetsubject("category1",this.gradename,this.sectionname);
         
@@ -467,35 +474,36 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
                document.querySelector("#cocurriculamid").checked=false;
                document.querySelector("#genderid").checked=false;
                document.querySelector("#talentid").checked=false;
-        this.$.talentsubjectid.hidden=true;
-        this.$.generalsubjectid.hidden=true
-        this.$.cocurricularscolasticsubjectid.hidden=true;
-        this.$.coscolasticsubjectid.hidden=true;
-        this.$.scolasticsubjectid.hidden=false;
-        this.$.scolasticsubjectid1.hidden=false;
+       
     
         this.subject="";
         this.subjectid="";
          }  
          },
          fncoscolasticid:function(e){
+          this.$.talentsubjectid.hidden=true;
+          this.$.generalsubjectid.hidden=true
+          this.$.cocurricularscolasticsubjectid.hidden=true;
+          this.$.coscolasticsubjectid.hidden=false;
+          this.$.scolasticsubjectid.hidden=true;
+          this.$.scolasticsubjectid1.hidden=true;
+     
  if(document.querySelector("#coscolasticid").checked==true){
            this.$.singleservice.Fngetsubject("category2",this.gradename,this.sectionname);
                document.querySelector("#scolasticid").checked=false;
                document.querySelector("#cocurriculamid").checked=false;
                document.querySelector("#genderid").checked=false;
                document.querySelector("#talentid").checked=false;
-           this.$.talentsubjectid.hidden=true;
-          this.$.generalsubjectid.hidden=true
-         this.$.cocurricularscolasticsubjectid.hidden=true;
-         this.$.coscolasticsubjectid.hidden=false;
-         this.$.scolasticsubjectid.hidden=true;
-          this.$.scolasticsubjectid1.hidden=true;
-     
+         
         this.subject="";
         this.subjectid="";
            }
          },fncocurriculamid:function(e){
+        this.$.generalsubjectid.hidden=true
+        this.$.cocurricularscolasticsubjectid.hidden=false;
+        this.$.coscolasticsubjectid.hidden=true;
+        this.$.scolasticsubjectid.hidden=true;
+        this.$.scolasticsubjectid1.hidden=true;
              if(document.querySelector("#cocurriculamid").checked==true){
            this.$.singleservice.Fngetsubject("category3",this.gradename,this.sectionname);
                document.querySelector("#scolasticid").checked=false;
@@ -503,32 +511,27 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
                document.querySelector("#genderid").checked=false;
                document.querySelector("#talentid").checked=false;
                  this.$.talentsubjectid.hidden=true;
-        this.$.generalsubjectid.hidden=true
-        this.$.cocurricularscolasticsubjectid.hidden=false;
-        this.$.coscolasticsubjectid.hidden=true;
-        this.$.scolasticsubjectid.hidden=true;
-        this.$.scolasticsubjectid1.hidden=true;
+      
  
        this.subject="";
         this.subjectid="";
            }
          },
          fngenderid:function(e){
+         this.$.talentsubjectid.hidden=true;
+        this.$.generalsubjectid.hidden=false
+        this.$.cocurricularscolasticsubjectid.hidden=true;
+        this.$.coscolasticsubjectid.hidden=true;
+        this.$.scolasticsubjectid.hidden=true;
+        this.$.scolasticsubjectid1.hidden=true;
              if(document.querySelector("#genderid").checked==true){
            this.$.singleservice.Fngetsubject("category4",this.gradename,this.sectionname);
                document.querySelector("#scolasticid").checked=false;
                document.querySelector("#coscolasticid").checked=false;
                document.querySelector("#cocurriculamid").checked=false;
                document.querySelector("#talentid").checked=false;
-        this.$.talentsubjectid.hidden=true;
-        this.$.generalsubjectid.hidden=false
-        this.$.cocurricularscolasticsubjectid.hidden=true;
-        this.$.coscolasticsubjectid.hidden=true;
-        this.$.scolasticsubjectid.hidden=true;
-          this.$.scolasticsubjectid1.hidden=true;
-  
-       this.subject="";
-        this.subjectid="";
+              this.subject="";
+              this.subjectid="";
            }
            
          

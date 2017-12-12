@@ -1319,11 +1319,8 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
  },
     callconsolidateddatanalysisreportService:function(){
       this.consolidateddatanalysisreporturl=sessionStorage.getItem("addrinfo")+"/consolidateddatanalysisreport-service";
-<<<<<<< HEAD
-    var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
-=======
-      var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
->>>>>>> 432419a070d950ede8d716d42f3f5ca796b78131
+var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
+
         obj.termname=localStorage.getItem("curr_sess_termname");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -1335,15 +1332,10 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
         this.$.consolidateddatanalysisreportajax.generateRequest();
     },
     consolidateddatanalysisreportResponse:function(e){
-<<<<<<< HEAD
-  
-        var assesscategorycnt=e.detail.response.categorycnt;
-        var arr=e.detail.response.returnval;
      
-=======
+
         var assesscategorycnt=e.detail.response.categorycnt;
         var arr=e.detail.response.returnval;
->>>>>>> 432419a070d950ede8d716d42f3f5ca796b78131
         var temp=[];
         var obj={};
         var title=[];
@@ -1488,11 +1480,10 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
    
 document.querySelector('consolidated-data-analysis').tabwidth=tabwidth;
  document.querySelector('consolidated-data-analysis').studarr=overall;
-<<<<<<< HEAD
-=======
+
  document.querySelector('consolidated-report-card').FnSpinnerrActive(false);
  document.querySelector('consolidated-report-card').setDefaultHeaders();
->>>>>>> 432419a070d950ede8d716d42f3f5ca796b78131
+
  document.querySelector('consolidated-data-analysis').setDefaultdddHeaders();
        
        
@@ -1576,21 +1567,20 @@ document.querySelector('consolidated-data-analysis').tabwidth=tabwidth;
         document.querySelector("consolidated-data-analysis-report").subjectarr=subfinal;
         document.querySelector("consolidated-data-analysis-report").titlearr=titlearr;
         document.querySelector("consolidated-data-analysis-report").itemarr=overall;
-<<<<<<< HEAD
+
         // document.querySelector('consolidated-data-analysis-report').FnSpinnerrActive(false);
  document.querySelector("consolidated-data-analysis-report").tiggerDialog();
- document.querySelector('consolidated-data-analysis-report').FnSpinnerrActive(false);
-=======
+document.querySelector('consolidated-data-analysis-report').FnSpinnerrActive(false);
         document.querySelector("consolidated-data-analysis-report").tiggerDialog();
 
         document.querySelector('consolidated-data-analysis-report').FnSpinnerrActive(false);
->>>>>>> 432419a070d950ede8d716d42f3f5ca796b78131
 
         subfinal=[];
         titlearr=[];
         overall=[];        
       }
      }
+    
 //     callassesmentwisereportService:function(){
 //        this.assesmentwisereporturl=sessionStorage.getItem("addrinfo")+"/assesmentwisereport-service";
 //         var obj={"schoolid":"","academicyear":"","grade":"","section":"","assesment":"","termname":""};
