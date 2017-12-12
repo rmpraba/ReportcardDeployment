@@ -714,89 +714,171 @@ var i;
     callconsolidateddatanalysisreportService:function(){
 
       this.consolidateddatanalysisreporturl=sessionStorage.getItem("addrinfo")+"/consolidateddatanalysisreport-service";
-        var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
+    var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
         obj.termname=localStorage.getItem("curr_sess_termname");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
-        obj.grade=localStorage.getItem("curr_sess_grade");;
+        obj.grade=localStorage.getItem("curr_sess_grade");
+        obj.gradeid=localStorage.getItem("curr_sess_gradeid");
+        ;
         obj.section=localStorage.getItem("curr_sess_section");
         this.consolidateddatanalysisreportparam=obj;
         this.$.consolidateddatanalysisreportajax.generateRequest();
     },
     consolidateddatanalysisreportResponse:function(e){
-      var overall=[];
-      var assesmentarr=[];
-      var subarr=[];
-      var titlearr=[];
-      var arr1=e.detail.response.returnval;
-       for(var x=0;x<studarr.length;x++){
-        for(var y=0;y<arr1.length;y++)
-        {
-          if(studarr[x].id==arr1[y].student_id)
-            arr1[y].student_name=studarr[x].student_name;          
-        }
-       }
-       // alert(JSON.stringify(arr1));
-       if(arr1.length>0){      
-       for(var i=0;i<arr1.length;i++)
-       {
-        var markarr=[];
+  
+        var assesscategorycnt=e.detail.response.categorycnt;
+        var arr=e.detail.response.returnval;
+     
+        var temp=[];
         var obj={};
-        var t1=[];
-        markarr.push({"sno":i+1});
-        markarr.push({"studentname":arr1[i].student_name});
-        // obj.sno=i+1;
-        // obj.studentname=arr1[i].student_name;
-        obj.studentid=arr1[i].student_id;
-        obj.subject=arr1[i].subject_id;
-        obj.term=localStorage.getItem("curr_sess_termname");
-        obj.grade=localStorage.getItem("curr_sess_grade");
-        obj.section=localStorage.getItem("curr_sess_section");
-        obj.mark=(arr1[i].total);
-        // markarr.push(arr1[i].grade);
-        t1.push(obj);
-        // markarr.push(obj);
-        subarr.push(arr1[i].subject_id);
-        for(var j=i+1;j<arr1.length;j++)
-        {
-           if(arr1[i].student_id==arr1[j].student_id)
-           {
-            var obj1={};
-            // obj1.sno=i+1;
-            // obj1.studentname=arr1[i].student_name;
-            obj1.studentid=arr1[j].student_id;
-            obj1.subject=arr1[j].subject_id;
-            obj1.mark=(arr1[j].total);
-            obj1.term=localStorage.getItem("curr_sess_termname");
-            obj1.grade=localStorage.getItem("curr_sess_grade");
-            obj1.section=localStorage.getItem("curr_sess_section");
-            t1.push(obj1);
-            // markarr.push(arr1[j].total);
-            // markarr.push(arr1[j].grade); 
-            subarr.push(arr1[j].subject_id);           
-            arr1.splice(j,1);
-            j--;
-           }
+        var title=[];
+        var overall=[];
+        var row=[];
+        var cat=[];
+        var tabwidth=0;
+         if(assesscategorycnt.length>0){
+         // studentarr=arr;
+         var categorytitle=[];
+         var title=[];
+         var temp=[];
+         var tempcnt=0;
+         var divider=0;
+         var percent=0;
+
+        for(var i=0;i<assesscategorycnt.length;i++){
+          var obj={};
+          obj.subject_name=assesscategorycnt[i].subject_name;
+          obj.spancnt=1;
+          temp.push(obj);
+          tempcnt+=parseFloat(1);
         }
-        markarr.push({"mark":t1});
-        overall.push(markarr);
-       }
-       var subfinal=this.eliminateDuplicates(subarr);
-       subfinal.splice(0,2); 
-        for(var i=0;i<subfinal.length;i++){
-          if(subfinal[i]!="Sno"||subfinal[i]!="Student Name"){
-            titlearr.push("Total");
-            // titlearr.push("Grade");
-          }
-        }    
-       // alert(JSON.stringify(subfinal));
-        // alert(JSON.stringify(overall));
-        document.querySelector("consolidated-data-analysis-report").subjectarrr=subfinal;
-        // document.querySelector("consolidated-data-analysis-report").titlearr=titlearr;
-        document.querySelector("consolidated-data-analysis-report").itemarrr=overall;
-        subfinal=[];
+        //alert(JSON.stringify(temp));
+
+        if(parseFloat(tempcnt)>=8){
+          percent=80;
+          tabwidth="100%";
+        }
+        else if(parseFloat(tempcnt)>=3){
+          percent=40;
+          tabwidth="60%";
+        } 
+        else{
+          percent=25;
+          tabwidth="45%";
+        }
+        divider=parseFloat(percent)/(parseFloat(tempcnt));
+        for(var i=0;i<temp.length;i++){
+            var obj={};
+            obj.studentname="Student Name";
+            obj.subcategoryname=temp[i].subject_name;
+            obj.categorycnt=parseInt(temp[i].spancnt);
+            obj.width=parseFloat(temp[i].spancnt)*parseFloat(divider)+"%";
+            categorytitle.push(obj);
+         }
+     //   alert(JSON.stringify(categorytitle));
+
+         overall.push({"studentname":"","tabwidth":tabwidth,"serialno":"",'category':categorytitle});
+        
+        for(var i=0;i<arr.length;i++){
+            var obj={};
+           
+
+            var cnt=1;
+            var category=[];
+            obj.studentname=arr[i].studentname;
+            obj.subcategoryname=arr[i].total;
+            obj.subject_id=arr[i].subject_id;
+            obj.categorycnt=cnt;
+           obj.width=(parseFloat(cnt)*parseFloat(divider))+"%";
+            category.push(obj);
+             for(var j=i+1;j<arr.length;j++){
+               obj={};
+             var obj3={};
+             var obj4={};
+               
+             if(arr[i].student_id==arr[j].student_id){
+              // alert(arr[j].subject_id);
+                 if(arr[j].subject_id =='II Language Hindi'|| arr[j].subject_id =='II Language Kannada' || arr[j].subject_id =='II Language French'){
+                  // alert(2);
+                 if(arr[j].subject_id =='II Language Hindi'){
+                  
+
+                    obj3.subcategoryname=arr[j].total;
+                  obj3.categorycnt=cnt;
+                  obj3.width=(parseFloat(cnt)*parseFloat(divider))+"%";
+                    obj3.subject_id=arr[j].subject_id;
+
+
+                   obj4.subject_id="";
+                   obj4.subcategoryname="";
+
+                   obj4.categorycnt=cnt;
+                   obj4.width=(parseFloat(cnt)*parseFloat(divider))+"%";
+
+                 
+                  
+             arr.splice(j,1);
+             j--;
+             category.push(obj3);
+             category.push(obj4);
+           
+                 }
+             
+           else  if(arr[j].subject_id =='II Language Kannada'){
+                   obj3.subject_id="";
+                   obj3.subcategoryname="";
+
+                   obj3.categorycnt=cnt;
+                   obj3.width=(parseFloat(cnt)*parseFloat(divider))+"%";
+
+                   obj4.subject_id=arr[j].subject_id;
+                   obj4.subcategoryname=arr[j].total;
+                   obj4.categorycnt=cnt;
+                   obj4.width=(parseFloat(cnt)*parseFloat(divider))+"%";
+
+                  
+                   
+             arr.splice(j,1);
+             j--;
+             category.push(obj3);
+             category.push(obj4);
+             
+            
+                }
+                }
+              else{
+                  //alert(1);
+
+             obj.subject_id=arr[j].subject_id;
+             obj.subcategoryname=arr[j].total;
+             obj.categorycnt=cnt;
+             obj.width=(parseFloat(cnt)*parseFloat(divider))+"%";
+
+            
+             arr.splice(j,1);
+             j--;
+             category.push(obj);
+         
+            
+                 }
+                }
+               }
+            overall.push({"studentname":arr[i].studentname,"tabwidth":tabwidth,"category":category});
+            
+        }
+    
+        for(var i=2,j=0;i<overall.length;i++,j++){
+            overall[i].sno=j+1;
+        }  
+   
+document.querySelector('consolidated-data-analysis').tabwidth=tabwidth;
+ document.querySelector('consolidated-data-analysis').studarr=overall;
+ document.querySelector('consolidated-data-analysis').setDefaultdddHeaders();
+       
+       
+        temp=[];
         overall=[];
-        titlearr=[];
       }
     },
     callcategorywisereportfordataanalysisService:function(){
@@ -875,7 +957,9 @@ var i;
         document.querySelector("consolidated-data-analysis-report").titlearr=titlearr;
         document.querySelector("consolidated-data-analysis-report").itemarr=overall;
         // document.querySelector('consolidated-data-analysis-report').FnSpinnerrActive(false);
-        document.querySelector("consolidated-data-analysis-report").tiggerDialog();
+ document.querySelector("consolidated-data-analysis-report").tiggerDialog();
+ document.querySelector('consolidated-data-analysis-report').FnSpinnerrActive(false);
+
         subfinal=[];
         titlearr=[];
         overall=[];        

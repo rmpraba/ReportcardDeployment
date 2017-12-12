@@ -151,7 +151,7 @@
       },
       fetchmarksavedstudentsResponse:function(e){
         var arr=e.detail.response.returnval;
-        document.querySelector('dynamic-coscholastic-markentry-card').FnSetMarkEnteredArray(arr[0].total);
+   document.querySelector('dynamic-coscholastic-markentry-card').FnSetMarkEnteredArray(arr[0].total);
       },
       subjectsubmittedcheckService:function(grad,sec,sub){
         gradename=grad;
@@ -220,8 +220,8 @@
         if(assesscategory.length>0){
         localStorage.setItem("curr_sess_assesment",assesscategory[0].assesment_type);
         this.callFetchStudentInfo(gradename,section,subject);
-        }
-        // categorycnt=e.detail.response.catarr;
+         }
+    //categorycnt=e.detail.response.catarr;
       },
       callFetchStudentInfo:function(grad,sec,sub){
         sgrade=gradename;
@@ -344,11 +344,11 @@
         ssubject="";
         studentarr=[];
         overall=[]; 
-        document.querySelector('dynamic-coscholastic-markentry-itemcard').FnRefresh();
-        document.querySelector('coscholastic-markentry-card').FnRefresh();
-        document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;
-        document.querySelector('dynamic-coscholastic-markentry-card').studarr=overall;
-        document.querySelector('coscholastic-assesment-card').FnToggleSpinner(false);
+     document.querySelector('dynamic-coscholastic-markentry-itemcard').FnRefresh();
+     document.querySelector('coscholastic-markentry-card').FnRefresh();
+     document.querySelector('dynamic-coscholastic-markentry-card').hideheader=true;
+     document.querySelector('dynamic-coscholastic-markentry-card').studarr=overall;
+     document.querySelector('coscholastic-assesment-card').FnToggleSpinner(false);
         }
         // alert(JSON.stringify(overall));
       },

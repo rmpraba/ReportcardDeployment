@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="approvalstatus-card">
   <template>
-    <style>
+    <style> 
       :host {
         display: block;
       }
@@ -54,9 +54,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: 6%;
         width: 83%;
       }
-      
-      
-
+      #spinner{
+            margin: 0;
+            padding: 0;
+            border: none;
+            background-color: transparent;
+          }
+ .spinner{
+            margin-left: 50%;            
+           
+            /*color: #0f9d58;*/
+            /*border: none;*/
+          }
     </style>
     <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
     <div>

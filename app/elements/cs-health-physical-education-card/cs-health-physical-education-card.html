@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="cs-health-physical-education-card">
    <template>
     <style>
-      :host {
+      :host { 
         display: block;
       }
           table{
@@ -62,7 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 {
 
 }
-       .submitbutton paper-button{
+.submitbutton paper-button{
     background-color: #363636 !important;
     color: #ffffff !important;
     height: 33px !important;
@@ -211,6 +211,7 @@ var tableToExcel = (function() {
       },
        importmark:function()
       {
+        alert(1);
         localStorage.setItem("curr_sess_assesmenttype","");
         this.$.assesmentservice.Fnfaimportmark();  
       }

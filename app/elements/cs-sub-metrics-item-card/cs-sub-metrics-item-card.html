@@ -49,6 +49,13 @@
       // }
       if(this.score1!=null||this.score1!="")
       {
+   if(localStorage.getItem("curr_sess_page")=="single-student-mark-entery-card")
+   {
+document.querySelector('single-subject-dynamic-coscholastic-markentry-item-card').fnfindsum(this.score1,this.submetric);
+  }
+  else{
+document.querySelector('subject-dynamic-coscholastic-markentry-cards').fnfindsum(this.score1,this.submetric);
+  }
       var cat=sessionStorage.getItem("category");
       if(cat=="lifeskill"){
       if(localStorage.getItem("curr_sess_grade")=="Grade-9"||localStorage.getItem("curr_sess_grade")=="Grade-10")

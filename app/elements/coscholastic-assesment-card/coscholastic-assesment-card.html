@@ -76,12 +76,13 @@
           </paper-dropdown-menu>   
            
      </div>
-    </div>
+    </div>   
     <div class="spinner"><paper-dialog modal id="dynamiccospinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
     <co-scholastic-service id="assesmentservice"></co-scholastic-service>
     <term-assesment-service id="termassesmentservice"></term-assesment-service>
     <dynamic-coscholastic-subject-service id="scholasticsubjectservice"></dynamic-coscholastic-subject-service>
     <dynamic-scholastic-subject-service id="subjectservice"></dynamic-scholastic-subject-service>
+<subject-dynamic-coscholastic-markentry-service id="subcoslosticservice"></subject-dynamic-coscholastic-markentry-service>
   </template>
   <script>
   (function() {
@@ -105,6 +106,7 @@
           this.callService();
       },
       FnSelectSection:function(e){
+
         section = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_section",section);
         this.$.termassesmentservice.callSubjectService(gradename,section);       
@@ -114,6 +116,7 @@
       FnSelectSubject:function(e){
         this.flag=1;
         subject = e.target.selectedItem.textContent.trim();
+
         localStorage.setItem("curr_sess_subject",subject);              
         this.callService();
       },
@@ -130,7 +133,7 @@
           // alert("in");
           document.querySelector('coscholastic-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');
           document.querySelector('dynamic-scholastic-markentry-card').FnRefresh();
-          this.$.scholasticsubjectservice.subjectsubmittedcheckService(gradename,section,subject);
+      this.$.scholasticsubjectservice.subjectsubmittedcheckService(gradename,section,subject);
           }
           if(localStorage.getItem('curr_sess_report')=='1'){
           localStorage.setItem("curr_sess_assesment","Assesment3");
@@ -200,8 +203,12 @@
         // document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-personalitydevelopment-card'); 
         // document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(true);        
         // }      
-        else if(subject=="Life Skills"){      
-        if(gradename=="Grade-9"||gradename=="Grade-10"){
+else if(subject=="Life Skills"||subject=="Work Education"||subject=="Visual & Performing Arts" ||subject=="Co-Curricular Activities" || subject=="Health and Physical Education"|| subject=="Discipline"){ 
+       
+         this.$.subcoslosticservice.subjectsubmittedcheckService1(gradename,section,subject);
+           
+     
+       /* if(gradename=="Grade-9"||gradename=="Grade-10"){
         document.querySelector('cs-life-skill-card').studarr=[]; 
         document.querySelector('cs-life-skill-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card'); 
@@ -211,9 +218,9 @@
         document.querySelector('cs-life-skill-card').studarr=[]; 
         document.querySelector('cs-life-skill-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-life-skill-card'); 
+        }*/
         }
-        }
-        else if(subject=="Work Education"){
+       /* else if(subject=="Work Education"){
         document.querySelector('cs-education-card').studarr=[];        
         document.querySelector('cs-education-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-education-card');
@@ -224,14 +231,14 @@
         document.querySelector('cs-visual-performing-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-visual-performing-card');
         document.querySelector('cs-visual-performing-card').FnSpinnerrActive(true);
-        }
+        }*/
         else if(subject=="Attitudes And values"){
         document.querySelector('cs-attitudes-card').studarr=[]; 
         document.querySelector('cs-attitudes-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-attitudes-card'); 
         document.querySelector('cs-attitudes-card').FnSpinnerrActive(true);   
         }
-        else if(subject=="Co-Curricular Activities"){
+     /*   else if(subject=="Co-Curricular Activities"){
         document.querySelector('cs-co-curricular-card').studarr=[];
         document.querySelector('cs-co-curricular-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-co-curricular-card'); 
@@ -246,7 +253,7 @@
         document.querySelector('cs-discipline-card').studarr=[]; 
         document.querySelector('cs-discipline-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-discipline-card');
-        }
+        }*/
       },
       FnRefresh:function()
       {
@@ -295,7 +302,7 @@
         else if(subject=="Co-Curricular Activities"){
         document.querySelector('cs-co-curricular-card').FnRefresh();  
         }
-        else if(subject="Health & Physical Activities"){
+        else if(subject="Health and Physical Education"){
         document.querySelector('cs-health-physical-education-card').FnRefresh();  
         }
       },

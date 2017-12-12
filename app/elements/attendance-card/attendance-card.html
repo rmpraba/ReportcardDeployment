@@ -10,7 +10,7 @@
     <style>
       :host {
         display: block;
-      }
+      }    
       table{
         width: 80%;
         border-collapse: collapse;
@@ -54,20 +54,23 @@
       <h4>Term &nbsp&nbsp{{term}}  &nbsp&nbsp&nbsp {{grade}} - &nbsp&nbsp&nbsp&nbsp&nbsp{{section}} &nbsp&nbsp Subject: {{subject}} </h4> 
       <h4>Total Working Days: {{workingdays}}</h4>
       <table border="1" >    
-      <tr>
-      <th id="tb1">SNo</th>
-      <th id="tb2">Name</th>
-      <th id="tb1">Total Attendance</th>
-      <th id="tb2">Generic Comment</th>
-      <th id="tb2">Specific Comment</th>
-      <th id="tb1"></th>
-      </tr>  
+      <tr>   
+       <th id="tb1">SNo</th>
+       <th id="tb2">Name</th>
+       <th id="tb1">Total Attendance</th>
+       <th id="tb2">Generic Comment</th>
+       <th id="tb2">Specific Comment</th>
+       <th id="tb1"></th>
+     </tr>  
       </div>
       <template is="dom-repeat" items="{{studarr}}">
-      <tr><td colspan="6">
+      <tr>
+      <td colspan="6">
       <attendance-item-card serialno="{{item.serialno}}" studname="{{item.student_name}}" studid="{{item.id}}" workingdays="{{workingdays}}" attendance="{{item.attendance}}" specificcomment="{{item.speccomment}}" genericcomment="{{item.generic}}" speccomment="{{item.speccomment}}" gencomment="{{item.generic}}"></attendance-item-card>
-      </td></tr>
-      </template>
+      </td>
+      </tr>
+      </template> 
+    
       </table>      
       </center> 
       <paper-button class="button" id="submit" on-click="importmark">{{importlabel}}</paper-button>

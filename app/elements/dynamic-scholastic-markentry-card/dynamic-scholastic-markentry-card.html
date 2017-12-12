@@ -47,10 +47,10 @@
       <div>
       <template is="dom-repeat" items="{{studarr}}">
       <dynamic-scholastic-markentry-itemcard id="edmeic" serialno="{{item.serialno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}" tabwidth="{{item.tabwidth}}"></dynamic-scholastic-markentry-itemcard>
-      </template>  
-      </div>
+      </template>     
+       </div>
       </center> 
-    </div>
+    </div>  
     <div class="btndiv">
     <paper-button disabled$="{{disablesave}}" class="button" id="dynamicsavebtn" on-click="FnApprove">{{btnlabel}}</paper-button>
     </div>  
@@ -62,11 +62,11 @@
     'use strict';
     var scorearr=[];
     var gradearr=[];
-    Polymer({
+    Polymer({  
       is: 'dynamic-scholastic-markentry-card',
       ready:function(){
-        this.hideheader=true;      
-        this.$.dynamicsavebtn.hidden=true;
+         this.hideheader=true;      
+         this.$.dynamicsavebtn.hidden=true;
       },
       FnSetLabel:function(){
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){

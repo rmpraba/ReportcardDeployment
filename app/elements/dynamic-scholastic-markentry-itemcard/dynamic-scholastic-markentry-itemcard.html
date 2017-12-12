@@ -21,10 +21,10 @@
       }
     </style>
     <div hidden>{{temp}}</div>
-    <div class="card">
+    <div class="card">  
         <paper-input hidden value="{{studentid}}"></paper-input>
         <table border="1" width="{{tabwidth}}">
-        <tr>  
+        <tr>     
         <th width="3%" style="text-align: center;" valign="top">{{serialno}}</th>      
         <th width="14%" valign="top"><p>{{studentname}}</p></th>
         <template is="dom-repeat" items="{{category}}">
@@ -38,7 +38,7 @@
     </div>
     <subject-dynamic-service id='subjectservice'></subject-dynamic-service>
     <term-assesment-service id="assesmentservice"></term-assesment-service>
-  </template>
+  </template>  
   <script>
   (function() {
     'use strict';
