@@ -1050,7 +1050,7 @@ else
  document.querySelector('subject-report-status-card').academicyear=localStorage.getItem("curr_sess_academicyear");
  document.querySelector('subject-report-status-card').termname=localStorage.getItem("curr_sess_termname");
  document.querySelector('subject-report-status-card').approvalarr=e.detail.response.returnval;
- document.querySelector('approvalstatus-card').FnSpinnerrActive(false);
+ document.querySelector('subject-report-status-card').FnSpinnerrActive(false);
     },
    fnupdatestudentinfo:function(termname,assesmentid,grade,section,subject){
     var obj={};
