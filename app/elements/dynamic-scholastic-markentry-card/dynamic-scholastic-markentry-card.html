@@ -66,17 +66,17 @@
 
 
   <table border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
-      <template is="dom-repeat" items="{{studarr}}">
+      <template is="dom-repeat" items="{{studarr1}}">
       <tr>
       <th width="15%">{{item.studentname}}</th>
-      <th width="15%">{{item.studentname}}</th>
+      <th width="15%">{{item.stud}}</th>
       <template is="dom-repeat" items="{{item.category}}" as="i">
       <th  colspan="{{i.categorycnt}}" width="{{i.width}}">{{i.subcategoryname}}</th>
       </template>
       </tr>
       </template>
       </table>  
-      
+
     <center>
     <div hidden$="{{hideheader}}">
       <h1>{{schoolname}}</h1>

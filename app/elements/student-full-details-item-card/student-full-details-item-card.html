@@ -40,20 +40,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor: pointer;
         color:blue;
       }
+
+     paper-dialog
+      {
+           border-radius: 10px;
+           width: 500px;
+           height: 150px;
+      }
+      .buttons paper-button
+      {
+        @apply(--layout-left);
+      background-color: #363636;
+      color: #ffffff;
+      width: 10%;
+      margin-left: 6%;
+      margin-top: 10%;
+      }
     </style>
          <p hidden>{{subjectcategory}}</p>
-         <p hidden>{{studentid}}</p>
+         <p hidden>{{subjectcategoryname}}</p>
+         <p hidden>{{assesmentid}}</p>
+         <p hidden>{{grade}}</p>
+         <p hidden>{{section}}</p>
+         <p  hidden>{{subject}}</p>
         <div class="card">
-          <p  style="margin-left: 0%;">{{studentname}}</p>
-          <p  style="margin-left: 5%;">{{subjectcategoryname}}</p>
-          <p  style="margin-left: 5%;">{{assesmentid}}</p>
-          <p  style="margin-left: 5%;">{{grade}}</p>
-          <p  style="margin-left: 5%;">{{section}}</p>
-          <p  style="margin-left: 5%;">{{subject}}</p>
+          <p  style="margin-left: 0%;">{{studentid}}</p>
+          <p  style="margin-left: 5%;">{{studentname}}</p>
+       
+          <p  style="margin-left: 5%;">{{Comments}} <paper-icon-button hidden$="{{hidecheck1}}" icon="add" on-click="fnrequstvalue" style="color:#6699ff;float: right;"></paper-icon-button></p>
          
-          <p class='p7'><p class='p7'><ahref class="viewdata" on-click="FnSave"><u>Changed</u></ahref></p></p>
+          <p style="margin-left: 5%;" ><ahref class="viewdata" on-click="FnSave"><u>Raise Request</u></ahref></p>
         </div>
         <single-student-markentry-service id="singleservice"></single-student-markentry-service>
+          <paper-dialog id="raquestraisid" modal>
+          <center><b><label  id="labelid">Request Raised!!!</label></b></center>
+            <div class="buttons">
+            </div>
+              <center><paper-button style="background-color: #363636;color: #ffffff;" dialog-confirm autofocus>Ok</paper-button></center>
+        
+           </paper-dialog>
+
+ <paper-dialog id="innovationdialog1" modal>
+          <paper-textarea  label="Comments"  value="{{Comments}}"></paper-textarea>
+          <center style="margin-top: 5%;">
+            <paper-button  on-click="innovatsave" style="color:white;background-color:black">Save</paper-button>
+            <paper-button id="innvtt" style="color:white;background-color:black" on-click="innovatclosezzz" >Close</paper-button>
+
+          
+          </center>
+      </paper-dialog>
+
+
+
   </template>
   <script>
   (function() {
@@ -62,12 +100,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'student-full-details-item-card',
   FnSave:function(e){
-  
-   this.$.singleservice.singlestudentservice(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject);
+   this.$.raquestraisid.toggle();
+   this.$.singleservice.singlestudentservice(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.Comments);
+   this.Comments="";
+
   },
  fnresetvalue:function(e){
  this.$.singleservice.singlestudentservice(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject);
-  },      
+  },  
+
+ fnrequstvalue:function(e)
+    {
+  this.$.innovationdialog1.toggle();
+    }, 
+innovatclosezzz:function(e){
+this.Comments="";
+ this.$.innovationdialog1.close();
+},
+innovatsave:function(e){
+ this.$.innovationdialog1.close();
+
+}
     });
   })();
   </script>

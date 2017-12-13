@@ -28,7 +28,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       } 
       p{
         width: 30%;
-        margin-left: 10%;
       } 
       paper-button{
         text-transform: none;
@@ -46,16 +45,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <p hidden>{{studentid}}</p>
          <p hidden>{{termid}}</p>
         <div class="card">
-          <p class='p1' style="margin-left: 0%;">{{studentname}}</p>
-          <p class='p2' style="margin-left: 10%;">{{subjectcategory}}</p>
-          <p class='p3' style="margin-left: 5%;">{{assesmentid}}</p>
-          <p class='p4' style="margin-left: 5%;">{{grade}}</p>
-          <p class='p5' style="margin-left: 5%;">{{section}}</p>
-          <p class='p6' style="margin-left: 5%;">{{subject}}</p>
-          <p class='p6' style="margin-left: 5%;">
+          <p  style="margin-left: 0%;">{{studentname}}</p>
+          <p  style="margin-left: 5%;">{{subjectcategory}}</p>
+          <p  style="margin-left: 5%;">{{assesmentid}}</p>
+          <p ' style="margin-left: 5%;">{{grade}}</p>
+          <p  style="margin-left: 5%;">{{section}}</p>
+          <p  style="margin-left: 5%;">{{subject}}</p>
+          <p  style="margin-left: 5%;">{{comments}}</p>
+          <p  style="margin-left: 5%;">
             <paper-checkbox on-change="fnchangeprocess" hidden></paper-checkbox>
           </p>
-   <p class='p7'><ahref class="viewdata" on-click="Fnaproved"><u>Aproved</u></ahref></p>
+   <p ><ahref class="viewdata" on-click="Fnaproved"><u>Aproved</u></ahref></p>
+   <p ><ahref class="viewdata" on-click="FnReject"><u>Reject</u></ahref></p>
         </div>
     <single-student-markentry-service id="singleservice"></single-student-markentry-service>
   </template>
@@ -67,10 +68,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'student-coordinator-apruval-item-card',
 Fnaproved:function(e){
 
-this.$.singleservice.fnputcoapruval(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.termid);
+this.$.singleservice.fnputcoapruval(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.termid,"completed");
  
   },
+FnReject:function(e){
+ this.$.singleservice.fnputcoapruval(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.termid,"Reject");
 
+},
     });
   })();
   </script>

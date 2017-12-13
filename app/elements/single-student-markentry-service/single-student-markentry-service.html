@@ -231,7 +231,7 @@ this.getstudentinformationurl=sessionStorage.getItem("addrinfo")+"/getstudentinf
    // document.querySelector('single-student-mark-entery-card').getstudentdet(res);
 
        }, 
-fnputcoapruval:function(studentid,studentname,subjectcategory,assesmentid,grade,section,subject,termname){
+fnputcoapruval:function(studentid,studentname,subjectcategory,assesmentid,grade,section,subject,termname,flag){
 this.fnputcoapruvalurl=sessionStorage.getItem("addrinfo")+"/fnputcoapruval-service";
          var obj={};
          obj.studentid=studentid;
@@ -242,7 +242,7 @@ this.fnputcoapruvalurl=sessionStorage.getItem("addrinfo")+"/fnputcoapruval-servi
          obj.section=section;
          obj.subject=subject;
          obj.section=section;
-         obj.flag="completed";
+         obj.flag=flag;
          obj.termname=termname;
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
@@ -254,7 +254,7 @@ this.fnputcoapruvalurl=sessionStorage.getItem("addrinfo")+"/fnputcoapruval-servi
      // alert(JSON.stringify(res));
       this.fngetinformationvalue();
       }, 
-       singlestudentservice:function(studentid,studentname,subjectcategory,assesmentid,grade,section,subject){
+       singlestudentservice:function(studentid,studentname,subjectcategory,assesmentid,grade,section,subject,comments){
         this.singlestudentserviceurl=sessionStorage.getItem("addrinfo")+"/singlestudentservice-service";
          var obj={};
          obj.studentid=studentid;
@@ -265,6 +265,7 @@ this.fnputcoapruvalurl=sessionStorage.getItem("addrinfo")+"/fnputcoapruval-servi
          obj.section=section;
          obj.subject=subject;
          obj.flag="processing";
+         obj.comments=comments;
          obj.termname=localStorage.getItem("curr_sess_termname");
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
@@ -1096,7 +1097,7 @@ else
     fngetinformationvalueResponse:function(e){
       //alert(JSON.stringify(e.detail.response.returnval));
       // var arr=e.detail.response.returnval;
-       document.querySelector('student-coordinator-apruval-card').schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
+ document.querySelector('student-coordinator-apruval-card').schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
       document.querySelector('student-coordinator-apruval-card').academicyear=localStorage.getItem("curr_sess_academicyear");
       document.querySelector('student-coordinator-apruval-card').approvalarr=e.detail.response.returnval;
       },
