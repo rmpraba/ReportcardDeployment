@@ -25,12 +25,12 @@
     > 
      <iron-ajax
         method="post"
-        id="fetchsubjectstudentajax1"
-        url="{{fetchsubjectstudenturl1}}"
-        params="{{fetchsubjectstudentparam1}}"
+        id="fetchsubjectstudent11ajax"
+        url="{{fetchsubjectstudent11url}}"
+        params="{{fetchsubjectstudent11param}}"
         handle-as="json"
         content-type="application/json"
-        on-response="fetchsubjectstudentResponse1"
+        on-response="fetchsubjectstudent11Response"
         debounce-duration="300"
     > 
     <iron-ajax        
@@ -75,12 +75,12 @@
     >
     <iron-ajax        
         method="post"
-        id="fetchdynamicallyenteredmarksajax"
-        url="{{fetchdynamicallyenteredmarksurl}}"
-        params="{{fetchdynamicallyenteredmarksparam}}"
+        id="fetchdynamicallyenteredmarks1ajax"
+        url="{{fetchdynamicallyenteredmark1surl}}"
+        params="{{fetchdynamicallyenteredmarks1param}}"
         handle-as="json"
         content-type="application/json"
-        on-response="fetchdynamicallyenteredmarksResponse"
+        on-response="fetchdynamicallyenteredmarks1Response"
         debounce-duration="300"
     >
     
@@ -418,7 +418,7 @@
         sgrade=grad;
         ssection=sec;
         ssubject=sub;
-         this.fetchsubjectstudenturl1=sessionStorage.getItem("addrinfo")+"/fetchsubjectstudent-service";
+         this.fetchsubjectstudent11url=sessionStorage.getItem("addrinfo")+"/fetchsubjectstudent-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -429,15 +429,15 @@
          obj.subject=ssubject;
          obj.subjectid=localStorage.getItem("curr_sess_subjectid");
          obj.langpref=localStorage.getItem("curr_sess_languagepref");
-         this.fetchsubjectstudentparam1= obj;
-         this.$.fetchsubjectstudentajax1.generateRequest();        
+         this.fetchsubjectstudent11param=obj;
+         this.$.fetchsubjectstudent11ajax.generateRequest();        
       },
-      fetchsubjectstudentResponse1:function(e){   
+      fetchsubjectstudent11Response:function(e){   
         studentarr=e.detail.response.returnval;
-        this.FnFetchDynamicallyEnteredMarks(sgrade,ssection,ssubject);
+        this.FnFetchDynamicallyEnteredMarks1(sgrade,ssection,ssubject);
       },
-      FnFetchDynamicallyEnteredMarks:function(gradename,section,subject){
-        this.fetchdynamicallyenteredmarksurl=sessionStorage.getItem("addrinfo")+"/fetchdynamicallyenteredscholasticmarks-service";
+      FnFetchDynamicallyEnteredMarks1:function(gradename,section,subject){
+        this.fetchdynamicallyenteredmarks1url=sessionStorage.getItem("addrinfo")+"/fetchdynamicallyenteredscholasticmarks-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -446,10 +446,10 @@
          obj.grade=gradename;
          obj.section=section;
          obj.subject=subject;
-         this.fetchdynamicallyenteredmarksparam= obj;
-         this.$.fetchdynamicallyenteredmarksajax.generateRequest();
+         this.fetchdynamicallyenteredmarks1param= obj;
+         this.$.fetchdynamicallyenteredmarks1ajax.generateRequest();
       },
-      fetchdynamicallyenteredmarksResponse:function(e){
+      fetchdynamicallyenteredmarks1Response:function(e){
         var assesscategory=e.detail.response.map;
         var assesscategorycnt=e.detail.response.categorycnt;
         var arr=e.detail.response.returnval;
@@ -563,8 +563,7 @@
         document.querySelector('dynamic-scholastic-markentry-report').setDefaultHeaders();
         document.querySelector('dynamic-scholastic-markentry-report').tabwidth=tabwidth;
         document.querySelector('dynamic-scholastic-markentry-report').studarr=overall;
-        document.querySelector('term-assesment-card').FnToggleSpinner(false);
-        // document.querySelector('dynamic-scholastic-markentry-report').setColSpan(overall);
+           // document.querySelector('dynamic-scholastic-markentry-report').setColSpan(overall);
         temp=[];
         overall=[];
       }

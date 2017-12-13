@@ -54,7 +54,7 @@
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu  id="gradenam2" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
-                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+               <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -82,7 +82,7 @@
     <term-assesment-service id="termassesmentservice"></term-assesment-service>
     <dynamic-coscholastic-subject-service id="scholasticsubjectservice"></dynamic-coscholastic-subject-service>
     <dynamic-scholastic-subject-service id="subjectservice"></dynamic-scholastic-subject-service>
-<subject-dynamic-coscholastic-markentry-service id="subcoslosticservice"></subject-dynamic-coscholastic-markentry-service>
+     <subject-dynamic-coscholastic-markentry-service id="subcoslosticservice"></subject-dynamic-coscholastic-markentry-service>
   </template>
   <script>
   (function() {
@@ -122,13 +122,15 @@
       },
       callService:function(){
         this.FnRefresh();
+    //    alert(1);
         if(subject=="Health"||subject=="Attendance"||subject=="Physical Education"||subject=="Art Verticals")
         {
         } 
         else if(subject=="Art&Craft"||subject=="music"||subject=="dance"||subject=="Personality Development"||subject=="Games")
         {
+     //   alert(2);
+
          this.FnToggleSpinner(true);
-         // alert(localStorage.getItem('curr_sess_report'));
          if(localStorage.getItem('curr_sess_report')=='0'){
           // alert("in");
           document.querySelector('coscholastic-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');
@@ -144,10 +146,7 @@
           }
           // this.$.termassesmentservice.callFetchStudentInfo(gradename,section);
         } 
-        else
-        {
-          this.$.assesmentservice.callFetchStudentInfo();
-        }
+     
         if(subject=="Art Verticals"){  
          this.$.assesmentservice.callFetchStudentInfoforartverticals(); 
          document.querySelector('coscholastic-assesment-sheet-card').setPage('artverticals-card'); 
@@ -204,8 +203,22 @@
         // document.querySelector('cs-personalitydevelopment-card').FnSpinnerrActive(true);        
         // }      
 else if(subject=="Life Skills"||subject=="Work Education"||subject=="Visual & Performing Arts" ||subject=="Co-Curricular Activities" || subject=="Health and Physical Education"|| subject=="Discipline"){ 
+       // alert(3);
+
+   if(localStorage.getItem('curr_sess_report')=='0'){
+       document.querySelector('subject-dynamic-coscholastic-markentry-card').studarr=[]; 
+      
+          document.querySelector('coscholastic-assesment-sheet-card').setPage('subject-dynamic-coscholastic-markentry-card');
+           this.$.subcoslosticservice.subjectsubmittedcheckService1(gradename,section,subject);
+          }
+          if(localStorage.getItem('curr_sess_report')=='1'){
+          
+    document.querySelector('coscholastic-assesment-sheet-card').setPage('subject-dynamic-coscholastic-markentry-report');
+     document.querySelector('subject-dynamic-coscholastic-markentry-report').studarr=[];
+     document.querySelector('subject-dynamic-coscholastic-markentry-report').FnRefresh();
+  this.$.subcoslosticservice.callFetchStudentInfo11(gradename,section,subject);
+          } 
        
-         this.$.subcoslosticservice.subjectsubmittedcheckService1(gradename,section,subject);
            
      
        /* if(gradename=="Grade-9"||gradename=="Grade-10"){
@@ -254,10 +267,15 @@ else if(subject=="Life Skills"||subject=="Work Education"||subject=="Visual & Pe
         document.querySelector('cs-discipline-card').setDefaultHeaders();  
         document.querySelector('coscholastic-assesment-sheet-card').setPage('cs-discipline-card');
         }*/
+      else
+        {
+     //      alert(4);
+          this.$.assesmentservice.callFetchStudentInfo();
+        }
       },
       FnRefresh:function()
       {
-      if(subject=="Health"){         
+      /*if(subject=="Health"){         
         document.querySelector('cce-fivetoten-health-card').FnRefresh(); 
         }
         else if(subject=="Attendance"){
@@ -304,7 +322,7 @@ else if(subject=="Life Skills"||subject=="Work Education"||subject=="Visual & Pe
         }
         else if(subject="Health and Physical Education"){
         document.querySelector('cs-health-physical-education-card').FnRefresh();  
-        }
+        }*/
       },
       FnRefreshcard:function(){
         document.querySelector('#gradenam2').selected=-1;

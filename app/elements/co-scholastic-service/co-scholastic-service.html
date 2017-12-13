@@ -397,11 +397,11 @@
          obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.gradename=gradename;
-         this.sectionparam= obj;
+         this.sectionparam=obj;
          this.$.sectionajax.generateRequest();
       },
       sectionResponse:function(e){      
-         document.querySelector('coscholastic-assesment-card').sectionarr=e.detail.response.returnval; 
+  document.querySelector('coscholastic-assesment-card').sectionarr=e.detail.response.returnval; 
          this.callFetchCoscholasticGrade();
       },
        callFetchCoscholasticGrade:function()

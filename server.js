@@ -626,6 +626,31 @@ var qur="select subject_sub_category_name from md_subject_sub_category where sub
 app.post('/assesment-service',  urlencodedParser,function (req, res)
 {
 // var qur="select assesment_cyclename from md_assesment_cycle where assesment_cycleid in(select assesment_cycleid from mp_assesment_term_cycle where assesment_id=(select assesment_id from md_assesment_type where assesment_name='"+req.query.termtype+"') and term_id=(select term_id from md_term where term_name='"+req.query.termname+"'))";
+     var qur="select * from md_grade_assesment_mapping where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade_name='"+req.query.gradename+"'";
+  console.log("..............Reading assesment..........");
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+});
+app.post('/assesment-service',  urlencodedParser,function (req, res)
+{
+// var qur="select assesment_cyclename from md_assesment_cycle where assesment_cycleid in(select assesment_cycleid from mp_assesment_term_cycle where assesment_id=(select assesment_id from md_assesment_type where assesment_name='"+req.query.termtype+"') and term_id=(select term_id from md_term where term_name='"+req.query.termname+"'))";
      var qur="select * from md_grade_assesment_mapping where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade_name='"+req.query.gradename+"'and  assesment_id in  (select distinct(assesment_id) from single_student_markentry_table where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' and flag='completed')";
   console.log("..............Reading assesment..........");
   console.log(qur);
@@ -14470,6 +14495,60 @@ var mapqur="SELECT * FROM subject_mapping WHERE  academic_year='"+req.query.acad
 
   });
 });
+
+
+app.post('/fetchdynamicallyenteredscholasticmarks1-service',  urlencodedParser,function (req, res)
+{
+var qur="SELECT * FROM tr_coscholastic_assesment_marks WHERE school_id='"+req.query.schoolid+"' and "+
+" academic_year='"+req.query.academicyear+"' and  term_name='"+req.query.termname+"' and "+
+" grade='"+req.query.grade+"' and section='"+req.query.section+"' and subject_id='"+req.query.subject+"' order by student_name,sub_category";
+var categorycnt="SELECT subject_id,subject_name,category_id,category_name,count(sub_category_id) as cnt FROM subject_mapping WHERE academic_year='"+req.query.academicyear+"' and "+
+" grade_name='"+req.query.grade+"' and subject_name='"+req.query.subject+"' and school_id='"+req.query.schoolid+"' group by subject_id,subject_name,category_id,category_name";
+var mapqur="SELECT * FROM subject_mapping WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and "+
+" grade_name='"+req.query.grade+"' and subject_name='"+req.query.subject+"' order by category_id";
+
+ console.log('--------------------------enrichment stud fetch for report------------------------------');
+ console.log('--------------------------------------------------------');
+ console.log(qur);
+ console.log(categorycnt);
+ console.log(mapqur);
+ console.log('--------------------------------------------------------');
+ var arr1=[];
+ var arr2=[];
+ connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      arr1=rows;
+    connection.query(categorycnt,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      arr2=rows;
+    connection.query(mapqur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+     res.status(200).json({'returnval': arr1,'categorycnt':arr2,'map':rows});
+    }
+    });
+    }
+    });
+    }
+    else
+    {
+      console.log('error in this query....'+err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+
 
 app.post('/fetchdynamicallyenteredmarks-service',  urlencodedParser,function (req, res)
 {

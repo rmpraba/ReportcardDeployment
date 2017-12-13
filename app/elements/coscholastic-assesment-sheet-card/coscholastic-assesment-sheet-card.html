@@ -84,6 +84,9 @@
         <section data-category="cs-discipline-card">        
           <cs-discipline-card></cs-discipline-card>
         </section>
+     <section data-category="subject-dynamic-coscholastic-markentry-report">  
+     <subject-dynamic-coscholastic-markentry-report></subject-dynamic-coscholastic-markentry-report>
+      </section>
     </iron-pages>
   </template>
   <script>
@@ -93,8 +96,6 @@
     Polymer({
       is: 'coscholastic-assesment-sheet-card',
       setPage:function(page){
-        // alert(page);
-        // localStorage.setItem("curr_sess_page","coscholasticassesment");
         localStorage.setItem("curr_sess_page",page);
         this.page=page;
       }

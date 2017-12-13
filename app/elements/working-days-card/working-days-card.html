@@ -150,8 +150,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          this.acadamicyear=e.target.selectedItem.textContent.trim(); 
          this.hidenewtabgrid=false;
       //  alert(this.acadamicyear);
-          this.$.uiservice.fnsetpasssectinvalue(this.schootypidz,this.acadamicyear);
-           this.$.uiservice.fngetpasssectinvaluezz(this.schootypidz,this.acadamicyear);
+      this.$.uiservice.fnsetpasssectinvalue(this.schootypidz,this.acadamicyear);
+   this.$.uiservice.fngetpasssectinvaluezz(this.schootypidz,this.acadamicyear);
           document.querySelector('workingday-terms-card').fnsplice();
    
   
@@ -172,9 +172,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 //  alert(2);
        //            alert(dbschootypearr[j].type+"  "+gridschooltypearr[i].grade_name);
            if(dbschootypearr[j].type==gridschooltypearr[i].grade_name){
-                 
-                 
-                           if(dbschootypearr[j].term_name=='term1'){
+                     if(dbschootypearr[j].term_name=='term1'){
                                    gridschooltypearr[i].term1=dbschootypearr[j].no_of_days;
                             
                              }

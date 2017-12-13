@@ -96,7 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="student">
        <paper-input label="Enter Student Name" is="" value="{{value}}" on-keydown="FnSearchstudententry">
         </paper-input>
-       <paper-listbox class="dropdown-content" id="studentmarkid" on-iron-select="FnSelectstudent">
+       <paper-listbox class="dropdown-content" id="studentmarkidzz1" on-iron-select="FnSelectstudent">
          <template is="dom-repeat" items="{{itemArray}}" as="item">
           <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
         </template>
@@ -452,11 +452,11 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
     
    FnSelectstudent:function(e)
         {
-          this.querySelector('#studentmarkid').style.visibility='hidden';
+          this.querySelector('#studentmarkidzz1').style.visibility='hidden';
           this.value=e.target.selectedItem.textContent.trim();
           this.studentid=e.target.selectedItem.value;
           this.itemArray=[];
-          document.querySelector('#studentmarkid').selected=-1;
+          document.querySelector('#studentmarkidzz1').selected=-1;
          this.$.singleservice.getsection(this.studentid);
           },
 
@@ -517,8 +517,8 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
         this.subjectid="";
            }
          },
-         fngenderid:function(e){
-         this.$.talentsubjectid.hidden=true;
+        fngenderid:function(e){
+        this.$.talentsubjectid.hidden=true;
         this.$.generalsubjectid.hidden=false
         this.$.cocurricularscolasticsubjectid.hidden=true;
         this.$.coscolasticsubjectid.hidden=true;
@@ -556,22 +556,22 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
         FnSearchstudententry:function(e)
      {
       if(e.keyCode==13|| e.keyCode==40)
-            this.querySelector('#studentmarkid').focus();
+            this.querySelector('#studentmarkidzz1').focus();
           var arr=[];
           arr.push({"itemdes":"-----Select-----"});
-          this.querySelector('#studentmarkid').style.visibility='visible';
+          this.querySelector('#studentmarkidzz1').style.visibility='visible';
           if(e.keyCode==8){
             this.itemflag="true";
             this.itemval="";
             //alert('yes');
             var len=(this.value).length;
             if(len<=1){
-              this.querySelector('#studentmarkid').style.visibility='hidden';
+              this.querySelector('#studentmarkidzz1').style.visibility='hidden';
               this.itemArray="";
               this.itemval="";
             }
             if(len>1){   
-        this.querySelector('#studentmarkid').style.visibility='visible';
+        this.querySelector('#studentmarkidzz1').style.visibility='visible';
               var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
               for(var i=0;i<studentnamearr.length;i++)
               {
@@ -618,7 +618,27 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
      
            },
 
-    
+    fnref:function(e){
+      document.querySelector('#studentmarkidzz1').selected=-1;             
+      document.querySelector("#scolasticid").checked=false;
+      document.querySelector("#coscolasticid").checked=false;
+      document.querySelector("#cocurriculamid").checked=false;
+      document.querySelector("#genderid").checked=false;
+      document.querySelector("#talentid").checked=false;
+ this.$.talentsubjectid.hidden=true; 
+ this.$.generalsubjectid.hidden=true
+ this.$.cocurricularscolasticsubjectid.hidden=true;
+ this.$.coscolasticsubjectid.hidden=true;
+ this.$.scolasticsubjectid.hidden=true;
+ this.$.scolasticsubjectid1.hidden=true;
+  this.assesmentids="";
+  this.$.onetofourhiddenvalue.hidden=true;
+ this.$.fivetotenhiddenvalue.hidden=true; 
+ this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
+ this.$.fivetotencoscholastichiddenvalue.hidden=true;
+ this.$.onetofourattendencehiddenvalue.hidden=true;  
+ this.$.onetofourhealthhiddenvalue.hidden=true;
+    },
     });
   })();
   </script>
