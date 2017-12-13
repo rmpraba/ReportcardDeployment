@@ -107,12 +107,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     ></iron-ajax>
     <iron-ajax  
         method="post"
-        id="assesmentajax"
-        url="{{assesmenturl}}"
-        params="{{assesmentparam}}"
+        id="assesment1ajax"
+        url="{{assesment1url}}"
+        params="{{assesment1param}}"
         handle-as="json"
         content-type="application/json"
-        on-response="assesmentResponse"
+        on-response="assesment1Response"
         debounce-duration="300"
     > <iron-ajax  
         method="post"
@@ -1009,19 +1009,25 @@ else
    document.querySelector('single-student-mark-entery-card').sectionname=res[0].sectionname;
 
   
-   this.assesmenturl=sessionStorage.getItem("addrinfo")+"/assesment1-service";
-         var obj={"schoolid":"","termtype":"","termname":"","gradename":""};
+    this.assesment1url=sessionStorage.getItem("addrinfo")+"/assesment1-service";
+         var obj={};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.termname=localStorage.getItem("curr_sess_termname");
          obj.gradename=res[0].gradename;
          obj.sectionname=res[0].sectionname;
-        this.assesmentparam= obj;
-         this.$.assesmentajax.generateRequest();
+        this.assesment1param=obj;
+         alert(JSON.stringify(obj));
+     this.$.assesment1ajax.generateRequest();
+
+
+
+
+
       },
-      assesmentResponse:function(e){
+      assesment1Response:function(e){
      var arr=e.detail.response.returnval;
-    // alert(JSON.stringify(arr));
+     alert(JSON.stringify(arr));
      document.querySelector('single-student-mark-entery-card').assesmentarr=arr;
 
      
