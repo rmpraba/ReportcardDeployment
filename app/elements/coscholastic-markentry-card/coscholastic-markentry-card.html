@@ -12,8 +12,9 @@
       <div hidden>{{studentid}}{{studentname}}{{classid}}{{assesmenttype}}{{gradeid}}{{gradename}}
       {{subjectid}}{{subjectname}}{{categoryid}}{{categoryname}}{{subcategoryid}}{{grade}}{{categorycnt}}{{weight}}{{seq}}</div>
       <h4 hidden$="{{hidelabel}}" style="text-align: center;word-wrap: break-word;">{{subcategoryname}}</h4>
-      <paper-input style="text-align: center;" label="" hidden$="{{hideinput}}" value="{{score}}" on-change="FnChange"></paper-input>
-  </template>
+      <paper-input style="text-align: center;" label="" hidden$="{{hideinput}}" value="{{score}}" on-change="FnChange">
+       </paper-input>
+  </template>  
   <script>
   (function() {
     'use strict';

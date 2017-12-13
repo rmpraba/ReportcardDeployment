@@ -67,7 +67,7 @@
         </center>
     </paper-dialog>
     <co-scholastic-service id="assesmentservice"></co-scholastic-service>
-  </template>
+  </template>  
   <script>
   (function() {
     'use strict';
@@ -129,7 +129,7 @@
         }
         // alert(this.studid+"  "+this.studname+"  "+this.attendance+"  "+this.workingdays+"  "+this.genericcomment+"  "+this.specificcomment);
         this.$.assesmentservice.callinsertattendanceService(this.studid,this.studname,this.attendance,this.workingdays,this.genericcomment,this.specificcomment); 
-      }
+        }
     });
   })();
   </script>

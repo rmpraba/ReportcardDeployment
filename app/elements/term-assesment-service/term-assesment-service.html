@@ -175,8 +175,7 @@
         handle-as="json"
         content-type="application/json"
         on-response="nameforperformancereportResponse"
-        debounce-duration="300"
-    >
+        debounce-duration="300">
     <iron-ajax
         method="post"
         id="onetofourreportajax"
@@ -619,6 +618,7 @@
                 arr[i].subject_id=arr[i].language_pref+"  "+arr[i].subject_id;
             }
           }
+         // alert(JSON.stringify(arr));
           document.querySelector('term-assesment-card').subjectarr=arr;
           // if(localStorage.getItem("curr_sess_subjectcategory")=="category2"||localStorage.getItem("curr_sess_subjectcategory")=="category3"||localStorage.getItem("curr_sess_subjectcategory")=="category4")  
           document.querySelector('coscholastic-assesment-card').subjectarr=arr;  
@@ -1331,8 +1331,9 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(e.detail.response.returnval=='succ')
         insertflag++;
         if(insertflag==insertcheckflag){
-          alert('Marks saved!');
+      alert('Marks saved!');
           insertflag=0;
+     
         }
       }, 
       insertassesmentmarkResponse:function(e){
@@ -1341,6 +1342,10 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(insertflag==insertcheckflag){
           alert('Marks saved!');
           insertflag=0;
+           if(localStorage.getItem("curr_sess_page")=="single-student-mark-entery-card")
+          {
+         document.querySelector('single-student-mark-entery-card').updatestudentmark();
+       }
         }
       },      
       callinsertattendanceinfo:function(studid,studname,attendance,workingdays){
@@ -1516,6 +1521,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
 
       if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher")
       {
+       
         this.updatefaimportmarkcheckService();
       }
 
@@ -1617,9 +1623,11 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         this.updatefaimportmarkcheckurl=sessionStorage.getItem("addrinfo")+"/updatefaimportmarkcheck-service";
         this.updatefaimportmarkcheckparam=obj;
         this.$.updatefaimportmarkcheckajax.generateRequest();
+       // alert(3);
     },
     updatefaimportmarkcheckResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
+        alert(JSON.stringify(e.detail.response.returnval));
+       // alert();
         var arr=e.detail.response.returnval;
         if(arr[0].result=='match')
           this.updatefaimportmarkService();
@@ -1687,8 +1695,8 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       alert("Unable to approve!");
     },
     callOveralltermmarkinsertService:function(){ 
-        // alert('calling....');       
-         this.overalltermmarkinserturl=sessionStorage.getItem("addrinfo")+"/overalltermmarkinsert-service";
+  
+  this.overalltermmarkinserturl=sessionStorage.getItem("addrinfo")+"/overalltermmarkinsert-service";
          var obj={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","grade":"","section":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -2222,7 +2230,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
           arr[i].flag="Pending for approval";
         if(arr[i].flag=="1")
           arr[i].flag="Approved";
-      }
+      } 
       document.querySelector('approvalstatus-card').approvalarr=e.detail.response.returnval;
     },
     callUpdateStudentInfo:function(id,name,pname,pmail,alternatemail,mothername,address){
@@ -2286,7 +2294,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     if(localStorage.getItem("curr_sess_subject")=="Work Education"||localStorage.getItem("curr_sess_subject")=="Life Skills"||localStorage.getItem("curr_sess_subject")=="Visual & Performing Arts"||localStorage.getItem("curr_sess_subject")=="Attitudes And values"||localStorage.getItem("curr_sess_subject")=="Co-Curricular Activities"||localStorage.getItem("curr_sess_subject")=="Health and Physical Education" ||localStorage.getItem("curr_sess_subject")=="Discipline")
      {
        
-       var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
+    var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
          obj1.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj1.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj1.termname=localStorage.getItem("curr_sess_termname");

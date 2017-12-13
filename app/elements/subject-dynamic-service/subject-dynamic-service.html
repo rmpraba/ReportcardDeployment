@@ -12,7 +12,7 @@
         content-type="application/json"
         on-response="fetchinfoforsubjecttemplateResponse"
         debounce-duration="300"
-    >
+    > 
     <iron-ajax
         method="post"
         id="fetchsubjectstudentajax"
@@ -207,8 +207,10 @@
       fetchinfoforsubjecttemplateResponse:function(e){
         // alert(JSON.stringify(e.detail.response.returnval));
         assesscategory=e.detail.response.returnval;
-        if(assesscategory.length>0)
-        this.callFetchStudentInfo(gradename,section,subject);
+        if(assesscategory.length>0){
+          this.callFetchStudentInfo(gradename,section,subject);
+          
+        }
         // categorycnt=e.detail.response.catarr;
       },
       callFetchStudentInfo:function(grad,sec,sub){
@@ -321,8 +323,8 @@
          this.$.fetchstudentforsubjectreportajax.generateRequest();
       },
       fetchstudentforsubjectreportResponse:function(e){
-        var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));
+          var arr=e.detail.response.returnval;
+       //alert(JSON.stringify(arr));
         if(arr.length>0){
         for(var i=0;i<overall.length;i++){
           for(var j=0;j<arr.length;j++){
@@ -332,11 +334,11 @@
               overall[i].category[k].score=arr[j].mark;
             }
             }
+           }
           }
-          }
-        }        
+         }        
         }
-        // alert(JSON.stringify(overall));
+        //alert(JSON.stringify(overall));
         for(var i=1;i<overall.length;i++){
             overall[i].sno=i;
         }

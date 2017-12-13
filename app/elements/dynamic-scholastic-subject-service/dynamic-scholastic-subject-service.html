@@ -227,7 +227,7 @@
         sgrade=gradename;
         ssection=section;
         ssubject=subject;
-         this.fetchsubjectstudenturl=sessionStorage.getItem("addrinfo")+"/fetchsubjectstudent-service";
+     this.fetchsubjectstudenturl=sessionStorage.getItem("addrinfo")+"/fetchsubjectstudent-service";
          var obj={"schoolid":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -323,6 +323,7 @@
             categorytitle.push(obj);
          }
          overall.push({"tabwidth":tabwidth,"serialno":"Sno",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
+
          for(var i=0;i<studentarr.length;i++){
           var finalarr=[];
           for(var j=0;j<assesscategory.length;j++){
@@ -404,7 +405,7 @@
         }
         for(var i=2;i<overall.length;i++){
           overall[i].serialno=i-1;
-        }
+        } 
         // alert(JSON.stringify(overall));
         document.querySelector('term-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');
         document.querySelector('dynamic-scholastic-markentry-card').hideheader=false;

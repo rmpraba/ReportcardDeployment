@@ -1319,7 +1319,8 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
  },
     callconsolidateddatanalysisreportService:function(){
       this.consolidateddatanalysisreporturl=sessionStorage.getItem("addrinfo")+"/consolidateddatanalysisreport-service";
-      var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
+var obj={"schoolid":"","academicyear":"","grade":"","section":"","termname":""};
+
         obj.termname=localStorage.getItem("curr_sess_termname");
         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
@@ -1331,6 +1332,8 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
         this.$.consolidateddatanalysisreportajax.generateRequest();
     },
     consolidateddatanalysisreportResponse:function(e){
+     
+
         var assesscategorycnt=e.detail.response.categorycnt;
         var arr=e.detail.response.returnval;
         var temp=[];
@@ -1477,8 +1480,10 @@ overall.push({"studentname":arr[i].student_name,"tabwidth":tabwidth,"category":c
    
 document.querySelector('consolidated-data-analysis').tabwidth=tabwidth;
  document.querySelector('consolidated-data-analysis').studarr=overall;
+
  document.querySelector('consolidated-report-card').FnSpinnerrActive(false);
  document.querySelector('consolidated-report-card').setDefaultHeaders();
+
  document.querySelector('consolidated-data-analysis').setDefaultdddHeaders();
        
        
@@ -1562,6 +1567,10 @@ document.querySelector('consolidated-data-analysis').tabwidth=tabwidth;
         document.querySelector("consolidated-data-analysis-report").subjectarr=subfinal;
         document.querySelector("consolidated-data-analysis-report").titlearr=titlearr;
         document.querySelector("consolidated-data-analysis-report").itemarr=overall;
+
+        // document.querySelector('consolidated-data-analysis-report').FnSpinnerrActive(false);
+ document.querySelector("consolidated-data-analysis-report").tiggerDialog();
+document.querySelector('consolidated-data-analysis-report').FnSpinnerrActive(false);
         document.querySelector("consolidated-data-analysis-report").tiggerDialog();
 
         document.querySelector('consolidated-data-analysis-report').FnSpinnerrActive(false);
@@ -1571,6 +1580,7 @@ document.querySelector('consolidated-data-analysis').tabwidth=tabwidth;
         overall=[];        
       }
      }
+    
 //     callassesmentwisereportService:function(){
 //        this.assesmentwisereporturl=sessionStorage.getItem("addrinfo")+"/assesmentwisereport-service";
 //         var obj={"schoolid":"","academicyear":"","grade":"","section":"","assesment":"","termname":""};

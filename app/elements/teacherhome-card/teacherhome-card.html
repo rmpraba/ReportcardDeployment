@@ -59,10 +59,10 @@
     <div class="container" hidden$="{{rolescontainer}}">
     <!--Subject teacher options start-->
     <div class="subjectteacher" hidden$="{{subjectteacher}}">
-    <div class="inner1" hidden$="{{hideenrichmentcontainer}}">
-      <div id="entry" class="card" hidden$="{{BA}}">    
-       <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/Enrichment.png" height="180px" width="180px"></paper-button>
-      </div>
+      <div class="inner1" hidden$="{{hideenrichmentcontainer}}">
+         <div id="entry" class="card" hidden$="{{BA}}">    
+          <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/Enrichment.png" height="180px" width="180px"></paper-button>
+        </div>
     </div>
     <div class="inner1" hidden$="{{hidereportcardcontainer}}">
       <div  class="card" hidden$="{{TA}}">
@@ -70,7 +70,17 @@
       </div>
       <div class="card" hidden$="{{GenerateReport}}">
        <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
-      </div>  
+      </div> 
+       <div class="card" hidden$="{{subjectstatus}}">
+        <paper-button on-click="fnsubjectreport" no ink><img src="../../images/substatus.jpg" height="180px" width="180px">
+        <h4>Subject teacher Status</h4>
+        </paper-button>
+      </div> 
+       <div class="card" hidden$="{{singlestudentinfo}}">
+        <paper-button on-click="Fnsinglestudentinfo" no ink><img src="../../images/singlestudent.jpg" height="180px" width="180px">
+        <h4>Singl Student Mark </h4>
+        </paper-button>
+      </div> 
     </div>
     <div class="inner1" hidden$="{{hideleasonplancontainer}}">
       <div class="card" hidden$="{{bookclassplann}}">
@@ -79,11 +89,12 @@
         </paper-button>
       </div>     
     </div>
+      
     </div>
     <!--Subject teacher options end-->
     <!--Class teacher options start-->
     <div class="classteacher" hidden$="{{classteacher}}">
-    <div class="inner1" hidden$="{{hideenrichmentcontainer}}">
+     <div class="inner1" hidden$="{{hideenrichmentcontainer}}">
       <div id="entry" class="card" hidden$="{{BA}}">    
        <paper-button on-click="FnSelectPreEntryType" no ink><img src="../../images/Enrichment.png" height="180px" width="180px"></paper-button>
       </div>
@@ -92,6 +103,11 @@
       <div  class="card" hidden$="{{TA}}">
        <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
       </div>
+       <div class="card" hidden$="{{singlestudentinfo}}">
+          <paper-button on-click="Fnsinglestudentinfo" no ink><img src="../../images/singlestudent.jpg" height="180px" width="180px">
+           <h4>Singl Student Mark </h4>
+          </paper-button>
+      </div> 
       <div class="card" hidden$="{{GenerateReport}}">
        <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
       </div>
@@ -169,15 +185,18 @@
        <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
       </div>      
       <div class="card" hidden$="{{ConsolidatedReport}}">
-       <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
+        <paper-button on-click="FnConsolidatedReport" no ink><img src="../../images/consolidation.jpg" height="180px" width="180px"></paper-button>
       </div>
       <!-- <div class="card" hidden$="{{Analysis}}">
        <paper-button on-click="FnAnalysiscard" no ink><img src="../../images/analysis.jpg" height="180px" width="180px"></paper-button>
       </div> -->
       <div class="card" hidden$="{{dataanalysis}}">
-       <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"></paper-button>
+        <paper-button on-click="FnConsolidatedDataAnalysis" no ink><img src="../../images/dataanalysis.jpg" height="180px" width="180px"></paper-button>
       </div>
-      <div class="card" hidden$="{{teach_obser}}">
+      <div class="card" hidden$="{{coodinatormarkentry}}">
+     <paper-button on-click="fncoodinatormarkentry" no ink><img src="../../images/co.jpg" height="180px" width="180px"></paper-button>
+      </div>
+     <div class="card" hidden$="{{teach_obser}}">
        <paper-button on-click="FnTeacherbserver" no ink><img src="../../images/teacherobservation.png" height="180px" width="180px"></paper-button>
       </div>
     </div>
@@ -286,14 +305,7 @@
         <h4>Evaluation Report</h4>
         </paper-button>
       </div>
-
-      <!-- <div class="card" hidden$="{{innnovationreport}}">
-        <paper-button on-click="fninnovation" no ink><img src="../../images/innovations.jpg" height="180px" width="180px">
-        <h4>Innovation Report</h4>
-        </paper-button>
-      </div> -->
-
-      </div>
+     </div>
     </div>
 
     <!-- Co-ordinator options end -->
@@ -604,11 +616,6 @@
         <h4>Teacher Management</h4>
         </paper-button>
       </div>
-      <div class="card" hidden$="{{singlestudentinfo}}">
-        <paper-button on-click="Fnsinglestudentinfo" no ink><img src="../../images/singlestudent.jpg" height="180px" width="180px">
-        <h4>Singl Student Mark </h4>
-        </paper-button>
-      </div>
     </div>
     </div>
     <!-- General ssschooladmin master ends-->
@@ -659,7 +666,7 @@
     <student-report-service id="reportservice"></student-report-service>
     <teacher-book-service-card id="bookservice"></teacher-book-service-card>
     <student-add-service id="studservice"></student-add-service>
-
+    <single-student-markentry-service id="singleservice"></single-student-markentry-service>
   </template>
   <script>
   (function() {
@@ -835,6 +842,10 @@
          {     
           this.$.assesmentservice.callTermService("Term");
          }
+         if(localStorage.getItem('curr_sess_loggedassesmenttype')=="subjectreport") 
+         {     
+          this.$.assesmentservice.callTermService("Term");
+         }
          if(localStorage.getItem('curr_sess_loggedassesmenttype')=="Editinfo") 
          {          
           document.querySelector('app-card').setPage('homepage','');
@@ -952,7 +963,7 @@
              this.$.bookservice.fninnovategrade();
              //this.$.bookservice.fnselectinnovatesubject();
       }
-      if(localStorage.getItem('curr_sess_loggedassesmenttype')=="studentinformation")
+ if(localStorage.getItem('curr_sess_loggedassesmenttype')=="studentinformation")
       {
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('student-information-card','');
@@ -965,8 +976,14 @@
           this.$.studservice.studentconfics();
           document.querySelector('student-add-card').FnfullzRefresh();
       }
-
-      if(localStorage.getItem('curr_sess_loggedassesmenttype')=="singlestaff")
+if(localStorage.getItem('curr_sess_loggedassesmenttype')=="coodinatormarkentry")
+  {
+  document.querySelector('app-card').setPage('homepage','');
+document.querySelector('home-page').setPage('student-coordinator-apruval-card','');
+         this.$.singleservice.fngetinformationvalue();
+        
+      }
+  if(localStorage.getItem('curr_sess_loggedassesmenttype')=="singlestaff")
       {
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('single-staff-mapping-card','');
@@ -1033,7 +1050,6 @@
         var termname = e.target.selectedItem.textContent.trim();  
         localStorage.setItem('curr_sess_termname',termname);  
         // this.$.assesmentservice.callAssesmentService("Term",termname,"");               
-        this.$.assesmentservice.callGradeService();   
         
         if(localStorage.getItem('curr_sess_report')=="1")
         {
@@ -1041,19 +1057,33 @@
         document.querySelector('home-page').setPage('termscholasticcategory','');
         document.querySelector('term-scholastic-category').FnHideView();
         // document.querySelector('home-page').setPage('termassesment','');        
+          this.$.assesmentservice.callGradeService();   
+    
         }
         else if(localStorage.getItem('curr_sess_report')=="3"){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('approvalstatus');
-        this.$.assesmentservice.FnFetchApprovalStatus();
+            this.$.assesmentservice.callGradeService();   
+           this.$.assesmentservice.FnFetchApprovalStatus();
+        
         }
-         else if(localStorage.getItem('curr_sess_report')=="6"){
+  else if(localStorage.getItem('curr_sess_report')=="7"){
         document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('single-student-markentry-card');
-        this.$.assesmentservice.FnFetchApprovalStatus();
+        document.querySelector('home-page').setPage('subject-report-status-card');
+          //  this.$.assesmentservice.callGradeService();   
+           this.$.singleservice.FnFetchSubjectStatus();
+        document.querySelector('subject-report-status-card').FnSpinnerrActive(true);
         }
+
+
+         else if(localStorage.getItem('curr_sess_report')=="6"){
+          document.querySelector('app-card').setPage('homepage','');
+          document.querySelector('home-page').setPage('single-student-mark-entery-card');
+        this.$.singleservice.getstudentinformation();
+         }
         else
         {
+        this.$.assesmentservice.callGradeService();   
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('termscholasticcategory','');
         document.querySelector('term-scholastic-category').FnHideView();
@@ -1298,8 +1328,8 @@
       },
       FnRefresh:function()
       {
-         document.querySelector('#academicyr').selected=-1;
-         document.querySelector('#termtype').selected=-1;
+      document.querySelector('#academicyr').selected=-1;
+      document.querySelector('#termtype').selected=-1;
       },
       FnAnalysiscard:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','Analysis');   
@@ -1340,6 +1370,10 @@
          document.querySelector('teacher-observation_card').Fnobservername();
        //this.$.service.uname=sessionStorage.getItem("curr_sess_loggeduname");     
       },
+      fncoodinatormarkentry:function(e){
+      localStorage.setItem('curr_sess_loggedassesmenttype','coodinatormarkentry'); 
+        this.$.cdialog.toggle();
+   },
       FnComparison:function(){
         localStorage.setItem('curr_sess_loggedassesmenttype','Comparisonreport');
         this.$.scorecardservice.callGradeService();
@@ -1356,6 +1390,11 @@
         localStorage.setItem('curr_sess_loggedassesmenttype','Approvalstatus');
         localStorage.setItem('curr_sess_report','3');
         this.$.scorecardservice.callGradeService();
+        this.$.cdialog.toggle(); 
+      },
+      fnsubjectreport:function(){
+        localStorage.setItem('curr_sess_loggedassesmenttype','subjectreport');
+        localStorage.setItem('curr_sess_report','7');
         this.$.cdialog.toggle(); 
       },
       FnEditInfo:function(){
@@ -1622,7 +1661,7 @@
           },
           Fnsinglestudentinfo:function(e){
             localStorage.setItem('curr_sess_loggedassesmenttype','singlestudentinfo');
-            localStorage.setItem('curr_sess_report','6');
+            localStorage.setItem('curr_sess_report',"6");
     
            this.$.cdialog.toggle();
           }

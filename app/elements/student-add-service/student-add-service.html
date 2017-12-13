@@ -412,13 +412,15 @@ getalltermmarksResponse:function(e)
       obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
       obj.studentid=stuid;
       this.getalltermmarks1param=obj;
-      
+      alert(JSON.stringify(obj));
       this.$.getalltermmarks1ajax.generateRequest();
         },
 getalltermmarks1Response:function(e)
         {
-  var res=e.detail.response.returnval;
-  document.querySelector("student-information-card").termarrrs=res;
+       var res=e.detail.response.returnval;
+       alert(JSON.stringify(res));
+
+    document.querySelector("student-information-card").termarrrs=res;
       }, 
 fnsinglegrademapping:function(empid,arr,subjectid){
   len1=arr.length;
