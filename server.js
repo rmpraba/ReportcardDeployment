@@ -8,8 +8,8 @@ var dbserver_ip_address = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1'
 var connection = mysql.createConnection({
   host :'localhost',
   user     : 'root',
-  password : 'admin',
-  database : 'reportcardcheck' 
+  password : '',
+  database : 'reportcardlocal' 
   // port     : '62631',
   // user     : 'adminM1qnV1d',
   // password : 'HC2bIf7Sk2LD',
@@ -6709,7 +6709,7 @@ app.post('/fngetinformationvalue-service' ,  urlencodedParser,function (req, res
 
 
 
-
+/*
 
 app.post('/fetchapprovalstatus1-service' ,  urlencodedParser,function (req, res)
 {    
@@ -6737,6 +6737,136 @@ connection.query(qur1,function(err, rows){
   }
 });
 });
+
+
+*/
+
+
+
+   
+
+
+
+
+app.post('/fetchapprovalstatus1-service',  urlencodedParser,function (req, res)
+{
+//var qur="select * from tr_term_assesment_import_marks where flag='"+req.query.flag+"' and school_id='"+req.query.schoolid+"'";
+var checkqur="select grade_id from mp_teacher_grade where "+ 
+"id='"+req.query.loggedid+"' and role_id='subject-teacher'";
+
+var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject in(SELECT subject_name from md_subject where subject_id in(SELECT subject_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"'))";
+
+var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject in(SELECT subject_name from md_subject where subject_id in(SELECT subject_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"'))";
+
+
+console.log('.......................subject approval fetch.....................');
+console.log(checkqur);
+console.log('............................................');
+console.log(qur1);
+console.log('............................................');
+console.log(qur2);
+var resp={
+  flag:""
+};
+var arr=[];
+var f1=0,f2=0;
+connection.query(checkqur,function(err, rows){
+  if(rows.length>0){
+    console.log('-----------------in----------------------');
+    for(var i=0;i<rows.length;i++){
+      if(rows[i].grade_id=='g1'||rows[i].grade_id=='g2'||rows[i].grade_id=='g3'||rows[i].grade_id=='g4')
+        {
+        resp.flag=1;
+        f1=1;
+        }
+      else{
+        resp.flag=0;
+        f2=1;
+      }
+    }
+  }
+  // else{
+  console.log('-----------------out----------------------');
+  console.log('response flag...........'+resp.flag+" f1.... "+f1+" f2.... "+f2);
+  if(f1==1&&f2==1){
+    connection.query(qur1,function(err, rows)
+    {
+      if(!err){
+      if(rows.length>0)
+      {
+        console.log('----------------primary--------------'+rows.length);
+        arr=rows;
+      }
+      connection.query(qur2,function(err, rows)
+      {
+        if(!err){
+          if(rows.length>0){
+          console.log('----------------high--------------'+rows.length);
+          for(var i=0;i<rows.length;i++){
+            arr.push(rows[i]);
+          }
+          }
+          console.log('------whole---------'+arr.length);
+          res.status(200).json({'returnval': arr});     
+        }
+      });
+      }
+    });
+  }
+  else{
+  if(resp.flag==1){
+  connection.query(qur1,function(err, rows)
+    {
+      console.log(qur1);
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+  }
+  if(resp.flag==0){
+    console.log(qur2);
+  connection.query(qur2,function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+    }
+    else
+      console.log(err);
+  });
+  }
+  }
+// }
+});
+});
+
+
+
+
+
+
+
+
+
 
 app.post('/fnupdatestudentinfo-service' ,  urlencodedParser,function (req, res)
 {    
