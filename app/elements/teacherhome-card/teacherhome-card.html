@@ -978,10 +978,8 @@
       }
 if(localStorage.getItem('curr_sess_loggedassesmenttype')=="coodinatormarkentry")
   {
-  document.querySelector('app-card').setPage('homepage','');
-document.querySelector('home-page').setPage('student-coordinator-apruval-card','');
-         this.$.singleservice.fngetinformationvalue();
-        
+ 
+       this.$.assesmentservice.callTermService("Term");  
       }
   if(localStorage.getItem('curr_sess_loggedassesmenttype')=="singlestaff")
       {
@@ -1080,6 +1078,11 @@ document.querySelector('home-page').setPage('student-coordinator-apruval-card','
           document.querySelector('app-card').setPage('homepage','');
           document.querySelector('home-page').setPage('single-student-mark-entery-card');
         this.$.singleservice.getstudentinformation();
+         }
+         else if(localStorage.getItem('curr_sess_report')=="8"){
+           document.querySelector('app-card').setPage('homepage','');
+           document.querySelector('home-page').setPage('student-coordinator-apruval-card','');
+         this.$.singleservice.fngetinformationvalue();
          }
         else
         {
@@ -1372,6 +1375,8 @@ document.querySelector('home-page').setPage('student-coordinator-apruval-card','
       },
       fncoodinatormarkentry:function(e){
       localStorage.setItem('curr_sess_loggedassesmenttype','coodinatormarkentry'); 
+          localStorage.setItem('curr_sess_report',"8");
+    
         this.$.cdialog.toggle();
    },
       FnComparison:function(){
