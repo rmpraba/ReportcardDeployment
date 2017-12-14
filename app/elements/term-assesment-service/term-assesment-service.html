@@ -201,7 +201,7 @@
      
 
        <iron-ajax    
-     auto    
+       auto    
         method="post"
         id="fetchfagradeforscoreajax"
         url="{{fetchfagradeforscoreurl}}"
@@ -563,6 +563,7 @@
       termResponse:function(e){ 
       // alert(e.detail.response.returnval); 
          document.querySelector('cce-generate-score-card').termarr=e.detail.response.returnval;       
+         document.querySelector('student-remove-card').termarr=e.detail.response.returnval;
          document.querySelector('teacherhome-card').termarr=e.detail.response.returnval;
          document.querySelector('teacherhome-card').FnToggle();
       },

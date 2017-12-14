@@ -931,6 +931,8 @@ document.querySelector('student-information-card').termarrinfonatioid=true;
             var obj={"school_id":"","academic_year":""};
             obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
             obj.academic_year=localStorage.getItem("curr_sess_academicyear"); 
+            obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+            obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
               this.fetchstudentremoveparam=obj;
             this.$.fetchstudentremoveajax.generateRequest();
         },

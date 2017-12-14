@@ -79,7 +79,7 @@
               <div class="field">
                 <paper-dropdown-menu id="term" label="Select Term">
                   <paper-menu id="studtermremvid" class="dropdown-content"   on-iron-select="fntermstud" attr-for-selected="value" required>
-                  <template is="dom-repeat" items="{{termarrs}}" as="item">
+                  <template is="dom-repeat" items="{{termarr}}" as="item">
                   <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
                 </template>
                   </paper-menu>
@@ -98,6 +98,7 @@
       <paper-spinner id="empspinneridz"></paper-spinner>
     </paper-dialog>
           <student-add-service id="studservice"></student-add-service>
+          <term-assesment-service id="assesmentservice"></term-assesment-service>
   </template>
   <script>
   (function() {
@@ -273,7 +274,8 @@
           this.itemArray=[];
          document.querySelector('#'+this.studentslist).selected=-1;
           this.$.studservice.prestudentremovedet(this.studentid);
-            this.$.studservice.getalltermmarks(this.studentid);
+            // this.$.studservice.getalltermmarks(this.studentid);
+            this.$.assesmentservice.callTermService("Term");
 
           this.studid=this.studentid;
           this.hideremovecls=false;

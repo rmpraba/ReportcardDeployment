@@ -584,14 +584,9 @@ var qur="select subject_sub_category_name from md_subject_sub_category where sub
 
  app.post('/getalltermmarks-service',  urlencodedParser,function (req,res)
   {  
-    
-
- 
-
    var qur1="Select * from md_student where id='"+req.query.studentid+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"'";
     console.log(qur1);
-    var qur;
-    
+    var qur;    
     connection.query(qur1,function(err, rows){
     if(!err)
     {  
@@ -16017,7 +16012,11 @@ qur="SELECT distinct term_name from tr_term_assesment_marks where grade='"+req.q
 
 app.post('/Fnfetchstudentremove-service', urlencodedParser,function (req,res)
 {  
-    var qur="SELECT * FROM md_student where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academic_year+"' and flag='active'";
+    var qur="SELECT * FROM md_student where school_id='"+req.query.schoolid+"' and "+
+    " academic_year='"+req.query.academic_year+"' and flag='active' and grade_id in(select "+
+    " grade_id from mp_teacher_grade where school_id='"+req.query.schoolid+"' and "+
+    " academic_year='"+req.query.academic_year+"' and id='"+req.query.loggedid+"' and "+
+    " role_id='"+req.query.roleid+"')";
       console.log("..........................................");
   console.log("coming in Fnfetchstudentremove-service.........");
     connection.query(qur,
@@ -16177,21 +16176,23 @@ app.post('/deletestudentremove-service',  urlencodedParser,function (req,res)
     console.log(qur2);
     var updatearr1=[];
     var delarr=[];
-    connection.query(qur1,function(err, rows){
+    connection.query(qur1,function(err, result){
     if(!err)
     { 
-    updatearr1=rows; 
-    connection.query(qur2,function(err, rows){
+    // updatearr1=rows; 
+    if(result.affectedRows>0){
+    connection.query(qur2,function(err, result){
     if(!err)
     {  
       //console.log(rows);
-      delarr=rows;
+      // delarr=rows;
      res.status(200).json({'updatearr1': 'updated','delarr':'updated'});
     }
     });
     }
+    }
     else{
-      console.log(err);
+     console.log(err);
      res.status(200).json({'': 'no rows'}); 
    }
   });
