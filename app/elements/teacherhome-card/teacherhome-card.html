@@ -1098,8 +1098,8 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=="coodinatormarkentry")
       FnApprovecard:function()
       {        
         localStorage.setItem('curr_sess_report','2');
-        document.querySelector('app-card').setPage('homepage','');
-        document.querySelector('home-page').setPage('approveassesment','');  
+      document.querySelector('app-card').setPage('homepage','');
+      document.querySelector('home-page').setPage('approveassesment','');  
         this.$.assesmentservice.callApproveService();   
       },
       FnHideView:function(){ 
