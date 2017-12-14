@@ -286,17 +286,24 @@
          var obj={};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");  
+         count1=0;
+         count2=0;
+         count1=arr.length;
          for(var i=0;i<arr.length;i++){
           obj.bookid=arr[i].bookid;
           obj.paramid=arr[i].paramid;
-          obj.paramname=arr[i].paramname;
-         
+          obj.paramname=arr[i].paramname;         
          this.insertenrichmentparametermappingparam= obj;
          this.$.insertenrichmentparametermappingajax.generateRequest();
         }
       },
       insertenrichmentparametermappingResponse:function(e){
+        count2++;
+        if(count1==count2){
         alert(e.detail.response.returnval);
+        count1=0;
+        count2=0;
+      }
       },
       gradesforenrichmentService:function(){
          this.gradesforenrichmenturl=sessionStorage.getItem("addrinfo")+"/gradesforenrichment-service";
@@ -551,7 +558,7 @@
         }
       },
       assignbooktostudentResponse:function(e){
-         alert(JSON.stringify(e.detail.response.returnval));
+         // alert(JSON.stringify(e.detail.response.returnval));
         count2++;
         if(count1==count2){
           alert('Mapped successfully!!');

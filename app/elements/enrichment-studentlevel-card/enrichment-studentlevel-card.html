@@ -62,12 +62,16 @@
       }
     </style>
     <div class="card">
-    <div  class="innercard1">
+    <div class="innercard">
+    <h2>Books/Activities</h2>
+    <div  class="innercard2">
     <template is="dom-repeat" items="{{booklevelarr}}">
       <enrichment-booksoption-itemcard bookid="{{item.id}}" bookname="{{item.book_name}}"></enrichment-booksoption-itemcard>
     </template>   
     </div>
+    </div>
     <div class="innercard">
+    <h2>Student</h2>
     <div class="innercard2">
     <template is="dom-repeat" items="{{studlevelarr}}">
       <enrichment-studentoption-itemcard studentid="{{item.student_id}}" studentname="{{item.student_name}}"></enrichment-studentoption-itemcard>
@@ -106,11 +110,10 @@
         bookarr=book;
       },
       fnrefres:function(e){
-         alert(JSON.stringify(bookarr));
-         alert(JSON.stringify(studarr));
-        
-    document.querySelector('enrichment-studentoption-itemcard').Fnsetinfo11(studarr);
-          document.querySelector('enrichment-booksoption-itemcard').Fnsetinfo(bookarr);
+         // alert(JSON.stringify(bookarr));
+         // alert(JSON.stringify(studarr));        
+      document.querySelector('enrichment-studentoption-itemcard').Fnsetinfo11(studarr);
+      document.querySelector('enrichment-booksoption-itemcard').Fnsetinfo(bookarr);
  
       },
     });

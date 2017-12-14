@@ -114,7 +114,7 @@
          this.$.fetchevaluationparametersajax.generateRequest();
       },
       fetchevaluationparametersResponse:function(e){
-         alert(JSON.stringify(e.detail.response.returnval));
+         // alert(JSON.stringify(e.detail.response.returnval));
         var arr=e.detail.response.returnval;
         this.parameterarr=arr;
         document.querySelector('#collapseparameter').toggle();
