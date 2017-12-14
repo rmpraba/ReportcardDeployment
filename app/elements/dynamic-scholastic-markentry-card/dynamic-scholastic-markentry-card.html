@@ -108,7 +108,7 @@
          this.$.dynamicsavebtn.hidden=true;
       },
       FnSetLabel:function(){
-        if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
+      if(sessionStorage.getItem("curr_sess_loggedrole")=="Class-Teacher"||sessionStorage.getItem("curr_sess_loggedrole")=="Subject-Teacher"){
         this.btnlabel="Submit for approval";
         }
         if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
@@ -141,7 +141,7 @@
       FnSetMarkEnteredArray:function(arr){
         var scorearrlen=arr;
         if(((this.studarr.length)-2)==(scorearrlen)){
-          this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
+        this.$.subjectservice.callSubjectApprovalService(this.grade,this.section,this.subject);
         }
         else
         {

@@ -45,17 +45,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <p hidden>{{studentid}}</p>
          <p hidden>{{termid}}</p>
         <div class="card">
-          <p  style="margin-left: 0%;">{{studentname}}</p>
-          <p  style="margin-left: 5%;">{{subjectcategory}}</p>
+          <p  >{{studentname}}</p>
           <p  style="margin-left: 5%;">{{assesmentid}}</p>
-          <p ' style="margin-left: 5%;">{{grade}}</p>
+          <p  style="margin-left: 5%;">{{grade}}</p>
           <p  style="margin-left: 5%;">{{section}}</p>
           <p  style="margin-left: 5%;">{{subject}}</p>
           <p  style="margin-left: 5%;">{{comments}}</p>
-          <p  style="margin-left: 5%;">
-            <paper-checkbox on-change="fnchangeprocess" hidden></paper-checkbox>
-          </p>
-   <p ><ahref class="viewdata" on-click="Fnaproved"><u>Aproved</u></ahref></p>
+         
+   <p style="margin-left: 5%;"><ahref class="viewdata" on-click="Fnaproved"><u>Aproved</u></ahref></p>
    <p ><ahref class="viewdata" on-click="FnReject"><u>Reject</u></ahref></p>
         </div>
     <single-student-markentry-service id="singleservice"></single-student-markentry-service>

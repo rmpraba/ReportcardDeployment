@@ -7,11 +7,10 @@
     <style>
       :host {
         display: block;
-      } 
-
-      .horizontalframe
+       } 
+   .horizontalframe
       {
-        @apply(--layout-horizontal);
+         @apply(--layout-horizontal);
          display: flex;
          margin-left: 14%;
       }
@@ -80,7 +79,7 @@
                 <paper-dropdown-menu id="term" label="Select Term">
                   <paper-menu id="studtermremvid" class="dropdown-content"   on-iron-select="fntermstud" attr-for-selected="value" required>
                   <template is="dom-repeat" items="{{termarrs}}" as="item">
-                  <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
+                   <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
                 </template>
                   </paper-menu>
               </paper-dropdown-menu>
@@ -97,7 +96,7 @@
      <paper-dialog id="emplyspinisz" modal>
       <paper-spinner id="empspinneridz"></paper-spinner>
     </paper-dialog>
-          <student-add-service id="studservice"></student-add-service>
+       <student-add-service id="studservice"></student-add-service>
   </template>
   <script>
   (function() {
@@ -273,8 +272,7 @@
           this.itemArray=[];
          document.querySelector('#'+this.studentslist).selected=-1;
           this.$.studservice.prestudentremovedet(this.studentid);
-            this.$.studservice.getalltermmarks(this.studentid);
-
+          this.$.studservice.getalltermmarks(this.studentid);
           this.studid=this.studentid;
           this.hideremovecls=false;
         },
@@ -296,7 +294,7 @@
 
             if(this.grade=="Nursery" ||this.grade=="Junior KG" || this.grade=="Senior KG" || this.grade=="Grade-1" || this.grade=="Grade-2" ||this.grade=="Grade-3" || this.grade=="Grade-4" ){
          this.$.studservice.deletestudentinfo(this.studentid,this.gradeid,this.classid);
-          this.$.studservice.deletestudtermmarks(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
+       this.$.studservice.deletestudtermmarks(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
           this.$.studservice.flagupdatestud(this.studentid,this.grade);
           this.$.studservice.fetchstudentinfo();
 

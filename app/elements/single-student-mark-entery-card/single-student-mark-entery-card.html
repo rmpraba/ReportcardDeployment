@@ -312,8 +312,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.subjectid=sname.substring((inx+2));
         else
         this.subjectid=sname;
-        alert("pref:"+pref);
-        alert("name:"+this.subjectid);
+        
         this.subject = e.target.selectedItem.textContent.trim(); 
         localStorage.setItem("curr_sess_subject",this.subject);
         localStorage.setItem("curr_sess_subjectid",this.subjectid);
