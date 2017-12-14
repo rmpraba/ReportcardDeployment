@@ -63,13 +63,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <p hidden>{{grade}}</p>
          <p hidden>{{section}}</p>
          <p  hidden>{{subject}}</p>
-        <div class="card">
+         <div class="card">
           <p  style="margin-left: 0%;">{{studentid}}</p>
           <p  style="margin-left: 5%;">{{studentname}}</p>
+          <p hidden$="{{studenthiddenview2}}" style="margin-left: 5%;">Comments</p>
+          <p hidden$="{{studenthiddenview1}}" style="margin-left: 5%;">{{Comments}} <paper-icon-button  icon="add" on-click="fnrequstvalue"  style="color:#6699ff;"></paper-icon-button></p>
        
-          <p  style="margin-left: 5%;">{{Comments}} <paper-icon-button  icon="add" on-click="fnrequstvalue" style="color:#6699ff;"></paper-icon-button></p>
-         
-          <p style="margin-left: 5%;" ><ahref class="viewdata" on-click="FnSave"><u>Raise Request</u></ahref></p>
+          <p style="margin-left: 5%;" ><ahref  hidden$="{{studenthiddenview1}}" class="viewdata" on-click="FnSave"><u>Raise Request</u></ahref></p>
         </div>
         <single-student-markentry-service id="singleservice"></single-student-markentry-service>
           <paper-dialog id="raquestraisid" modal>
@@ -83,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        <paper-textarea  label="Comments"  value="{{Comments}}"></paper-textarea>
           <center style="margin-top: 5%;">
             <paper-button  on-click="innovatsave" style="color:white;background-color:black">Save</paper-button>
-            <paper-button id="innvtt" style="color:white;background-color:black" on-click="innovatclosezzz" >Close</paper-button>
+            <paper-button id="innvtt" style="color:white;background-color:black" on-click="innovatclosezzz">Close</paper-button>
          </center>
       </paper-dialog>
   </template>

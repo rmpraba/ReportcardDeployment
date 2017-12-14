@@ -243,11 +243,10 @@
          this.$.fetchsubjectstudentajax.generateRequest();        
       },
       fetchsubjectstudentResponse:function(e){   
-         // alert(JSON.stringify(e.detail.response.returnval));  
-        // alert(JSON.stringify(assesscategorycnt));
-        var tempplatearr=[];
-        var arr=e.detail.response.returnval;
-        if(assesscategory.length>0){
+     // alert(JSON.stringify(e.detail.response.returnval));  
+     // alert(JSON.stringify(assesscategorycnt));
+       var arr=e.detail.response.returnval;
+         if(assesscategory.length>0){
          studentarr=arr;
          var categorytitle=[];
          var title=[];
@@ -296,7 +295,7 @@
             categorytitle.push(obj);
          }
          overall.push({"tabwidth":tabwidth,"serialno":"",student_name:'',hiddenoutinput:true,'category':categorytitle});
-         tempplatearr.push({"tabwidth":tabwidth,"serialno":"",student_id:'',student_name:'',hiddenoutinput:true,'category':categorytitle});
+       
          categorytitle=[]
          temp=[];
         for(var i=0;i<assesscategory.length;i++){
@@ -325,8 +324,7 @@
             categorytitle.push(obj);
          }
          overall.push({"tabwidth":tabwidth,"serialno":"Sno",student_name:'Student Name',hiddenoutinput:true,'category':categorytitle});
-        tempplatearr.push({"tabwidth":tabwidth,"serialno":"Sno",id:"studentid",student_name:'StudentName',hiddenoutinput:true,'category':categorytitle});
-
+       
          for(var i=0;i<studentarr.length;i++){
           var finalarr=[];
           for(var j=0;j<assesscategory.length;j++){

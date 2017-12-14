@@ -68,18 +68,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    
     </center>
      <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
-       <table class="Mark">
-       <tr>
-        <th class="tb1"  style="margin-left:15%;">Student Id</th>
-       <th  class="tb1"  style="margin-left:15%;">Student Name</th>
-       <th  class="tb1" style="margin-left:15%;">Comments</th>
-       
-       </tr>
-       </table> 
+    
      <template is="dom-repeat" items="{{studentarr}}" as="item">
    
       <div id="itemcard">
-         <student-full-details-item-card subjectcategoryname="{{item.subject_category_name}}" subjectcategory="{{item.subject_category}}" assesmentid="{{item.assesment_id}}" grade="{{item.grade}}" section="{{item.section}}" subject="{{item.subject_id}}" flag="{{item.flag}}" studentid="{{item.student_id}}" studentname="{{item.student_name}}" ></student-full-details-item-card>
+         <student-full-details-item-card subjectcategoryname="{{item.subject_category_name}}" studenthiddenview1="{{item.studenthiddenview}}"  studenthiddenview2="{{item.studenthiddenview2}}" subjectcategory="{{item.subject_category}}" assesmentid="{{item.assesment_id}}" grade="{{item.grade}}" section="{{item.section}}" subject="{{item.subject_id}}" flag="{{item.flag}}" studentid="{{item.student_id}}" studentname="{{item.student_name}}" ></student-full-details-item-card>
       </div>
   </template>  
     </div>
