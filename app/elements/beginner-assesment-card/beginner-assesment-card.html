@@ -98,7 +98,7 @@
       FnSelectAssesment:function(e){
         assesmentname = e.target.selectedItem.textContent.trim();
         localStorage.setItem("curr_sess_assesmentname",assesmentname);
-        alert(localStorage.getItem("curr_sess_assesmentname"));
+        // alert(localStorage.getItem("curr_sess_assesmentname"));
         if(this.flag==1){
         document.querySelector('enrichment-dynamic-markentrycard').FnRefresh();
         document.querySelector('#gradenamrrrrr').selected=-1;

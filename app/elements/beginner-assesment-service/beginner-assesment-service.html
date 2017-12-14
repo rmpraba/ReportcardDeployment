@@ -424,6 +424,7 @@
           obj.category_name=assesscategory[i].category_name;
           obj.sub_category_id=assesscategory[i].sub_category_id;
           obj.sub_category_name=assesscategory[i].sub_category_name;
+          obj.weight=assesscategory[i].weight;
           temp.push(obj);
          }         
          // alert(JSON.stringify(temp));
@@ -452,7 +453,11 @@
           obj.hiddenlabel=false;
           obj.hiddeninput=true;
           obj.categorycnt=1;
-          obj.subcategoryname=assesscategory[i].sub_category_name;
+          if(assesscategory[i].weight==null||assesscategory[i].weight==""){
+            obj.subcategoryname=assesscategory[i].sub_category_name
+          }
+          else
+          obj.subcategoryname=assesscategory[i].sub_category_name+"("+assesscategory[i].weight+")";
           title.push(obj);
          }
          overall.push({hiddenoutinput:true,'category':title});
@@ -472,6 +477,7 @@
             obj.categoryname=assesscategory[j].category_name;
             obj.subcategoryid=assesscategory[j].sub_category_id;
             obj.subcategoryname=assesscategory[j].sub_category_name;
+            obj.weight=assesscategory[j].weight;
             obj.score="";
             obj.hiddenlabel=true;
             obj.hiddeninput=false;

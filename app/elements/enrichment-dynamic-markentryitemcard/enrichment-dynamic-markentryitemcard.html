@@ -34,7 +34,7 @@
         <!-- <td id="tb1"><paper-input  value="{{score}}" on-change="FnActivity"></paper-input></td> -->
         <template is="dom-repeat" items="{{category}}">
           <td valign="top" colspan="{{item.categorycnt}}">
-          <enrichment-markentry-input categorycnt="{{item.categorycnt}}" grade="{{grade}}" studentid="{{item.studentid}}" studentname="{{item.studentname}}" classid="{{item.classid}}" assesmenttype="{{item.assesmenttype}}" gradeid="{{item.gradeid}}" gradename="{{item.gradename}}" subjectid="{{item.subjectid}}" subjectname="{{item.subjectname}}" categoryid="{{item.categoryid}}" categoryname="{{item.categoryname}}" subcategoryid="{{item.subcategoryid}}" subcategoryname="{{item.subcategoryname}}" hideinput="{{item.hiddeninput}}" hidelabel="{{item.hiddenlabel}}" score="{{item.score}}"></enrichment-markentry-input>
+          <enrichment-markentry-input categorycnt="{{item.categorycnt}}" grade="{{grade}}" studentid="{{item.studentid}}" studentname="{{item.studentname}}" classid="{{item.classid}}" assesmenttype="{{item.assesmenttype}}" gradeid="{{item.gradeid}}" gradename="{{item.gradename}}" subjectid="{{item.subjectid}}" subjectname="{{item.subjectname}}" categoryid="{{item.categoryid}}" categoryname="{{item.categoryname}}" subcategoryid="{{item.subcategoryid}}" subcategoryname="{{item.subcategoryname}}" hideinput="{{item.hiddeninput}}" hidelabel="{{item.hiddenlabel}}" score="{{item.score}}" weight="{{item.weight}}"></enrichment-markentry-input>
           </td>
         </template>
         <td width="5%"><p style="text-align: center;" hidden$="{{hiddenoutinput}}">{{grade}}</p></td>

@@ -11583,7 +11583,6 @@ app.post('/fetchinfoforsubjecttemplate-service',  urlencodedParser,function (req
     " grade_name='"+req.query.gradename+"' and subject_name='"+req.query.subject+"' and assesment_type='"+req.query.assesment+"' group by subject_id,subject_name,category_id,category_name";
     var qur="SELECT * FROM subject_mapping WHERE  academic_year='"+req.query.academicyear+"' and "+
     " grade_name='"+req.query.gradename+"' and subject_name='"+req.query.subject+"' and assesment_type='"+req.query.assesment+"' order by category_id";
-
     var auditarr="SELECT  * from tr_term_auditimport WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade='"+req.query.gradename+"' and section='"+req.query.section+"' and subject_id='"+req.query.subject+"'";
     console.log('------------subject template-------------');
     console.log('-------------------------');
@@ -11599,7 +11598,7 @@ app.post('/fetchinfoforsubjecttemplate-service',  urlencodedParser,function (req
     if(!err)
     {    
     cnt=rows;
-      connection.query(auditarr,function(err, rows)
+    connection.query(auditarr,function(err, rows)
     {
     if(!err)
     {    
