@@ -355,7 +355,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     // "school_id='"+req.query.schoolid+"' and role_id='"+req.query.roleid+"' "+
     // "and id='"+req.query.loggedid+"' and grade_id=(select grade_id from md_grade "+
     // "where grade_name='"+req.query.gradename+"') and academic_year='"+req.query.academicyear+"') and school_id='"+req.query.schoolid+"' ";
-    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where section_id in (select distinct(tg.section_id) from "+
+    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where class_id in (select distinct(tg.class_id) from "+
     " mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
     " tg.role_id='"+req.query.roleid+"' and tg.id='"+req.query.loggedid+"' and tg.school_id='"+req.query.schoolid+"' and "+ 
     " tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and "+ 
@@ -370,7 +370,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     // "school_id='"+req.query.schoolid+"' and role_id='"+req.query.roleid+"' "+
     // "and id='"+req.query.loggedid+"' and grade_id=(select grade_id from md_grade "+
     // "where grade_name='"+req.query.gradename+"') and academic_year='"+req.query.academicyear+"') and school_id='"+req.query.schoolid+"' ";
-    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where section_id in (select distinct(tg.section_id) from "+
+    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where class_id in (select distinct(tg.class_id) from "+
     " mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
     " tg.id='"+req.query.loggedid+"' and tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and "+
     " g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
@@ -382,7 +382,7 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     // "(select distinct(section_id) from mp_teacher_grade where "+
     // "grade_id=(select grade_id from md_grade where "+
     // "school_id='"+req.query.schoolid+"' and grade_name='"+req.query.gradename+"') and academic_year='"+req.query.academicyear+"') and school_id='"+req.query.schoolid+"'";
-    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where section_id in (select distinct(tg.section_id) from mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
+    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where class_id in (select distinct(tg.class_id) from mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
     " tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
   }
   else if(req.query.roleid=='headmistress')
@@ -393,12 +393,12 @@ app.post('/section-service',  urlencodedParser,function (req, res)
     // "grade_id in(select distinct(grade_id) from mp_teacher_grade where grade_id=(select grade_id from md_grade "+
     // "where grade_name='"+req.query.gradename+"') and "+
     // "school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"') and school_id='"+req.query.schoolid+"' ";
-    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where section_id in (select distinct(tg.section_id) from mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
+    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where class_id in (select distinct(tg.class_id) from mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
     " tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
   }
    else if(req.query.roleid=='principal'||req.query.roleid=='viceprincipal'||req.query.roleid=='headofedn'||req.query.roleid=='management')
   {
-    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where section_id in (select distinct(tg.section_id) from mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
+    var qur="select distinct(section_id) ,UPPER(section_id) as section_name,class_id from mp_grade_section  where class_id in (select distinct(tg.class_id) from mp_teacher_grade tg join md_grade g on(tg.grade_id=g.grade_id) where "+
     " tg.school_id='"+req.query.schoolid+"' and tg.academic_year='"+req.query.academicyear+"' and g.grade_name='"+req.query.gradename+"') and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
     //console.log('5');
     // var qur="select * from md_section where section_id in "+
