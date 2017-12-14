@@ -26,11 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: 0%;
         margin-top: 5%;
       }
-      table{
-        width: 90%;
-
-        /*border-collapse: collapse;*/
-      }
+    
       .spinner{
             margin-left: 50%;            
            
@@ -54,15 +50,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: 6%;
         width: 83%;
        }
+        .Mark{
+        
+        @apply(--layout-horizontal);
+        
+      }
+     .tb1{
+       width: 18.4%;
+     margin-left:5%;
+      }
     </style>
     <div>
      <center>
        <h1>{{schoolname}}</h1>
        <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       </center>
+        <table class="Mark">
+       <tr>
+      <th class="tb1"  style="margin-left:5%;">Student Name</th>
+       <th  class="tb1"  style="margin-left:5%;">Assesment</th>
+       <th  class="tb1" style="margin-left:5%;">Grade</th>
+       <th  class="tb1" style="margin-left:5%;">Section</th>
+       <th  class="tb1" style="margin-left:5%;">Subject</th>
+       <th  class="tb1" style="margin-left:5%;">Comments</th>
+        </tr>
+       </table> 
      <template is="dom-repeat" items="{{approvalarr}}" as="item">
       <div id="itemcard">
-     <student-coordinator-apruval-item-card  academicyear="{{item.academic_year}}" studentid="{{item.student_id}}"  studentname="{{item.student_name}}" termid="{{item.term_id}}" subjectcategory="{{item.subject_category}}" assesmentid="{{item.assesment_id}}" grade="{{item.grade}}" section="{{item.section}}" subject="{{item.subject}}" flag="{{item.flag}}">
+     <student-coordinator-apruval-item-card  comments="{{item.comments}}" academicyear="{{item.academic_year}}" studentid="{{item.student_id}}"  studentname="{{item.student_name}}" termid="{{item.term_id}}" subjectcategory="{{item.subject_category}}" assesmentid="{{item.assesment_id}}" grade="{{item.grade}}" section="{{item.section}}" subject="{{item.subject}}" flag="{{item.flag}}">
      </student-coordinator-apruval-item-card>
       </div>
   </template>

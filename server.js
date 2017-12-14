@@ -8,8 +8,8 @@ var dbserver_ip_address = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1'
 var connection = mysql.createConnection({
   host :'localhost',
   user     : 'root',
-  password : 'admin',
-  database : 'reportcardcheck' 
+  password : '',
+  database : 'reportcardlocal' 
   // port     : '62631',
   // user     : 'adminM1qnV1d',
   // password : 'HC2bIf7Sk2LD',
@@ -642,10 +642,12 @@ app.post('/assesment-service',  urlencodedParser,function (req, res)
       console.log(err);
   });
 });
+
+
 app.post('/assesment1-service',  urlencodedParser,function (req, res)
 {
 // var qur="select assesment_cyclename from md_assesment_cycle where assesment_cycleid in(select assesment_cycleid from mp_assesment_term_cycle where assesment_id=(select assesment_id from md_assesment_type where assesment_name='"+req.query.termtype+"') and term_id=(select term_id from md_term where term_name='"+req.query.termname+"'))";
-     var qur="select * from md_grade_assesment_mapping where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade_name='"+req.query.gradename+"'and  assesment_id in  (select distinct(assesment_id) from single_student_markentry_table where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' and flag='completed')";
+    var qur="select * from md_grade_assesment_mapping where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade_name='"+req.query.gradename+"'and  assesment_id in  (select distinct(assesment_id) from single_student_markentry_table where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_id='"+req.query.termname+"' and grade='"+req.query.gradename+"' and section='"+req.query.sectionname+"' and flag='completed')";
   console.log("..............Reading assesment..........");
   console.log(qur);
   connection.query(qur,
@@ -667,6 +669,8 @@ app.post('/assesment1-service',  urlencodedParser,function (req, res)
       console.log(err);
   });
 });
+
+
 
 app.post('/fetchstudentbeginner-service',  urlencodedParser,function (req, res)
 {
@@ -6748,9 +6752,9 @@ app.post('/fetchapprovalstatus1-service',  urlencodedParser,function (req, res)
 var checkqur="select grade_id from mp_teacher_grade where "+ 
 "id='"+req.query.loggedid+"' and role_id='subject-teacher'";
 
-var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject in(SELECT subject_name from md_subject where subject_id in(SELECT subject_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"'))";
+var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject in(SELECT subject_name from md_subject where subject_id in(SELECT subject_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and section  in (SELECT section_id  FROM mp_teacher_grade where  id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')";
 
-var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject in(SELECT subject_name from md_subject where subject_id in(SELECT subject_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"'))";
+var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject in(SELECT subject_name from md_subject where subject_id in(SELECT subject_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and  section  in (SELECT section_id  FROM mp_teacher_grade where  id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')";
 
 
 console.log('.......................subject approval fetch.....................');
@@ -10912,6 +10916,7 @@ app.post('/singlestudentservice-service',  urlencodedParser,function (req,res)
       academic_year:req.query.academic_year,
       term_id:req.query.termname,
       flag:req.query.flag,
+      comments:req.query.comments,
       };
      console.log('------------ single mark entry-------------');
     console.log(qur);

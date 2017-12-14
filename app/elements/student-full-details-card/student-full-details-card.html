@@ -25,11 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: 0%;
         margin-top: 5%;
       }
-      table{
-        width: 90%;
-
-        /*border-collapse: collapse;*/
-      }
+      
       .spinner{
             margin-left: 50%;            
            
@@ -53,21 +49,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-left: 6%;
         width: 83%;
       }
+      .Mark{
+        
+        @apply(--layout-horizontal);
+        
+      }
+     .tb1{
+        width: 45%;
+     margin-left:20%;
+      }
     </style>
     <div>
     <center>
        
       <h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
-      <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}} </h4> 
+      <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}}</h4> 
    
     </center>
-     <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div> 
+     <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
+       <table class="Mark">
+       <tr>
+        <th class="tb1"  style="margin-left:15%;">Student Id</th>
+       <th  class="tb1"  style="margin-left:15%;">Student Name</th>
+       <th  class="tb1" style="margin-left:15%;">Comments</th>
+       
+       </tr>
+       </table> 
      <template is="dom-repeat" items="{{studentarr}}" as="item">
+   
       <div id="itemcard">
          <student-full-details-item-card subjectcategoryname="{{item.subject_category_name}}" subjectcategory="{{item.subject_category}}" assesmentid="{{item.assesment_id}}" grade="{{item.grade}}" section="{{item.section}}" subject="{{item.subject_id}}" flag="{{item.flag}}" studentid="{{item.student_id}}" studentname="{{item.student_name}}" ></student-full-details-item-card>
       </div>
-  </template> 
+  </template>  
     </div>
   </template>
   <script>

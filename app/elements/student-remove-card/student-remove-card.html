@@ -7,11 +7,10 @@
     <style>
       :host {
         display: block;
-      } 
-
-      .horizontalframe
+       } 
+   .horizontalframe
       {
-        @apply(--layout-horizontal);
+         @apply(--layout-horizontal);
          display: flex;
          margin-left: 14%;
       }
@@ -81,7 +80,7 @@
                   <paper-menu id="studtermremvid" class="dropdown-content"   on-iron-select="fntermstud" attr-for-selected="value" required>
                   <template is="dom-repeat" items="{{termarr}}" as="item">
                   <paper-item value="{{item.term_name}}">{{item.term_name}}</paper-item>
-                </template>
+                  </template>
                   </paper-menu>
               </paper-dropdown-menu>
               </div>
@@ -276,7 +275,6 @@
           this.$.studservice.prestudentremovedet(this.studentid);
             // this.$.studservice.getalltermmarks(this.studentid);
             this.$.assesmentservice.callTermService("Term");
-
           this.studid=this.studentid;
           this.hideremovecls=false;
         },
@@ -298,7 +296,7 @@
 
             if(this.grade=="Nursery" ||this.grade=="Junior KG" || this.grade=="Senior KG" || this.grade=="Grade-1" || this.grade=="Grade-2" ||this.grade=="Grade-3" || this.grade=="Grade-4" ){
          this.$.studservice.deletestudentinfo(this.studentid,this.gradeid,this.classid);
-          this.$.studservice.deletestudtermmarks(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
+       this.$.studservice.deletestudtermmarks(this.studentid,this.gradeid,this.classid,this.grade,this.section,this.tremname);
           this.$.studservice.flagupdatestud(this.studentid,this.grade);
           this.$.studservice.fetchstudentinfo();
 
