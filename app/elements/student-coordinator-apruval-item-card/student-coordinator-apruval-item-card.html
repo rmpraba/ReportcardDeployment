@@ -39,6 +39,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         cursor: pointer;
         color:blue;
       }
+      paper-dialog
+      {
+           border-radius: 10px;
+           width: 500px;
+           height: 200px;
+      }
     </style>
 
          <p hidden>{{subjectcategory}}</p>
@@ -52,9 +58,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <p  style="margin-left: 5%;">{{subject}}</p>
           <p  style="margin-left: 5%;">{{comments}}</p>
          
-   <p style="margin-left: 5%;"><ahref class="viewdata" on-click="Fnaproved"><u>Aproved</u></ahref></p>
-   <p ><ahref class="viewdata" on-click="FnReject"><u>Reject</u></ahref></p>
-        </div>
+   <p style="margin-left: 5%;"><ahref hidden$="{{studenthiddenviews1}}" class="viewdata" on-click="Fnaproved"><u>Approve</u></ahref></p>
+   <p > <ahref hidden$="{{studenthiddenviews1}}" class="viewdata" on-click="FnReject"><u>Reject</u></ahref></p>
+     </div>
+       <paper-dialog id="innovationdialog12" modal>
+         
+          <center>
+          <b><h2>{{dialogvalue}}successfully</h2></b>
+          <paper-button style="background-color: #363636;color: #ffffff;height:34px;" dialog-confirm autofocus>Ok</paper-button>
+         </center>
+      </paper-dialog>
+
     <single-student-markentry-service id="singleservice"></single-student-markentry-service>
   </template>
   <script>
@@ -64,13 +78,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'student-coordinator-apruval-item-card',
 Fnaproved:function(e){
-
+   this.dialogvalue="Aprove"+" ";
+ this.$.innovationdialog12.toggle();
 this.$.singleservice.fnputcoapruval(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.termid,"completed");
- 
+
   },
 FnReject:function(e){
+  this.dialogvalue="Reject"+" ";
+this.$.innovationdialog12.toggle();
  this.$.singleservice.fnputcoapruval(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.termid,"Reject");
-
+ 
 },
     });
   })();

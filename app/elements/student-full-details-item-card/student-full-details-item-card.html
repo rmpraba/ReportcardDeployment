@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 35%;
 
       } 
+     
       paper-button{
         text-transform: none;
         height: 25px;
@@ -45,7 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
            border-radius: 10px;
            width: 500px;
-           height: 150px;
+           height: 300px;
       }
       .buttons paper-button
       {
@@ -67,23 +68,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <p  style="margin-left: 0%;">{{studentid}}</p>
           <p  style="margin-left: 5%;">{{studentname}}</p>
           <p hidden$="{{studenthiddenview2}}" style="margin-left: 5%;">Comments</p>
-          <p hidden$="{{studenthiddenview1}}" style="margin-left: 5%;">{{Comments}} <paper-icon-button  icon="add" on-click="fnrequstvalue"  style="color:#6699ff;"></paper-icon-button></p>
+     
        
-          <p style="margin-left: 5%;" ><ahref  hidden$="{{studenthiddenview1}}" class="viewdata" on-click="FnSave"><u>Raise Request</u></ahref></p>
+        
+               <p hidden$="{{studenthiddenview1}}" style="margin-left: 5%;"><paper-icon-button  icon="add" on-click="fnrequstvalue"  style="color:#6699ff;"></paper-icon-button>{{Comments}} </p>
+                 <p style="margin-left: 5%; " ><ahref  hidden$="{{studenthiddenview1}}" class="viewdata" on-click="FnSave"><u>Raise Request</u></ahref></p>
         </div>
         <single-student-markentry-service id="singleservice"></single-student-markentry-service>
           <paper-dialog id="raquestraisid" modal>
    <center><h2><b><label  id="labelid">Request Raised!!!</label></b></h2></center>
             <div class="buttons">
             </div>
-              <center><paper-button style="background-color: #363636;color: #ffffff;" dialog-confirm autofocus>Ok</paper-button></center>
+              <center><paper-button style="background-color: #363636;color: #ffffff;height:34px;" dialog-confirm autofocus>Ok</paper-button></center>
           </paper-dialog>
 
     <paper-dialog id="innovationdialog1" modal>
        <paper-textarea  label="Comments"  value="{{Comments}}"></paper-textarea>
           <center style="margin-top: 5%;">
-            <paper-button  on-click="innovatsave" style="color:white;background-color:black">Save</paper-button>
-            <paper-button id="innvtt" style="color:white;background-color:black" on-click="innovatclosezzz">Close</paper-button>
+            <paper-button  on-click="innovatsave" style="color:white;background-color:black;height:34px;">Save</paper-button>
+            <paper-button id="innvtt" style="color:white;background-color:black;height:34px;" on-click="innovatclosezzz">Close</paper-button>
          </center>
       </paper-dialog>
   </template>

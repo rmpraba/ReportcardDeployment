@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>Assesment: {{assesmentname}}  &nbsp;&nbsp;&nbsp; Grade: {{grade}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{section}} &nbsp;&nbsp; Subject: {{subject}}</h4> 
    
-    </center>
+    
      <div class="spinner"><paper-dialog id="spinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
     
      <template is="dom-repeat" items="{{studentarr}}" as="item">
@@ -74,7 +74,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div id="itemcard">
          <student-full-details-item-card subjectcategoryname="{{item.subject_category_name}}" studenthiddenview1="{{item.studenthiddenview}}"  studenthiddenview2="{{item.studenthiddenview2}}" subjectcategory="{{item.subject_category}}" assesmentid="{{item.assesment_id}}" grade="{{item.grade}}" section="{{item.section}}" subject="{{item.subject_id}}" flag="{{item.flag}}" studentid="{{item.student_id}}" studentname="{{item.student_name}}" ></student-full-details-item-card>
       </div>
-  </template>  
+  </template>
+  </center>  
     </div>
   </template>
   <script>

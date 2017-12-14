@@ -970,7 +970,7 @@ else
       },
 
 
- Fngetsubject:function(category,gradename,sectionname){
+ Fngetsubject:function(category,gradename,sectionname,studentid){
       this.fngetsubjecturl=sessionStorage.getItem("addrinfo")+"/fngetsubject-service";
      var obj={};
           obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
@@ -978,6 +978,7 @@ else
           obj.category=category;
           obj.gradename=gradename;
           obj.sectionname=sectionname;
+          obj.studentid=studentid;
           this.fngetsubjectparam=obj;
          this.$.fngetsubjectajax.generateRequest();
          },
@@ -988,7 +989,20 @@ else
             if(arr[i].language_pref=="Second Language"||arr[i].language_pref=="Third Language"){
                 arr[i].subject_id=arr[i].language_pref+"  "+arr[i].subject_id;
               }}
-    document.querySelector('single-student-mark-entery-card').thirdarr=arr;
+
+ if((sessionStorage.getItem("curr_sess_category"))=="category1")
+ document.querySelector('single-student-mark-entery-card').thirdarr1=arr;
+if((sessionStorage.getItem("curr_sess_category"))=="category2")
+ document.querySelector('single-student-mark-entery-card').thirdarr2=arr;
+if((sessionStorage.getItem("curr_sess_category"))=="category3")
+ document.querySelector('single-student-mark-entery-card').thirdarr3=arr;
+if((sessionStorage.getItem("curr_sess_category"))=="category4")
+ document.querySelector('single-student-mark-entery-card').thirdarr4=arr;
+if((sessionStorage.getItem("curr_sess_category"))=="category5")
+ document.querySelector('single-student-mark-entery-card').thirdarr5=arr;
+
+document.querySelector('single-student-mark-entery-card').FnRefreshcard();
+
       },
      getsection:function(stuid){
        this.getsectionurl=sessionStorage.getItem("addrinfo")+"/getsection-service";
@@ -1018,17 +1032,12 @@ else
          obj.gradename=res[0].gradename;
          obj.sectionname=res[0].sectionname;
         this.assesment1param=obj;
-         alert(JSON.stringify(obj));
+   //      alert(JSON.stringify(obj));
      this.$.assesment1ajax.generateRequest();
-
-
-
-
-
-      },
+    },
       assesment1Response:function(e){
      var arr=e.detail.response.returnval;
-     alert(JSON.stringify(arr));
+     //alert(JSON.stringify(arr));
      document.querySelector('single-student-mark-entery-card').assesmentarr=arr;
 
      
@@ -1094,7 +1103,7 @@ temp.push(arr[i]);
       //  alert(JSON.stringify(res));
        temp.push({"student_id":"student Id","student_name":"Student Name","subject_category_name":"Subject categoryname","assesment_id":"Assesment","grade":"Grade","section":"Section","subject_id":"Subject",studenthiddenview:true,studenthiddenview2:false});
        var res=e.detail.response.returnval;
-      alert(JSON.stringify(temp));
+   //   alert(JSON.stringify(temp));
 
   for(var i=0;i<res.length;i++){
      temp.push(res[i]);
@@ -1102,11 +1111,11 @@ temp.push(arr[i]);
  for(var j=0;j<temp.length;j++){
         if(j!=0){
         temp[j].studenthiddenview=false;
-        temp[j].studenthiddenview2=false;
+        temp[j].studenthiddenview2=true;
         }
       
        }
-alert(JSON.stringify(temp));
+//alert(JSON.stringify(temp));
       document.querySelector('student-full-details-card').studentarr=temp;
       document.querySelector('student-full-details-card').FnSpinnerrActive(false);
   
@@ -1127,10 +1136,27 @@ alert(JSON.stringify(temp));
     },
     fngetinformationvalueResponse:function(e){
       //alert(JSON.stringify(e.detail.response.returnval));
-      // var arr=e.detail.response.returnval;
+       var arr=e.detail.response.returnval;
+     var temp=[];
+      //  alert(JSON.stringify(res));
+       temp.push({"school_id":"SchoolId","academic_year":"AcademicYear","student_id":"student Id","student_name":"Student Name","term_id":"Term","assesment_id":"Assesment","flag":"flag","subject_category":"Subject Category","grade":"Grade","section":"Section","subject":"Subject","comments":"Comments",studenthiddenviews:true});
+       var res=e.detail.response.returnval;
+   //   alert(JSON.stringify(temp));
+
+  for(var i=0;i<res.length;i++){
+     temp.push(res[i]);
+       }
+ for(var j=0;j<temp.length;j++){
+        if(j!=0){
+        temp[j].studenthiddenviews=false;
+        
+        }
+      
+       }
+
  document.querySelector('student-coordinator-apruval-card').schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
       document.querySelector('student-coordinator-apruval-card').academicyear=localStorage.getItem("curr_sess_academicyear");
-      document.querySelector('student-coordinator-apruval-card').approvalarr=e.detail.response.returnval;
+      document.querySelector('student-coordinator-apruval-card').approvalarr=temp;
       },
     });
   })();

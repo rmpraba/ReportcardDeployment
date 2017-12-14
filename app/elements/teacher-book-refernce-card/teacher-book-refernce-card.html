@@ -120,22 +120,24 @@ section p{
     </style>
 
       <div>
-        <center><h3>BOOK CHAPTER CREATION</h3></center>
+         <center><h3>BOOK CHAPTER CREATION</h3></center>
       </div>
        <span class="position"> 
        <paper-dropdown-menu  label="Select the Grade">
                 <paper-menu id="teacherref" class="dropdown-content"   on-iron-select="fnsetgrade">
                   <template is="dom-repeat" items="{{empschoolnamesarr}}">
-                    <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+                    <paper-item value="{{item.grade_id}}">{{item.grade_name}}
+                    </paper-item>
                   </template>    
                 </paper-menu>
          </paper-dropdown-menu>
        </span>
          <span class="position1"> 
-         <paper-dropdown-menu  label="Select Subject">
+           <paper-dropdown-menu  label="Select Subject">
                 <paper-menu id="teacherrefzzzz" class="dropdown-content"   on-iron-select="fnemployeename">
                   <template is="dom-repeat" items="{{subjectarr}}">
-                     <paper-item value="{{item.subjectid}}">{{item.subjectname}}</paper-item>
+                     <paper-item value="{{item.subjectid}}">{{item.subjectname}}
+                     </paper-item>
                   </template>    
                 </paper-menu>
           </paper-dropdown-menu>

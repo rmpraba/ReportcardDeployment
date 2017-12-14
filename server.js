@@ -2469,7 +2469,7 @@ app.post('/fetchstudentlifeskill',  urlencodedParser,function (req,res)
 
 app.post('/fngetsubject-service',  urlencodedParser,function (req,res)
 {  
- var qur= "select * from md_subject where subject_category='"+req.query.category+"'and subject_name in(select distinct(subject) from single_student_markentry_table where subject_category='"+req.query.category+"' and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"'   and section='"+req.query.sectionname+"' and flag='completed')";
+ var qur= "select * from md_subject where subject_category='"+req.query.category+"'and subject_name in(select distinct(subject) from single_student_markentry_table where subject_category='"+req.query.category+"' and academic_year='"+req.query.academic_year+"' and school_id='"+req.query.schoolid+"' and grade='"+req.query.gradename+"'   and section='"+req.query.sectionname+"' and student_id='"+req.query.studentid+"'and flag='completed')";
   console.log("==============================");
   console.log(qur);
   connection.query(qur,
