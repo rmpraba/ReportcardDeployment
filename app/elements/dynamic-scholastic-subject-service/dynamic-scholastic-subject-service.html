@@ -355,7 +355,7 @@
           studentarr[i].category=finalarr;
           studentarr[i].grade='';
           overall.push(studentarr[i]);
-          tempplatearr.push(studentarr[i]);
+        
          }     
          this.fetchstudentforsubjectreportService();
         }
@@ -373,8 +373,8 @@
      document.querySelector('dynamic-scholastic-markentry-card').studarr=overall;
      document.querySelector('term-assesment-card').FnToggleSpinner(false);
         }
-document.querySelector('dynamic-scholastic-markentry-card').studarr1=tempplatearr;
-     tempplatearr=[];
+
+     
         // alert(JSON.stringify(overall));
       },
       fetchstudentforsubjectreportService:function(){
