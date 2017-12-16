@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-horizontal);
       } 
       p{
-        width: 25%;
+        width: 30%;
         margin-left: 10%;
       } 
       paper-button{
@@ -41,16 +41,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color:blue;
       }
     </style>
-
+     
         <div class="card">
-          <p class='p1' style="margin-left: 0%;">{{academicyear}}</p>
-          <p class='p2' style="margin-left: 10%;">{{termname}}</p>
-          <p class='p3' style="margin-left: 5%;">{{assesmentid}}</p>
-          <p class='p4' style="margin-left: 5%;">{{grade}}</p>
-          <p class='p5' style="margin-left: 5%;">{{section}}</p>
-          <p class='p6' style="margin-left: 5%;">{{subject}}</p>
-          <p class='p6' style="margin-left: 5%;">{{flag}}</p>
-          <p class='p7' ><ahref  hidden$="{{hiddenview1}}" class="viewdata" on-click="Fnview"><u>View to Change</u></ahref></p>
+          <p class='p1' style="margin-left: 0%;{{fonts}}">{{academicyear}}</p>
+          <p class='p2' style="margin-left: 5%;{{fonts}}">{{termname}}</p>
+          <p class='p3' style="margin-left: 5%;{{fonts}}">{{assesmentid}}</p>
+          <p class='p4' style="margin-left: 5%;{{fonts}}">{{grade}}</p>
+          <p class='p5' style="margin-left: 5%;{{fonts}}">{{section}}</p>
+          <p class='p6' style="margin-left: 5%;{{fonts}}">{{subject}}</p>
+          <p class='p6' style="margin-left: 5%;{{fonts}}">{{flag}}</p>
+          <p class='p7' style="margin-left: 5%;{{fonts}}" ><ahref  hidden$="{{hiddenview1}}" class="viewdata" on-click="Fnview"><u>View to Change</u></ahref></p>
         </div>
         <single-student-markentry-service id="singleservice"></single-student-markentry-service>
   </template>

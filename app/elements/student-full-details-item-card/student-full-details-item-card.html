@@ -20,9 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-collapse: collapse;
         width: 100%;
       }
-      td{
-        width: 41%;        
-      } 
+    
       .card{
         @apply(--layout-horizontal);
       } 
@@ -64,6 +62,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <p hidden>{{grade}}</p>
          <p hidden>{{section}}</p>
          <p  hidden>{{subject}}</p>
+
+     <table class="card">
+        <tr>
+           <td style=" width: 7%;{{fonts}}">{{studentid}}</td>
+           <td style=" width: 10%;{{fonts}}">{{studentname}}</td>
+           <td style=" width: 5%; {{fonts}}" hidden$="{{studenthiddenview2}}"> Comments</td>
+           <td style=" width:15%; {{fonts}}" hidden$="{{studenthiddenview1}}">{{Comments}}</td>
+           <td style=" width: 5%; {{fonts}}" hidden$="{{studenthiddenview1}}"><paper-icon-button  icon="add" on-click="fnrequstvalue"  style="color:#6699ff;"></paper-icon-button></td>
+           <td style=" width: 5%; {{fonts}}"><ahref  hidden$="{{studenthiddenview1}}" class="viewdata" on-click="FnSave"><u>Raise Request</u></ahref></td>
+        </tr>
+      </table>
+<!-- 
          <div class="card">
           <p  style="margin-left: 0%;">{{studentid}}</p>
           <p  style="margin-left: 5%;">{{studentname}}</p>
@@ -71,9 +81,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      
        
         
-               <p hidden$="{{studenthiddenview1}}" style="margin-left: 5%;"><paper-icon-button  icon="add" on-click="fnrequstvalue"  style="color:#6699ff;"></paper-icon-button>{{Comments}} </p>
+               <p>{{Comments}} </p>
                  <p style="margin-left: 5%; " ><ahref  hidden$="{{studenthiddenview1}}" class="viewdata" on-click="FnSave"><u>Raise Request</u></ahref></p>
-        </div>
+        </div> -->
         <single-student-markentry-service id="singleservice"></single-student-markentry-service>
           <paper-dialog id="raquestraisid" modal>
    <center><h2><b><label  id="labelid">Request Raised!!!</label></b></h2></center>

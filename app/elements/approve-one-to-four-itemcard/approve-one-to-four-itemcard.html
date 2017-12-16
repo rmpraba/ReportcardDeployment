@@ -65,13 +65,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <p hidden>{{subjectid}}</p>
   <p hidden>{{category}}</p>
    <div class='card'>
-   <p class='p1'>{{academic}}</p>
-   <p class='p2'>{{term}}</p>
-   <p class='p3'>{{assesment}}</p>
-   <p class='p4'>{{grade}}</p>
-   <p class='p5'>{{section}}</p>
-   <p class='p6'>{{subject}}</p>
-   <p class='p7'><ahref class="viewdata" on-click="Fnview"><u>View</u></ahref></p>
+    <p class='p1'>{{academic}}</p>
+    <p class='p2'>{{term}}</p>
+    <p class='p3'>{{assesment}}</p>
+    <p class='p4'>{{grade}}</p>
+    <p class='p5'>{{section}}</p>
+    <p class='p6'>{{subject}}</p>
+    <p class='p7'><ahref class="viewdata" on-click="Fnview"><u>View</u></ahref></p>
    <p class='p8'><ahref class="viewdata" on-click="Fnrevert"><u>Revert</u></ahref></p>
    </div>
    <div class="spinner"><paper-dialog modal id="dynamicspinner" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop><paper-spinner active></paper-spinner></paper-dialog></div>
@@ -128,7 +128,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('home-page').setPage('termassesment','');
         document.querySelector('term-assesment').hiddenpage(); 
         document.querySelector('term-assesment-sheet-card').setPage('subject-dynamic-markentrycard');
-        document.querySelector('subject-dynamic-markentrycard').FnRefresh();
+     document.querySelector('subject-dynamic-markentrycard').FnRefresh();
         this.$.subjectservice.subjectsubmittedcheckService(this.grade,this.section,this.subject);
       }
       else{
@@ -153,7 +153,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.$.assesmentservice.revertsubmittedmarkService(this.academic,this.term,this.assesment,this.grade,this.section,this.subject);
      },
      FnToggleSpinner:function(flag){
-      // alert(flag);
+        // alert(flag);
         this.$.dynamicspinner.opened=flag;
      }
 

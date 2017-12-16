@@ -65,7 +65,7 @@
       </div> 
  -->
 
-  <table border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
+<!-- <table border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
       <template is="dom-repeat" items="{{studarr1}}">
       <tr>
       <th width="15%">{{item.studentname}}</th>
@@ -75,7 +75,7 @@
       </template>
       </tr>
       </template>
-      </table>  
+      </table>   -->
 
     <center>
     <div hidden$="{{hideheader}}">
@@ -95,18 +95,20 @@
     </div>  
     <dynamic-scholastic-subject-service id="subjectservice"></dynamic-scholastic-subject-service>
    <term-assesment-service id="assesmentservice"></term-assesment-service>
-   <!-- <table id="myTable" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
+   <table id="myTable" border="1" style="border-collapse: collapse;" width="{{tabwidth}}">
       <template is="dom-repeat" items="{{studarr1}}">
       <tr>
-      <th width="5%">{{item.sno}}</th>
-      <th width="15%">{{item.Studentno}}</th>
+      <th width="5%">{{item.serialno}}</th>
+      <th width="15%">{{item.studentname}}</th>
       <th width="15%">{{item.studentname}}</th>
       <template is="dom-repeat" items="{{item.category}}" as="i">
-      <th colspan$="{{i.categorycnt}}" width$="{{i.width}}">{{i.subcategoryname}}</th>
+      <th colspan$="{{i.categorycnt}}" width$="{{i.width}}">
+        {{subcategoryname}}
+      </th>
       </template>
       </tr>
       </template>
-      </table>   -->
+      </table>
   </template>
   <script>
   (function(){
