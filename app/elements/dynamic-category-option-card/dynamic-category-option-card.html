@@ -51,7 +51,12 @@
           document.querySelector('single-student-mark-entery-card').fntalentid();
         }
         // alert(selectedtype+" "+selectedname);
-      }
+      },
+      ref:function(e){
+           document.querySelector('#dcoc'+selectedname).checked=false;
+            selectedname="";
+        }
+
     });
   })();
   </script>
