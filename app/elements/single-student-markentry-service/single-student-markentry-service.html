@@ -1117,20 +1117,34 @@ temp.push(arr[i]);
  document.querySelector('subject-report-status-card').approvalarr=temp;
  document.querySelector('subject-report-status-card').FnSpinnerrActive(false);
     },
-   fnupdatestudentinfo:function(termname,assesmentid,grade,section,subject){
-    var obj={};
-        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
-        obj.academicyear=localStorage.getItem("curr_sess_academicyear");      
-        obj.termname=localStorage.getItem("curr_sess_termname");
-        obj.assesmentid=assesmentid;
-        obj.grade=grade;
-        obj.section=section;
-        obj.subject=subject;
-        this.fnupdatestudentinfourl=sessionStorage.getItem("addrinfo")+"/fnupdatestudentinfo-service";
-        obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
-         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
-        this.fnupdatestudentinfoparam=obj;
-        this.$.fnupdatestudentinfoajax.generateRequest();
+   fnupdatestudentinfo:function(termname,assesmentid,grade,section,subject,category,langpref,subjectid){
+    // var obj={};
+    //     obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+    //     obj.academicyear=localStorage.getItem("curr_sess_academicyear");      
+    //     obj.termname=localStorage.getItem("curr_sess_termname");
+    //     obj.assesmentid=assesmentid;
+    //     obj.grade=grade;
+    //     obj.section=section;
+    //     obj.subject=subject;
+    //     this.fnupdatestudentinfourl=sessionStorage.getItem("addrinfo")+"/fnupdatestudentinfo-service";
+    //     obj.loggedid=sessionStorage.getItem("curr_sess_loggedid");
+    //      obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+    //     this.fnupdatestudentinfoparam=obj;
+    //     this.$.fnupdatestudentinfoajax.generateRequest();
+    this.fnupdatestudentinfourl=sessionStorage.getItem("addrinfo")+"/fetchsubjectstudent-service";
+         var obj={"schoolid":"","gradename":"","section":"","subject":""};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.assesmenttype=localStorage.getItem("curr_sess_assesment");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.gradename=grade;
+         obj.section=section;
+         obj.subject=subject;
+         obj.subjectid=subjectid;
+         obj.langpref=langpref;
+         // alert(localStorage.getItem("curr_sess_languagepref"));
+         this.fnupdatestudentinfoparam= obj;
+         this.$.fnupdatestudentinfoajax.generateRequest();      
       },
    fnupdatestudentinfoResponse:function(e){
          var temp=[];
@@ -1152,6 +1166,16 @@ temp.push(arr[i]);
        }
 //alert(JSON.stringify(temp));
       document.querySelector('student-full-details-card').studentarr=temp;
+      document.querySelector('student-full-details-card').subject= localStorage.getItem("curr_sess_subject");
+      document.querySelector('student-full-details-card').subjectcategory=localStorage.getItem("curr_sess_subjectcategory");
+      document.querySelector('student-full-details-card').assesmentid=
+          localStorage.getItem("curr_sess_assesmentname");
+      document.querySelector('student-full-details-card').termname=
+          localStorage.getItem("curr_sess_termname");
+      document.querySelector('student-full-details-card').grade=
+          localStorage.getItem("curr_sess_grade");
+      document.querySelector('student-full-details-card').section=
+          localStorage.getItem("curr_sess_section");
       document.querySelector('student-full-details-card').FnSpinnerrActive(false);
   
        document.querySelector('app-card').setPage('homepage','');

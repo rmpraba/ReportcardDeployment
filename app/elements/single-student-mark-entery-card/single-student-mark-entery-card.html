@@ -193,9 +193,10 @@
 <div id="fivetotenhiddenvalue">
     <template is="dom-repeat" items="{{studarrs}}" >
     <subject-dynamic-markentryitemcard id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}"></subject-dynamic-markentryitemcard>
-    <paper-button on-click="FnSubmit">Submit</paper-button>   
-      <!--  <single-student-markentry-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}"></single-student-markentry-card> -->
-      </template>
+       </template>
+      <!--  <single-student-markentry-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" 
+      temp="{{temp}}"></single-student-markentry-card> -->      
+      <!-- <paper-button on-click="FnSubmit">Submit</paper-button> -->
 </div>
 </center>
 <center>
@@ -212,10 +213,11 @@
       <template is="dom-repeat" items="{{studarr1}}">
       <subject-dynamic-coscholastic-markentry-item-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}">
       </subject-dynamic-coscholastic-markentry-item-card>
-      <paper-button on-click="FnSubmit">Submit</paper-button>   
+      
       <!-- <single-subject-dynamic-coscholastic-markentry-card id="edmeic" serialno="{{item.sno}}" studentname="{{item.student_name}}" studentid="{{item.id}}" hiddenoutinput="{{item.hiddenoutinput}}" category="{{item.category}}" grade="{{item.grade}}" temp="{{temp}}">
       </single-subject-dynamic-coscholastic-markentry-card> -->
      </template>
+     <!-- <paper-button on-click="FnSubmit">Submit</paper-button>    -->
    </div>   
   </center> 
   <center> 
@@ -682,12 +684,10 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
                   arr.push(obj);
                 this.itemArray=arr;
               }
-            } }
-     
-           },
-
-    fnref:function(e){
-        
+            } 
+          }     
+        },
+    fnref:function(e){        
       this.value=""; 
       this.studentid=""; 
       this.itemArray="";
@@ -702,11 +702,11 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
       this.gradename="";
       this.sectionname="";
       this.classid="";
-      document.querySelector("#scolasticid").checked=false;
-      document.querySelector("#coscolasticid").checked=false;
-      document.querySelector("#cocurriculamid").checked=false;
-      document.querySelector("#genderid").checked=false;
-      document.querySelector("#talentid").checked=false;
+      // document.querySelector("#scolasticid").checked=false;
+      // document.querySelector("#coscolasticid").checked=false;
+      // document.querySelector("#cocurriculamid").checked=false;
+      // document.querySelector("#genderid").checked=false;
+      // document.querySelector("#talentid").checked=false;
  this.$.talentsubjectid.hidden=true; 
  this.$.generalsubjectid.hidden=true
  this.$.cocurricularscolasticsubjectid.hidden=true;

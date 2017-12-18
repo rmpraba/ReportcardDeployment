@@ -3,7 +3,7 @@ var mysql      = require('mysql');
 var email   = require("emailjs/email");
 var htmlToPdf = require('html-to-pdf');
 var fs = require('fs');
-var AWS = require('aws-sdk');
+// var AWS = require('aws-sdk');
 var dbserver_ip_address = process.env.OPENSHIFT_MYSQL_DB_HOST || '127.0.0.1'
 var connection = mysql.createConnection({
   host :'localhost',
@@ -19,7 +19,7 @@ var connection = mysql.createConnection({
 var bodyParser = require('body-parser'); 
 var app = express();
 var logfile;
-AWS.config.loadFromPath('app/credential.json');
+// AWS.config.loadFromPath('app/credential.json');
 
 app.use(express.static('app'));
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -5982,20 +5982,20 @@ app.post('/mailreportcard-service' ,  urlencodedParser,function (req, res)
         //  logfile.write('pdf write:success\n\n');
           console.log('Converted');
           // res.status(200).json({'returnval': 'converted'});     
-  fs.readFile('./app/reportcard/'+global.studentinfo[0].student_name+'.pdf', function (err, data) {
-  if (err) { throw err; }
-  var base64data = new Buffer(data, 'binary');
-  var s3 = new AWS.S3();
-  s3.putObject({
-    Bucket: 'samsidh-helpdesk',
-    Key: 'reportcard.pdf',
-    Body: base64data
-  },function (resp) {
-    console.log(arguments);
-    console.log('Successfully uploaded package.');
-    res.status(200).json({'returnval': 'converted'});   
-  });
-  });    
+  // fs.readFile('./app/reportcard/'+global.studentinfo[0].student_name+'.pdf', function (err, data) {
+  // if (err) { throw err; }
+  // var base64data = new Buffer(data, 'binary');
+  // var s3 = new AWS.S3();
+  // s3.putObject({
+  //   Bucket: 'samsidh-helpdesk',
+  //   Key: 'reportcard.pdf',
+  //   Body: base64data
+  // },function (resp) {
+  //   console.log(arguments);
+  //   console.log('Successfully uploaded package.');
+  //   res.status(200).json({'returnval': 'converted'});   
+  // });
+  // });    
         }
     });
 });
@@ -6872,9 +6872,9 @@ app.post('/fetchapprovalstatus1-service',  urlencodedParser,function (req, res)
 var checkqur="select grade_id from mp_teacher_grade where "+ 
 "id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"'";
 if(req.query.roleid=='subject-teacher')
-var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject in(SELECT subject_name from md_subject where subject_id in(SELECT subject_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and section  in (SELECT section_id  FROM mp_teacher_grade where  id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')";
+var qur1="select *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subjectid from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and subject in(SELECT subject_name from md_subject where subject_id in(SELECT subject_id FROM mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) and section  in (SELECT section_id  FROM mp_teacher_grade where  id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"' and  school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"')";
 else
-var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' "+
+var qur1="select *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subjectid  from tr_term_assesment_import_marks where school_id='"+req.query.schoolid+"' "+
 " and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and "+
 " grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM "+
 " mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) "+ 
@@ -6882,7 +6882,7 @@ var qur1="select * from tr_term_assesment_import_marks where school_id='"+req.qu
 " and role_id='"+req.query.roleid+"' and  school_id='"+req.query.schoolid+"' and "+
 " academic_year='"+req.query.academicyear+"')";
 if(req.query.roleid=='subject-teacher')
-var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' "+
+var qur2="select *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subjectid  from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' "+
 " and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and "+
 " grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM "+
 " mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) "+
@@ -6892,7 +6892,7 @@ var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req
 " and role_id='"+req.query.roleid+"' and  school_id='"+req.query.schoolid+"' and "+
 " academic_year='"+req.query.academicyear+"')";
 else
-var qur2="select * from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' "+
+var qur2="select *,(select subject_category from md_subject where subject_name=subject) as category, (select language_pref from md_subject where subject_name=subject) as langpref,(select subject_id from md_subject where subject_name=subject) as subjectid  from tr_term_fa_assesment_import_marks where school_id='"+req.query.schoolid+"' "+
 " and academic_year='"+req.query.academicyear+"' and term_name='"+req.query.termname+"' and "+
 " grade in(SELECT grade_name from md_grade where grade_id in(SELECT grade_id FROM "+
 " mp_teacher_grade where id='"+req.query.loggedid+"' and role_id='"+req.query.roleid+"')) "+ 

@@ -41,7 +41,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color:blue;
       }
     </style>
-     
+        <div hidden>{{category}}{{langpref}}{{subjectid}}</div>
         <div class="card">
           <p class='p1' style="margin-left: 0%;{{fonts}}">{{academicyear}}</p>
           <p class='p2' style="margin-left: 5%;{{fonts}}">{{termname}}</p>
@@ -62,7 +62,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'subject-report-status-item-card',
     Fnview:function(e){
 
-  this.$.singleservice.fnupdatestudentinfo(this.termname,this.assesmentid,this.grade,this.section,this.subject);
+  localStorage.setItem("curr_sess_subject",this.subject);
+  localStorage.setItem("curr_sess_subjectcategory",this.category);
+  localStorage.setItem("curr_sess_assesmentname",this.assesmentid);
+  localStorage.setItem("curr_sess_termname",this.termname);
+  localStorage.setItem("curr_sess_grade",this.grade);
+  localStorage.setItem("curr_sess_section",this.section);
+  this.$.singleservice.fnupdatestudentinfo(this.termname,this.assesmentid,this.grade,this.section,this.subject,this.category,this.langpref,this.subjectid);
   document.querySelector('student-full-details-card').schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
   document.querySelector('student-full-details-card').academicyear=localStorage.getItem("curr_sess_academicyear");
   document.querySelector('student-full-details-card').section=this.section;
@@ -70,11 +76,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   document.querySelector('student-full-details-card').grade=this.grade;
   document.querySelector('student-full-details-card').assesmentname=this.assesmentid;
   document.querySelector('student-full-details-card').FnSpinnerrActive(true);
-      },
-      fnrestview:function(){
-        this.$.singleservice.fnupdatestudentinfo(this.termname,this.assesmentid,this.grade,this.section,this.subject);
+      }
+      // fnrestview:function(){
+      //   this.$.singleservice.fnupdatestudentinfo(this.termname,this.assesmentid,this.grade,this.section,this.subject);
     
-       }
+      //  }
     });
   })();
   </script>
