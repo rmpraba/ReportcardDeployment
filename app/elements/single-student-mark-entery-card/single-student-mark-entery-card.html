@@ -94,16 +94,18 @@
 <span >
 <paper-input  label="Section Name" style="width:15%" hidden readonly  hiddenvalue="{{sectionname}}"></paper-input>
 </span>
-<center>
+<div id=hiddenmainheader>
+  <center>
   <h1>{{schoolname}}</h1>
       <h3>Continuous Comprehensive Evaluation -AY-{{academicyear}}</h3>  
       <h4>  &nbsp;&nbsp;&nbsp; Grade: {{gradename}}  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Section: {{sectionname}} &nbsp;&nbsp; </h4> 
   </center>
+  </div>
 <div class="mainbox">
 <span class="space1">
 <template is="dom-repeat" items="{{checkarr}}">
   <dynamic-category-option-card categorytype="{{item.category_type}}" categoryname="{{item.category_name}}"></dynamic-category-option-card>     
-</template>
+</template> 
 </span>
 <!-- <span class="space1">
 <paper-checkbox on-change="fnscolasticid" id="scolasticid"><h2>Scholastic</h2></paper-checkbox>
@@ -291,6 +293,7 @@
  this.$.fivetotencoscholastichiddenvalue.hidden=true;
  this.$.onetofourattendencehiddenvalue.hidden=true;  
  this.$.onetofourhealthhiddenvalue.hidden=true;
+ this.$.hiddenmainheader.hidden=true;
        },
        FnSubmit:function(){
         if(sessionStorage.getItem("curr_sess_category")=="category1"||sessionStorage.getItem("curr_sess_category")=="category2"){
@@ -464,6 +467,7 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
           localStorage.setItem("curr_sess_studentid",this.studentid);
           document.querySelector('#singlestudentgerid').selected=-1;
          this.$.singleservice.getsection(this.studentid);
+         this.$.hiddenmainheader.hidden=false;
           },
 
           fnscolasticid:function(){
@@ -683,11 +687,28 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
                 this.itemArray=arr;
               }
             } }
-     
+             this.checkarr="";
+      this.$.hiddenmainheader.hidden=true;
+    this.$.talentsubjectid.hidden=true; 
+ this.$.generalsubjectid.hidden=true
+ this.$.cocurricularscolasticsubjectid.hidden=true;
+ this.$.coscolasticsubjectid.hidden=true;
+ this.$.scolasticsubjectid.hidden=true;
+ this.$.scolasticsubjectid1.hidden=true;
+  this.assesmentids="";
+  this.$.onetofourhiddenvalue.hidden=true;
+ this.$.fivetotenhiddenvalue.hidden=true; 
+ this.$.onetofourcoslosandcocurrcohiddenvalue.hidden=true;
+ this.$.fivetotencoscholastichiddenvalue.hidden=true;
+ this.$.onetofourattendencehiddenvalue.hidden=true;  
+ this.$.onetofourhealthhiddenvalue.hidden=true;
+ document.querySelector("dynamic-category-option-card").ref();
+
            },
 
     fnref:function(e){
-        
+     this.$.hiddenmainheader.hidden=true;
+      this.checkarr="";
       this.value=""; 
       this.studentid=""; 
       this.itemArray="";
@@ -702,12 +723,12 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
       this.gradename="";
       this.sectionname="";
       this.classid="";
-      document.querySelector("#scolasticid").checked=false;
+      /*document.querySelector("#scolasticid").checked=false;
       document.querySelector("#coscolasticid").checked=false;
       document.querySelector("#cocurriculamid").checked=false;
       document.querySelector("#genderid").checked=false;
-      document.querySelector("#talentid").checked=false;
- this.$.talentsubjectid.hidden=true; 
+      document.querySelector("#talentid").checked=false;*/
+  this.$.talentsubjectid.hidden=true; 
  this.$.generalsubjectid.hidden=true
  this.$.cocurricularscolasticsubjectid.hidden=true;
  this.$.coscolasticsubjectid.hidden=true;
@@ -720,6 +741,8 @@ this.$.assesmentservice.callWorkingdaysService1(this.studentid);
  this.$.fivetotencoscholastichiddenvalue.hidden=true;
  this.$.onetofourattendencehiddenvalue.hidden=true;  
  this.$.onetofourhealthhiddenvalue.hidden=true;
+ document.querySelector("dynamic-category-option-card").ref();
+
     },
     });
   })();
