@@ -464,6 +464,16 @@
         on-response="fnimporttermmarksResponse"
         debounce-duration="300"
     >
+     <iron-ajax
+        method="post"
+        id="fnimporttermmarks1ajax"
+        url="{{fnimporttermmarks1url}}"
+        params="{{fnimporttermmarks1param}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fnimporttermmarks1Response"
+        debounce-duration="300"
+    >
 
       <iron-ajax
         method="post"
@@ -2543,6 +2553,36 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
     },
     fnimporttermmarksResponse:function(e)
        {
+        var res=e.detail.response.returnval;
+        if(res==='Updated')
+        {
+            alert('Removed Successfully');
+            this.FnFetchApprovalStatus();
+        }
+        //alert(JSON.stringify(res));
+       },
+
+
+fnimporttermmarks11:function(termname,assesmentid,grade,section,subject)
+    {
+        this.fnimporttermmarks1url=sessionStorage.getItem("addrinfo")+"/fnimporttermmarks11-service";
+        var obj={};
+        obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.roleid=sessionStorage.getItem("curr_sess_loggedroleid");
+         obj.termname=termname;
+         obj.assesmentid=assesmentid;
+         obj.grade=grade;
+         obj.section=section;
+         obj.subject=subject;
+         obj.flag='0';
+         this.fnimporttermmarks1param=obj;  
+       //  alert(JSON.stringify(obj));
+         this.$.fnimporttermmarks1ajax.generateRequest();
+    },
+    fnimporttermmarks1Response:function(e)
+       {
+       // alert(JSON.stringify(e.detail.response.returnval));
         var res=e.detail.response.returnval;
         if(res==='Updated')
         {

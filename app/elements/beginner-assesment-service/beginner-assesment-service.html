@@ -652,6 +652,7 @@
          var obj={"schoolid":"","academicyear":"","gradename":"","section":"","subject":""};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.subjectid=localStorage.setItem("curr_sess_subjectid");
          obj.assesment=localStorage.getItem("curr_sess_assesmentname");
          obj.gradename=gradename;
          obj.section=section;
@@ -757,7 +758,6 @@ document.querySelector('enrichment-dynamic-markentrycard').categorylength=arr3[0
              obj.categorycnt=cnt;
               obj.width=parseFloat(cnt)*parseFloat(divider)+"%";
               category.push(obj);
-
               }
            
             overall.push({"sno":i+1,"Studentno":arr1[i].id,"studentname":arr1[i].student_name,"tabwidth":tabwidth,"category":category});

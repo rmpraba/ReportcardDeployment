@@ -51,12 +51,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          <p hidden>{{studentid}}</p>
          <p hidden>{{termid}}</p>
         <div class="card">
-          <p  >{{studentname}}</p>
-          <p  style="margin-left: 5%;">{{assesmentid}}</p>
-          <p  style="margin-left: 5%;">{{grade}}</p>
-          <p  style="margin-left: 5%;">{{section}}</p>
-          <p  style="margin-left: 5%;">{{subject}}</p>
-          <p  style="margin-left: 5%;">{{comments}}</p>
+          <p style="{{fonts}}" >{{studentname}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{assesmentid}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{grade}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{section}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{subject}}</p>
+          <p  style="margin-left: 5%; {{fonts}}">{{comments}}</p>
          
    <p style="margin-left: 5%;"><ahref hidden$="{{studenthiddenviews1}}" class="viewdata" on-click="Fnaproved"><u>Approve</u></ahref></p>
    <p > <ahref hidden$="{{studenthiddenviews1}}" class="viewdata" on-click="FnReject"><u>Reject</u></ahref></p>
@@ -64,11 +64,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        <paper-dialog id="innovationdialog12" modal>
          
           <center>
-          <b><h2>{{dialogvalue}}successfully</h2></b>
-          <paper-button style="background-color: #363636;color: #ffffff;height:34px;" dialog-confirm autofocus>Ok</paper-button>
+          <b><h2> Aprove successfully</h2></b><br>
+          <paper-button style="background-color: #363636;color: #ffffff;height:34px;" on-click="fnclose">Ok</paper-button>
          </center>
       </paper-dialog>
-
+    <paper-dialog id="innovationdialog131" modal>
+         
+          <center>
+          <b><h2>Reject successfully</h2></b><br>
+          <paper-button style="background-color:black; color:white;height:34px;" on-click="fnclosee">close</paper-button>
+         </center>
+      </paper-dialog>
     <single-student-markentry-service id="singleservice"></single-student-markentry-service>
   </template>
   <script>
@@ -78,18 +84,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'student-coordinator-apruval-item-card',
 Fnaproved:function(e){
-   this.dialogvalue="Aprove"+" ";
+ 
  this.$.innovationdialog12.toggle();
 this.$.singleservice.fnputcoapruval(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.termid,"completed");
 
   },
 FnReject:function(e){
-  this.dialogvalue="Reject"+" ";
-this.$.innovationdialog12.toggle();
+ // this.dialogvalue1="Reject"+" ";
+this.$.innovationdialog131.toggle();
  this.$.singleservice.fnputcoapruval(this.studentid,this.studentname,this.subjectcategory,this.assesmentid,this.grade,this.section,this.subject,this.termid,"Reject");
  
 },
-    });
+fnclose:function(e){
+this.$.innovationdialog12.close();
+},
+fnclosee:function(e){
+this.$.innovationdialog131.close();
+},
+  });
   })();
   </script>
 </dom-module>

@@ -47,7 +47,7 @@
           <paper-dropdown-menu id="grade" label="Select Grade" disabled="{{read}}" required>
             <paper-menu id="gradenam1" class="dropdown-content"  on-iron-select="FnSelectGrade"  attr-for-selected="value" required>     
               <template is="dom-repeat" items="{{gradearr}}">
-                <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+                <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -141,6 +141,7 @@
         //   this.hideassesment=true;
         // }
         localStorage.setItem("curr_sess_grade",gradename);
+        localStorage.setItem("curr_sess_gradeid",this.gradeid);
         this.$.assesmentservice.callSectionService(gradename);
         this.$.assesmentservice.callAssesmentService(gradename);
         if(this.flag==1)
@@ -182,7 +183,7 @@
         localStorage.setItem("curr_sess_assesment",assesment);
         localStorage.setItem("curr_sess_assesmenttype",assesment);
         if(this.flag==1)
-          document.querySelector('subject-dynamic-markentrycard').studarr=[];
+   document.querySelector('subject-dynamic-markentrycard').studarr=[];
           // this.callService();
       },
       FnSelectAssesmentType:function(e){
@@ -198,9 +199,10 @@
         {
           this.FnToggleSpinner(true);
           if(localStorage.getItem('curr_sess_report')=='0'){
-          document.querySelector('term-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');
+     document.querySelector('term-assesment-sheet-card').setPage('dynamic-scholastic-markentry-card');
           document.querySelector('dynamic-scholastic-markentry-card').FnRefresh();
     this.$.scholasticsubjectservice.subjectsubmittedcheckService(gradename,section,subject);
+     //this.$.scholasticsubjectservice.templateincoscolasticsubject(gradename,section,subject);
           }
           if(localStorage.getItem('curr_sess_report')=='1'){
             // alert('in');

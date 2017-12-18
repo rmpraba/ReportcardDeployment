@@ -277,8 +277,8 @@ this.fnputcoapruvalurl=sessionStorage.getItem("addrinfo")+"/fnputcoapruval-servi
          },
    singlestudentserviceResponse:function(e){
          var res=e.detail.response.returnval;
-   //      alert(JSON.stringify(res));
-         document.querySelector('subject-report-status-item-card').fnrestview();
+        // alert(JSON.stringify(res));
+     //  document.querySelector('subject-report-status-item-card').fnrestview();
        },
 
  fnoverallmarks:function(studentid,value,gradeid,gradename,classid,sectionname,subjectid,subjectname,assesmentid){
@@ -1089,7 +1089,7 @@ document.querySelector('single-student-mark-entery-card').FnRefreshcard();
       // alert(JSON.stringify(e.detail.response.returnval));
       var temp=[];
     
-temp.push({"school_id":"school Id","academic_year":"Academicyear","term_name":"Term","assesment_id":"Assesment","grade":"Grade","section":"Section","subject":"Subject","flag":"Apruval Status",hiddenview:true});
+temp.push({"font":"font-size:100%;font-weight: bold;","school_id":"school Id","academic_year":"Academicyear","term_name":"Term","assesment_id":"Assesment","grade":"Grade","section":"Section","subject":"Subject","flag":"Apruval Status",hiddenview:true});
      var arr=e.detail.response.returnval;
    for(var i=0;i<arr.length;i++){
 temp.push(arr[i]);
@@ -1100,10 +1100,12 @@ temp.push(arr[i]);
        if(temp[i].flag=="0"){
           temp[i].flag="Pending for approval";
           temp[i].hiddenview=false;
+           temp[i].font="font-size:100%;";
       }
         if(temp[i].flag=="1"){
           temp[i].flag="Approved";
           temp[i].hiddenview=false;
+           temp[i].font="font-size:100%;";
       }
 
         }  
@@ -1133,7 +1135,7 @@ temp.push(arr[i]);
    fnupdatestudentinfoResponse:function(e){
          var temp=[];
       //  alert(JSON.stringify(res));
-       temp.push({"student_id":"student Id","student_name":"Student Name","subject_category_name":"Subject categoryname","assesment_id":"Assesment","grade":"Grade","section":"Section","subject_id":"Subject",studenthiddenview:true,studenthiddenview2:false});
+       temp.push({"font":"font-size:100%;font-weight: bold;","student_id":"student Id","student_name":"Student Name","subject_category_name":"Subject categoryname","assesment_id":"Assesment","grade":"Grade","section":"Section","subject_id":"Subject",studenthiddenview:true,studenthiddenview2:false});
        var res=e.detail.response.returnval;
    //   alert(JSON.stringify(temp));
 
@@ -1144,6 +1146,7 @@ temp.push(arr[i]);
         if(j!=0){
         temp[j].studenthiddenview=false;
         temp[j].studenthiddenview2=true;
+        temp[j].font="font-size:100%;";
         }
       
        }
@@ -1171,7 +1174,7 @@ temp.push(arr[i]);
        var arr=e.detail.response.returnval;
      var temp=[];
       //  alert(JSON.stringify(res));
-       temp.push({"school_id":"SchoolId","academic_year":"AcademicYear","student_id":"student Id","student_name":"Student Name","term_id":"Term","assesment_id":"Assesment","flag":"flag","subject_category":"Subject Category","grade":"Grade","section":"Section","subject":"Subject","comments":"Comments",studenthiddenviews:true});
+       temp.push({"font":"font-size:100%;font-weight: bold;","school_id":"SchoolId","academic_year":"AcademicYear","student_id":"student Id","student_name":"Student Name","term_id":"Term","assesment_id":"Assesment","flag":"flag","subject_category":"Subject Category","grade":"Grade","section":"Section","subject":"Subject","comments":"Comments",studenthiddenviews:true});
        var res=e.detail.response.returnval;
    //   alert(JSON.stringify(temp));
 
@@ -1181,14 +1184,15 @@ temp.push(arr[i]);
  for(var j=0;j<temp.length;j++){
         if(j!=0){
         temp[j].studenthiddenviews=false;
-        
+         temp[j].font="font-size:100%;";
         }
+     
       
        }
 
  document.querySelector('student-coordinator-apruval-card').schoolname=sessionStorage.getItem("curr_sess_loggedschoolname");
-      document.querySelector('student-coordinator-apruval-card').academicyear=localStorage.getItem("curr_sess_academicyear");
-      document.querySelector('student-coordinator-apruval-card').approvalarr=temp;
+  document.querySelector('student-coordinator-apruval-card').academicyear=localStorage.getItem("curr_sess_academicyear");
+  document.querySelector('student-coordinator-apruval-card').approvalarr=temp;
       },
     });
   })();
