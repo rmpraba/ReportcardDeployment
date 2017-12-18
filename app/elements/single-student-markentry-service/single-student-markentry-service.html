@@ -1,12 +1,3 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
@@ -173,7 +164,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content-type="application/json"
         on-response="fnoverallmarks1Response"
         debounce-duration="300"
-    ><iron-ajax  
+    >
+    <iron-ajax  
         method="post"
         id="fncosolasticsetstudentinfoajax"
         url="{{fncosolasticsetstudentinfourl}}"
@@ -183,6 +175,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-response="fncosolasticsetstudentinfoResponse"
         debounce-duration="300"
     >
+    <iron-ajax  
+        method="post"
+        id="fetchcategoryajax"
+        url="{{fetchcategoryurl}}"
+        params="{{fetchcategoryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchcategoryResponse"
+        debounce-duration="300"
+    >
+    
   </template>
   <script>
   (function() {
@@ -212,7 +215,6 @@ this.getstudentinformationurl=sessionStorage.getItem("addrinfo")+"/getstudentinf
          var res=e.detail.response.returnval;
        //alert(JSON.stringify(res));
      document.querySelector('single-student-mark-entery-card').getstudentdet(res);
-
        }, 
        fncosolasticsetstudentinfo:function(){
  this.fncosolasticsetstudentinfourl=sessionStorage.getItem("addrinfo")+"/getstudentinformation-service";
@@ -964,7 +966,7 @@ else
  
 
    document.querySelector('single-student-mark-entery-card').studarr2=overall;
-  //    alert(JSON.stringify(overall));
+     // alert(JSON.stringify(overall));
       overall=[];
     }
       },
@@ -1022,18 +1024,48 @@ document.querySelector('single-student-mark-entery-card').FnRefreshcard();
    document.querySelector('single-student-mark-entery-card').gradename=res[0].gradename;
    document.querySelector('single-student-mark-entery-card').classid=res[0].classid;
    document.querySelector('single-student-mark-entery-card').sectionname=res[0].sectionname;
-
-  
-    this.assesment1url=sessionStorage.getItem("addrinfo")+"/assesment1-service";
+   //  this.assesment1url=sessionStorage.getItem("addrinfo")+"/assesment1-service";
+   //       var obj={};
+   //       obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+   //       obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+   //       obj.termname=localStorage.getItem("curr_sess_termname");
+   //       obj.gradename=res[0].gradename;
+   //       obj.sectionname=res[0].sectionname;
+   //      this.assesment1param=obj;
+   // //      alert(JSON.stringify(obj));
+   //   this.$.assesment1ajax.generateRequest();
+   this.fetchcategoryService(res[0].gradename,res[0].sectionname,e.detail.response.studentid);
+    },
+    fetchcategoryService:function(gradename,sectionname,studentid){
+        this.fetchcategoryurl=sessionStorage.getItem("addrinfo")+"/fetchcategory-service";
          var obj={};
          obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
          obj.academicyear=localStorage.getItem("curr_sess_academicyear");
          obj.termname=localStorage.getItem("curr_sess_termname");
-         obj.gradename=res[0].gradename;
-         obj.sectionname=res[0].sectionname;
-        this.assesment1param=obj;
+         obj.gradename=gradename;
+         obj.sectionname=sectionname;
+         obj.studentid=studentid;
+         this.fetchcategoryparam=obj;
+         this.$.fetchcategoryajax.generateRequest();
+    },
+    fetchcategoryResponse:function(e)
+    {
+        var arr=e.detail.response.returnval;
+        document.querySelector('single-student-mark-entery-card').checkarr=arr;
+    },
+    assesment1Service:function(category,gradename,sectionname,studentid){
+        this.assesment1url=sessionStorage.getItem("addrinfo")+"/assesment1-service";
+         var obj={};
+         obj.schoolid=sessionStorage.getItem("curr_sess_loggedschoolid");
+         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
+         obj.termname=localStorage.getItem("curr_sess_termname");
+         obj.category=category;
+         obj.gradename=gradename;
+         obj.sectionname=sectionname;
+         obj.studentid=studentid;
+         this.assesment1param=obj;
    //      alert(JSON.stringify(obj));
-     this.$.assesment1ajax.generateRequest();
+         this.$.assesment1ajax.generateRequest();
     },
       assesment1Response:function(e){
      var arr=e.detail.response.returnval;

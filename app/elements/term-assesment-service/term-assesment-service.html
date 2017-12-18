@@ -1343,10 +1343,10 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         if(insertflag==insertcheckflag){
           alert('Marks saved!');
           insertflag=0;
-           if(localStorage.getItem("curr_sess_page")=="single-student-mark-entery-card")
-          {
-         document.querySelector('single-student-mark-entery-card').updatestudentmark();
-       }
+       //     if(localStorage.getItem("curr_sess_page")=="single-student-mark-entery-card")
+       //    {
+       //   document.querySelector('single-student-mark-entery-card').updatestudentmark();
+       // }
         }
       },      
       callinsertattendanceinfo:function(studid,studname,attendance,workingdays){
@@ -1539,9 +1539,6 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
       if(e.detail.response.returnval=='not updated')
       alert("Unable to approve!");
     },
-
-
-
     Fnimportmark:function()
     {   
       var obj1={"schoolid":"","academicyear":"","assesmentid":"","termname":"","subject":"","gradename":"","sectionname":"","flag":""};   
@@ -1627,7 +1624,7 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
        // alert(3);
     },
     updatefaimportmarkcheckResponse:function(e){
-        alert(JSON.stringify(e.detail.response.returnval));
+        // alert(JSON.stringify(e.detail.response.returnval));
        // alert();
         var arr=e.detail.response.returnval;
         if(arr[0].result=='match')
@@ -1705,7 +1702,9 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          obj.termname=localStorage.getItem("curr_sess_termname");
          obj.grade= localStorage.getItem("curr_sess_grade"); 
          obj.section=localStorage.getItem("curr_sess_section");       
-         obj.subject=localStorage.getItem("curr_sess_subject");     
+         obj.subject=localStorage.getItem("curr_sess_subject"); 
+         obj.role=sessionStorage.getItem("curr_sess_loggedrole");
+         obj.studentid=localStorage.getItem("curr_sess_studentid");     
          this.overalltermmarkinsertparam= obj;
          // alert(obj);
          this.$.overalltermmarkinsertajax.generateRequest();
@@ -1714,14 +1713,21 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
         // alert("Inserted!");
         if(e.detail.response.returnval=="succ")
         {
-             alert('Approved!');
-              this.callApproveService();
-            document.querySelector('home-page').setPage('approveassesment','');  
-            document.querySelector('approve-one-to-four-card').setDefaultHeaders();
+            if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
+             alert('Approved!');              
+            else
+             alert('Submitted!');
         }
          
         if(localStorage.getItem("curr_sess_assesment")=="Assesment3"||localStorage.getItem("curr_sess_subject")=="Art&Craft"||localStorage.getItem("curr_sess_subject")=="dance"||localStorage.getItem("curr_sess_subject")=="music"||localStorage.getItem("curr_sess_subject")=="Games"||localStorage.getItem("curr_sess_subject")=="Personality Development")
           this.calloveralltermassesmentinsertService();
+      else{
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+        this.callApproveService();
+        document.querySelector('home-page').setPage('approveassesment','');  
+        document.querySelector('approve-one-to-four-card').setDefaultHeaders();
+       }
+       }
         // n1++;
         // if(localStorage.getItem("curr_sess_assesment")=="Assesment3"&&(n1==this.count)){
         // this.calloveralltermassesmentinsertService();
@@ -1736,14 +1742,26 @@ this.fetchfastudentreporturl=sessionStorage.getItem("addrinfo")+"/fetchfastudent
          obj.termname=localStorage.getItem("curr_sess_termname");
          obj.grade=localStorage.getItem("curr_sess_grade");
          obj.section=localStorage.getItem("curr_sess_section");                
-         obj.subject=localStorage.getItem("curr_sess_subject");                          
+         obj.subject=localStorage.getItem("curr_sess_subject");                        
+         obj.role=sessionStorage.getItem("curr_sess_loggedrole");
+         obj.studentid=localStorage.getItem("curr_sess_studentid"); 
          this.overalltermassesmentinsertparam= obj;
          this.$.overalltermassesmentinsertajax.generateRequest();
       },
       overalltermassesmentinsertResponse:function(e){    
         // alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="succ")
+         {
+          if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator")
           alert("All assesments are approved in this term!");
+          else
+          alert('Submitted!');
+         }
+        if(sessionStorage.getItem("curr_sess_loggedrole")=="Co-Ordinator"){
+            this.callApproveService();
+            document.querySelector('home-page').setPage('approveassesment','');  
+            document.querySelector('approve-one-to-four-card').setDefaultHeaders();
+        }
       },
     callApproveService:function()
     {

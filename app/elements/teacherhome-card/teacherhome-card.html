@@ -71,7 +71,7 @@
       <div class="card" hidden$="{{GenerateReport}}">
        <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
       </div> 
-       <div class="card" hidden$="{{subjectstatus}}">
+      <div class="card" hidden$="{{subjectstatus}}">
         <paper-button on-click="fnsubjectreport" no ink><img src="../../images/substatus.png" height="180px" width="180px">
         <h4>Mark Change Request</h4>
         </paper-button>
@@ -103,10 +103,15 @@
       <div  class="card" hidden$="{{TA}}">
        <paper-button on-click="FnSelectTermType" no ink><img src="../../images/term.png" height="180px" width="180px"></paper-button>
       </div>
+      <div class="card" hidden$="{{subjectstatus}}">
+        <paper-button on-click="fnsubjectreport" no ink><img src="../../images/substatus.png" height="180px" width="180px">
+        <h4>Mark Change Request</h4>
+        </paper-button>
+      </div> 
        <div class="card" hidden$="{{singlestudentinfo}}">
-          <paper-button on-click="Fnsinglestudentinfo" no ink><img src="../../images/singlestudent.jpg" height="180px" width="180px">
-           <h4>Singl Student Mark </h4>
-          </paper-button>
+        <paper-button on-click="Fnsinglestudentinfo" no ink><img src="../../images/approverequest.png" height="180px" width="180px">
+        <h4>Change Mark</h4>
+        </paper-button>
       </div> 
       <div class="card" hidden$="{{GenerateReport}}">
        <paper-button on-click="FnGenerateReportcard" no ink><img src="../../images/report-icon.gif" height="180px" width="180px"></paper-button>
@@ -1063,7 +1068,7 @@ if(localStorage.getItem('curr_sess_loggedassesmenttype')=="coodinatormarkentry")
            this.$.assesmentservice.FnFetchApprovalStatus();
         
         }
-  else if(localStorage.getItem('curr_sess_report')=="7"){
+        else if(localStorage.getItem('curr_sess_report')=="7"){
         document.querySelector('app-card').setPage('homepage','');
         document.querySelector('home-page').setPage('subject-report-status-card');
           //  this.$.assesmentservice.callGradeService();   

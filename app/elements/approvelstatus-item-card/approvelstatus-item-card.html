@@ -39,7 +39,7 @@
           <p class='p5' style="margin-left: 5%;">{{section}}</p>
           <p class='p6' style="margin-left: 5%;">{{subject}}</p>
           <p class='p6' style="margin-left: 5%;">{{flag}}</p>
-          <p class='p7'><ahref class="viewdata" on-click="FnRemove"><u>Remove</u></ahref></p>
+          <p class='p7'><ahref class="viewdata" on-click="FnRemove"><u>Revert</u></ahref></p>
         </div>
 
           <term-assesment-service id="assesmentservice"></term-assesment-service>
@@ -66,6 +66,7 @@
       is: 'approvelstatus-item-card',
       FnRemove:function()      
       {
+        // alert('calling');
         if(this.grade=="Grade-1"||this.grade=="Grade-2"||this.grade=="Grade-3"||this.grade=="Grade-4")
         {
           // alert(this.grade);
@@ -105,7 +106,7 @@
       fngetauditlevelResponse:function(e)
       {
         var res=e.detail.response.returnval;
-        //alert(JSON.stringify(res));
+        // alert(JSON.stringify(res));
         sessionStorage.setItem("curr_sess_loggedauditlevel",res[0].assesment_level2);
         if(this.assesmentid=="Assesment2")
         {
